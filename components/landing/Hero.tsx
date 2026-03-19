@@ -54,7 +54,7 @@ export default function Hero() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left items-stretch">
 
           {/* Card 1: Essay ideas - free */}
-          <div className="bg-white rounded-2xl shadow-md ring-1 ring-brand-orange/30 border border-gray-200 p-6 flex flex-col hover:shadow-lg hover:ring-brand-orange/40 transition-all duration-200">
+          <div className="bg-white rounded-2xl shadow-md ring-2 ring-brand-orange/30 border-2 border-brand-orange/20 p-6 flex flex-col hover:shadow-lg hover:ring-brand-orange/40 transition-all duration-200">
             <div className="flex items-center justify-between mb-1">
               <p className="text-xs font-semibold uppercase tracking-widest text-brand-orange">Get essay ideas</p>
               <span className="text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2.5 py-0.5">Free</span>
@@ -101,7 +101,7 @@ export default function Hero() {
           </div>
 
           {/* Card 2: Analyse your Substack - Pro */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 flex flex-col hover:shadow-md hover:border-brand-orange/30 transition-all duration-200">
+          <div className="bg-white rounded-2xl shadow-sm border-2 border-teal-600/40 p-6 flex flex-col hover:shadow-md hover:border-teal-600/60 transition-all duration-200">
             <div className="flex items-center justify-between mb-1">
               <p className="text-xs font-semibold uppercase tracking-widest text-teal-600">Analyse your Substack</p>
               <span className="text-xs font-medium text-teal-700 bg-teal-50 border border-teal-200 rounded-full px-2.5 py-0.5">Free during beta</span>
