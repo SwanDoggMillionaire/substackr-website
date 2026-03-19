@@ -197,6 +197,18 @@ function ResearchPageInner() {
 
             {/* Profile card - topline only (free tier) */}
             <ProfileCard profile={profile} toplineOnly={true} />
+
+            {/* Feedback */}
+            <div className="text-center mt-12 mb-4">
+              <a
+                href="https://tally.so/r/D4eEg5"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                How was this? 30-second feedback →
+              </a>
+            </div>
           </>
         )}
       </div>
