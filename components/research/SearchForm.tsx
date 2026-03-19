@@ -5,7 +5,7 @@ import { Search, User } from 'lucide-react'
 import { ResearchMode } from '@/lib/types'
 
 interface SearchFormProps {
-  onSearch: (name: string, mode: ResearchMode, niche?: string) => void
+  onSearch: (name: string, mode: ResearchMode, niche?: string, userHandle?: string) => void
   isLoading: boolean
   initialMode?: ResearchMode
   initialNiche?: string
@@ -16,25 +16,35 @@ const SUGGESTED = ['Lenny Rachitsky', 'Ben Thompson', 'Anne-Laure Le Cunff']
 export default function SearchForm({ onSearch, isLoading, initialMode = 'writer', initialNiche = '' }: SearchFormProps) {
   const [value, setValue] = useState('')
   const [niche, setNiche] = useState(initialNiche)
+  const [userHandle, setUserHandle] = useState('')
   const [mode, setMode] = useState<ResearchMode>(initialMode)
 
   const isSelf = mode === 'self'
 
-  const canSubmit = isSelf
-    ? value.trim().length >= 2
-    : value.trim().length >= 2 && niche.trim().length >= 3
+  // Writer field always required. Niche and userHandle are optional.
+  const canSubmit = value.trim().length >= 2
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (canSubmit && !isLoading) {
-      onSearch(value.trim(), mode, isSelf ? undefined : niche.trim())
+      onSearch(
+        value.trim(),
+        mode,
+        isSelf ? undefined : (niche.trim() || undefined),
+        isSelf ? undefined : (userHandle.trim() || undefined)
+      )
     }
   }
 
   const handleSuggestion = (name: string) => {
     setValue(name)
-    if (!isLoading && (isSelf || niche.trim().length >= 3)) {
-      onSearch(name, mode, isSelf ? undefined : niche.trim())
+    if (!isLoading) {
+      onSearch(
+        name,
+        mode,
+        niche.trim() || undefined,
+        userHandle.trim() || undefined
+      )
     }
   }
 
@@ -51,7 +61,7 @@ export default function SearchForm({ onSearch, isLoading, initialMode = 'writer'
           }`}
         >
           <Search className="w-3.5 h-3.5" />
-          Research a writer
+          Get essay ideas
         </button>
         <button
           onClick={() => setMode('self')}
@@ -62,7 +72,7 @@ export default function SearchForm({ onSearch, isLoading, initialMode = 'writer'
           }`}
         >
           <User className="w-3.5 h-3.5" />
-          Analyse yourself
+          Analyse your Substack
         </button>
       </div>
 
@@ -84,15 +94,16 @@ export default function SearchForm({ onSearch, isLoading, initialMode = 'writer'
             />
             <button
               type="submit"
-              disabled={value.trim().length < 2 || isLoading}
+              disabled={!canSubmit || isLoading}
               className="bg-brand-orange text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-brand-orange-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed text-sm whitespace-nowrap"
             >
               {isLoading ? 'Analysing…' : 'Analyse'}
             </button>
           </div>
         ) : (
-          /* Writer mode — two stacked fields */
+          /* Writer mode — three stacked fields, niche + handle optional */
           <div className="bg-white rounded-2xl shadow-md border border-gray-200 focus-within:border-brand-orange/40 focus-within:shadow-lg transition-all duration-200 overflow-hidden">
+            {/* Writer field — required */}
             <div className="flex items-center px-4 py-3 border-b border-gray-100">
               <Search className="w-4 h-4 text-gray-400 flex-shrink-0 mr-3" />
               <input
@@ -105,13 +116,26 @@ export default function SearchForm({ onSearch, isLoading, initialMode = 'writer'
                 autoFocus
               />
             </div>
-            <div className="flex items-center px-4 py-3">
+            {/* Niche — optional */}
+            <div className="flex items-center px-4 py-3 border-b border-gray-100">
               <span className="text-gray-300 flex-shrink-0 mr-3 text-lg leading-none">✦</span>
               <input
                 type="text"
                 value={niche}
                 onChange={(e) => setNiche(e.target.value)}
-                placeholder="Your newsletter is about… e.g. productivity for remote workers"
+                placeholder="Your newsletter niche (optional) — e.g. mindfulness for busy parents"
+                className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm py-1"
+                disabled={isLoading}
+              />
+            </div>
+            {/* User handle — optional, for personalised ideas */}
+            <div className="flex items-center px-4 py-3">
+              <User className="w-4 h-4 text-gray-300 flex-shrink-0 mr-3" />
+              <input
+                type="text"
+                value={userHandle}
+                onChange={(e) => setUserHandle(e.target.value)}
+                placeholder="Your Substack handle (optional) — for personalised ideas"
                 className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm py-1"
                 disabled={isLoading}
               />

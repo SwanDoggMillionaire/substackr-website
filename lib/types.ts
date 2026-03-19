@@ -1,3 +1,5 @@
+import { RecentPost } from './substack'
+
 export interface ProfileSection {
   title: string
   content: string
@@ -23,6 +25,8 @@ export interface WriterProfile {
   similarWriters: string[]  // 2-3 names to look up next
   generatedAt: string
   isAnalysingSelf?: boolean
+  aboutMeTips?: string[]    // only populated when isAnalysingSelf === true
+  recentPosts?: RecentPost[] // only populated when live Substack data was fetched
 }
 
 export interface EssayIdea {
@@ -35,6 +39,7 @@ export interface EssayIdea {
 export interface EssayIdeasResult {
   writerName: string
   userNiche: string
+  userDataSource?: 'live' | 'niche' | 'none'  // how the user's context was personalised
   ideas: EssayIdea[]  // always 5
 }
 

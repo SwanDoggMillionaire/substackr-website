@@ -153,6 +153,60 @@ export default function ProfileCard({ profile, collapsed = false }: ProfileCardP
               </div>
             )}
 
+            {/* About Me Tips — self-analysis only */}
+            {profile.isAnalysingSelf && profile.aboutMeTips && profile.aboutMeTips.length > 0 && (
+              <div className="px-8 py-6 border-t border-gray-100">
+                <p className="section-label mb-3">Improve your About page</p>
+                <ul className="space-y-3">
+                  {profile.aboutMeTips.map((tip, i) => (
+                    <li key={i} className="flex gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-brand-orange flex-shrink-0 mt-1.5" />
+                      <p className="text-sm text-gray-700 leading-relaxed">{tip}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Recent Posts — self-analysis only */}
+            {profile.isAnalysingSelf && profile.recentPosts && profile.recentPosts.length > 0 && (
+              <div className="px-8 py-6 border-t border-gray-100 bg-gray-50/50">
+                <p className="section-label mb-3">Your recent posts</p>
+                <ol className="space-y-3">
+                  {profile.recentPosts.map((post, i) => (
+                    <li key={post.slug} className="flex gap-3">
+                      <span className="text-xs text-gray-400 font-medium w-5 flex-shrink-0 pt-0.5">{i + 1}.</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start gap-2 flex-wrap">
+                          <a
+                            href={post.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm font-medium text-gray-900 hover:text-brand-orange transition-colors leading-snug"
+                          >
+                            {post.title}
+                          </a>
+                          <span className={`inline-flex items-center text-xs font-medium rounded-full px-2 py-0.5 flex-shrink-0 ${
+                            post.audience === 'paid'
+                              ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                              : 'bg-gray-100 text-gray-500'
+                          }`}>
+                            {post.audience === 'paid' ? 'Paid' : 'Free'}
+                          </span>
+                          {post.wordcount && (
+                            <span className="text-xs text-gray-400 flex-shrink-0">{post.wordcount.toLocaleString()} words</span>
+                          )}
+                        </div>
+                        {post.subtitle && (
+                          <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">{post.subtitle}</p>
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
+
             {/* Collapse button */}
             {collapsed && (
               <button

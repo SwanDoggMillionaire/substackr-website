@@ -81,28 +81,42 @@ Return ONLY the JSON object — no preamble, no explanation, no markdown.`
 
 const SELF_ANALYSIS_ADDITION = `
 
-IMPORTANT: The user is analysing their OWN Substack newsletter. Adjust your tone accordingly:
+IMPORTANT: The user is analysing their OWN Substack newsletter. Adjust your tone and output accordingly:
 - Write in second person where it feels natural ("Your niche is..." rather than "Their niche is...")
 - Be diplomatically honest — this is meant to surface blind spots the writer cannot see themselves
 - The theGap field should focus on opportunities for THIS WRITER to expand or pivot
 - The strategicSummary insights should be personal development advice, not general observations
-- confidenceLevel should reflect how well-known their newsletter is — LOW is fine and expected for smaller writers`
+- confidenceLevel should reflect how well-known their newsletter is — LOW is fine and expected for smaller writers
+
+ADDITIONALLY: Add an "aboutMeTips" field to your JSON response — an array of 3–5 specific, actionable tips for improving this writer's Substack About page. Base these tips directly on what you found in the profile analysis. Do not give generic advice. Each tip should be something the writer can act on this week.
+
+Example of good tips (adapt to the actual profile):
+- "Your About page likely leads with what you cover (topics) rather than why a reader should care. Add a one-sentence hook about the transformation you offer — not just the subject matter."
+- "Your positioning is currently unclear from the outside. Your About page should answer: who is this for, and what will they get from subscribing? Spell it out explicitly."
+- "Add a recent post or two to your About page as 'Start here' links — give new visitors an immediate sample of your best work."
+
+Add this to your JSON:
+"aboutMeTips": ["Specific tip 1", "Specific tip 2", "Specific tip 3"]`
 
 // ─── Essay Ideas Prompt ───────────────────────────────────────────────────────
 
-const ESSAY_IDEAS_SYSTEM_PROMPT = `You are a creative writing strategist for Substack writers. You have been given a structured profile of a writer the user admires. Your job is to generate 5 essay ideas inspired by that writer's approach, adapted for the user's own newsletter.
+const ESSAY_IDEAS_SYSTEM_PROMPT = `You are a creative writing strategist for Substack writers. You will receive:
+1. A profile of a writer the user admires (the INSPIRATION WRITER)
+2. Context about the user's own newsletter — either as live Substack data (YOUR NEWSLETTER) or a typed niche description
+
+Your job is to generate 5 essay ideas inspired by the inspiration writer's approach, adapted specifically for the user's newsletter.
 
 Return ONLY valid JSON (no markdown, no code fences) matching this exact structure:
 
 {
-  "writerName": "the analysed writer's name",
-  "userNiche": "the user's stated niche",
+  "writerName": "the inspiration writer's name",
+  "userNiche": "brief description of the user's newsletter or niche",
   "ideas": [
     {
       "title": "A working title for the essay — specific and compelling, not vague",
       "coreTension": "The central question or conflict this essay would explore. What makes it interesting?",
-      "whyItWorksForThem": "Why this angle or format works specifically for the writer being studied",
-      "howToAdaptForYou": "How the user should make this their own — what to keep, what to change, what to add based on their niche"
+      "whyItWorksForThem": "Why this angle or format works specifically for the inspiration writer being studied",
+      "howToAdaptForYou": "How the user should make this their own — what to keep, what to change, what to add based on their specific newsletter content and audience"
     }
   ]
 }
@@ -111,7 +125,7 @@ Rules:
 - Generate EXACTLY 5 ideas
 - Each title should be specific enough to actually write — not "A piece about productivity" but "The productivity advice I followed for a year that made me less productive"
 - coreTension should be a question or conflict, not a description
-- howToAdaptForYou must reference the user's specific niche — not generic advice
+- howToAdaptForYou must be specific to the user's actual newsletter content and audience — when live Substack data is provided, reference their actual posts and topics
 - Mix formats: essay, list, personal story, interview angle, contrarian take
 - Return ONLY the JSON object`
 
@@ -141,7 +155,7 @@ export async function researchWriter(
 
   const message = await client.messages.create({
     model: 'claude-sonnet-4-6',
-    max_tokens: 2500,
+    max_tokens: 2800,
     temperature: 0.3,
     system: systemPrompt,
     messages: [
@@ -179,17 +193,22 @@ export async function researchWriter(
 
 export async function generateEssayIdeas(
   profile: WriterProfile,
-  userNiche: string
+  userNiche: string,
+  userData?: string   // live Substack data for the user's own newsletter
 ): Promise<EssayIdeasResult> {
-  const profileSummary = `
-Writer: ${profile.writerName}
+  const inspirationBlock = `=== INSPIRATION WRITER: ${profile.writerName} ===
 One-liner: ${profile.oneLiner}
 Niche: ${profile.nicheAndTopicFocus.content}
 Topics: ${profile.nicheAndTopicFocus.bullets?.join(', ') || 'not specified'}
 Positioning: ${profile.positioning.content}
 Content patterns: ${profile.contentPatterns.content}
-Strategic gap: ${profile.strategicSummary.theGap}
-`
+Strategic gap: ${profile.strategicSummary.theGap}`
+
+  const userBlock = userData
+    ? `=== YOUR NEWSLETTER ===\n${userData}`
+    : `=== YOUR NEWSLETTER ===\nNiche: ${userNiche}`
+
+  const userContent = `${inspirationBlock}\n\n${userBlock}\n\nGenerate 5 essay ideas inspired by the inspiration writer's approach, adapted specifically for the user's newsletter.`
 
   const message = await client.messages.create({
     model: 'claude-sonnet-4-6',
@@ -199,7 +218,7 @@ Strategic gap: ${profile.strategicSummary.theGap}
     messages: [
       {
         role: 'user',
-        content: `Writer profile:\n${profileSummary}\n\nUser's newsletter niche: ${userNiche}\n\nGenerate 5 essay ideas.`,
+        content: userContent,
       },
     ],
   })
@@ -210,5 +229,10 @@ Strategic gap: ${profile.strategicSummary.theGap}
   }
 
   const jsonText = extractJSON(content.text)
-  return JSON.parse(jsonText) as EssayIdeasResult
+  const result = JSON.parse(jsonText) as EssayIdeasResult
+
+  // Set the userDataSource based on what was actually used
+  result.userDataSource = userData ? 'live' : userNiche ? 'niche' : 'none'
+
+  return result
 }

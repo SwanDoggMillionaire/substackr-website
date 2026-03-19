@@ -54,17 +54,26 @@ export default function EssayIdeas({ ideas }: EssayIdeasProps) {
     <div className="w-full max-w-3xl mx-auto mt-12 animate-slide-up">
       <div className="bg-white rounded-2xl shadow-md card-orange-top overflow-hidden">
         {/* Header */}
-        <div className="px-8 py-5 border-b border-gray-100 flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-brand-orange-muted flex items-center justify-center flex-shrink-0">
+        <div className="px-8 py-5 border-b border-gray-100 flex items-start gap-3">
+          <div className="w-8 h-8 rounded-lg bg-brand-orange-muted flex items-center justify-center flex-shrink-0 mt-0.5">
             <Lightbulb className="w-4 h-4 text-brand-orange" />
           </div>
-          <div>
+          <div className="flex-1 min-w-0">
             <p className="font-display font-semibold text-gray-900 text-sm">
               Your 5 essay ideas
             </p>
             <p className="text-xs text-gray-500">
-              Inspired by {ideas.writerName} · Your niche: <span className="font-medium text-gray-700">{ideas.userNiche}</span>
+              Inspired by {ideas.writerName}
+              {ideas.userNiche && ideas.userDataSource !== 'live' && (
+                <> · Your niche: <span className="font-medium text-gray-700">{ideas.userNiche}</span></>
+              )}
             </p>
+            {ideas.userDataSource === 'live' && (
+              <span className="inline-flex items-center gap-1.5 mt-1.5 text-xs font-medium border rounded-full px-2.5 py-1 bg-emerald-50 text-emerald-700 border-emerald-200">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                Personalised using your real Substack content
+              </span>
+            )}
           </div>
         </div>
 

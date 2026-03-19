@@ -1,4 +1,5 @@
 import { generateEssayIdeas } from '@/lib/claude'
+import { extractHandle, fetchSubstackData } from '@/lib/substack'
 import { WriterProfile } from '@/lib/types'
 import { NextRequest } from 'next/server'
 
@@ -7,7 +8,11 @@ export const maxDuration = 60
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { profile, userNiche } = body as { profile: WriterProfile; userNiche: string }
+    const { profile, userNiche, userHandle } = body as {
+      profile: WriterProfile
+      userNiche?: string
+      userHandle?: string
+    }
 
     if (!profile || !profile.writerName) {
       return Response.json(
@@ -16,14 +21,21 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    if (!userNiche || typeof userNiche !== 'string' || userNiche.trim().length < 3) {
-      return Response.json(
-        { error: 'Please describe your newsletter niche (at least 3 characters).', code: 'INVALID_INPUT' },
-        { status: 400 }
-      )
+    // Fetch the user's own Substack data if a handle was provided
+    // This is distinct from the inspiration writer's data — it describes the USER's newsletter
+    let userData: string | undefined
+    if (userHandle && typeof userHandle === 'string') {
+      const handle = extractHandle(userHandle.trim())
+      if (handle) {
+        const result = await fetchSubstackData(handle)
+        userData = result?.contextString ?? undefined
+      }
     }
 
-    const result = await generateEssayIdeas(profile, userNiche.trim())
+    // Niche fallback: use typed niche if no live user data available
+    const effectiveNiche = userNiche?.trim() || profile.writerName
+
+    const result = await generateEssayIdeas(profile, effectiveNiche, userData)
     return Response.json(result)
   } catch (error) {
     if (error instanceof SyntaxError) {
