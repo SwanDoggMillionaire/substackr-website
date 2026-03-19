@@ -7,6 +7,7 @@ export interface ProfileSection {
 export interface WriterProfile {
   writerName: string
   confidenceLevel: 'HIGH' | 'MEDIUM' | 'LOW'
+  dataSource?: 'live' | 'training'
   oneLiner: string
   researchProfile: ProfileSection
   nicheAndTopicFocus: ProfileSection

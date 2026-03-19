@@ -77,7 +77,7 @@ export default function SearchForm({ onSearch, isLoading, initialMode = 'writer'
               type="text"
               value={value}
               onChange={(e) => setValue(e.target.value)}
-              placeholder="Enter your Substack name or URL…"
+              placeholder="Your Substack handle or URL — e.g. stonedape or stonedape.substack.com"
               className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-base py-2"
               disabled={isLoading}
               autoFocus
@@ -99,7 +99,7 @@ export default function SearchForm({ onSearch, isLoading, initialMode = 'writer'
                 type="text"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
-                placeholder="Writer you admire — e.g. Lenny Rachitsky"
+                placeholder="Writer's name or handle — e.g. Lenny Rachitsky or lenny.substack.com"
                 className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm py-1"
                 disabled={isLoading}
                 autoFocus
@@ -130,7 +130,7 @@ export default function SearchForm({ onSearch, isLoading, initialMode = 'writer'
       {/* Context copy / suggestions */}
       {isSelf ? (
         <p className="text-center text-sm text-gray-500 mt-3">
-          Get an honest, structured view of how your newsletter looks from the outside.
+          We&apos;ll fetch your actual posts and about page for an accurate analysis — not a guess.
         </p>
       ) : (
         <div className="flex flex-wrap gap-2 mt-4 justify-center">

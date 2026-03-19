@@ -9,7 +9,7 @@ const client = new Anthropic({
 
 const RESEARCH_SYSTEM_PROMPT = `You are a competitive intelligence researcher specialising in Substack creators. Your job is to research ONE Substack writer and return a structured profile in JSON format.
 
-You will be given a writer's name (or Substack URL/handle). Work from your training knowledge to produce the most accurate and useful profile possible.
+You will be given a writer's name (or Substack URL/handle). When a "VERIFIED SUBSTACK DATA" block is provided, treat it as authoritative ground truth — it is live data fetched directly from Substack's API. Prioritise this data over anything in your training knowledge. Do not contradict it. Use it to anchor every section of the profile. When no verified data is provided, work from your training knowledge.
 
 Return ONLY valid JSON (no markdown, no code fences) matching this exact structure:
 
@@ -56,9 +56,9 @@ Return ONLY valid JSON (no markdown, no code fences) matching this exact structu
 }
 
 Rules for confidenceLevel:
-- "HIGH": you have strong, specific knowledge of this writer — real subscriber counts, specific essays, clear positioning
+- "HIGH": verified live data was provided, OR you have strong specific training knowledge of this writer
 - "MEDIUM": you know who they are but details are limited or potentially outdated
-- "LOW": you have minimal knowledge — be honest in the content sections that this profile is limited
+- "LOW": you have minimal knowledge and no live data was provided — be honest that this profile is limited
 
 Rules for oneLiner:
 - Specific, not generic. Bad: "A writer covering productivity and mindset." Good: "Anne-Laure Le Cunff turned her neuroscience PhD into the most rigorous self-improvement newsletter on the internet."
@@ -124,11 +124,20 @@ function extractJSON(text: string): string {
 
 export async function researchWriter(
   writerName: string,
-  isSelf: boolean = false
+  isSelf: boolean = false,
+  substackData?: string
 ): Promise<WriterProfile> {
   const systemPrompt = isSelf
     ? RESEARCH_SYSTEM_PROMPT + SELF_ANALYSIS_ADDITION
     : RESEARCH_SYSTEM_PROMPT
+
+  const basePrompt = isSelf
+    ? `Analyse my own Substack newsletter: ${writerName}`
+    : `Research the Substack writer: ${writerName}`
+
+  const userContent = substackData
+    ? `${substackData}\n\n---\n\n${basePrompt}`
+    : basePrompt
 
   const message = await client.messages.create({
     model: 'claude-sonnet-4-6',
@@ -138,9 +147,7 @@ export async function researchWriter(
     messages: [
       {
         role: 'user',
-        content: isSelf
-          ? `Analyse my own Substack newsletter: ${writerName}`
-          : `Research the Substack writer: ${writerName}`,
+        content: userContent,
       },
     ],
   })
@@ -160,6 +167,8 @@ export async function researchWriter(
   if (isSelf) {
     profile.isAnalysingSelf = true
   }
+
+  profile.dataSource = substackData ? 'live' : 'training'
 
   // Ensure arrays are initialised
   if (!profile.similarWriters) profile.similarWriters = []

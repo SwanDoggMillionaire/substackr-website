@@ -59,9 +59,17 @@ export default function ProfileCard({ profile, collapsed = false }: ProfileCardP
                 {profile.writerName}
               </h2>
             </div>
-            {profile.confidenceLevel && (
-              <ConfidenceBadge level={profile.confidenceLevel} />
-            )}
+            <div className="flex flex-col items-end gap-1.5">
+              {profile.dataSource === 'live' && (
+                <span className="inline-flex items-center gap-1.5 text-xs font-medium border rounded-full px-2.5 py-1 bg-emerald-50 text-emerald-700 border-emerald-200">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  Live data
+                </span>
+              )}
+              {profile.confidenceLevel && (
+                <ConfidenceBadge level={profile.confidenceLevel} />
+              )}
+            </div>
           </div>
 
           {/* One-liner */}
