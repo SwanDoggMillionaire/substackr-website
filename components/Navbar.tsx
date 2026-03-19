@@ -38,7 +38,7 @@ export default function Navbar() {
             How it works
           </Link>
           <Link
-            href="/research?mode=self"
+            href="/analyse"
             className="text-sm text-gray-600 hover:text-gray-900 transition-colors hidden sm:block"
           >
             Analyse your Substack
