@@ -54,7 +54,7 @@ export default function Hero() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left items-stretch">
 
           {/* Card 1: Essay ideas - free */}
-          <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 flex flex-col">
+          <div className="bg-white rounded-2xl shadow-lg ring-1 ring-brand-orange/20 border border-gray-200 p-6 flex flex-col">
             <div className="flex items-center justify-between mb-1">
               <p className="text-xs font-semibold uppercase tracking-widest text-brand-orange">Get essay ideas</p>
               <span className="text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2.5 py-0.5">Free</span>
