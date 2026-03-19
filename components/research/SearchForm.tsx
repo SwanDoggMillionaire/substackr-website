@@ -92,7 +92,7 @@ export default function SearchForm({ onSearch, isLoading, initialNiche = '' }: S
 
       {/* Suggestions */}
       <div className="flex flex-wrap gap-2 mt-4 justify-center">
-        <span className="text-sm text-gray-400">Try:</span>
+        <span className="text-sm text-gray-500">Not sure who to try? These produce great results:</span>
         {suggested.map((name) => (
           <button
             key={name}
