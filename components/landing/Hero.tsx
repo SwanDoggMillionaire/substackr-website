@@ -93,6 +93,11 @@ export default function Hero() {
                 Get my ideas →
               </button>
             </form>
+            <div className="md:hidden mt-3 text-center">
+              <a href="/analyse" className="text-sm text-gray-500 hover:text-gray-700 transition-colors">
+                Or analyse your own Substack →
+              </a>
+            </div>
           </div>
 
           {/* Card 2: Analyse your Substack - Pro */}
