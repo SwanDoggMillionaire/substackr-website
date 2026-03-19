@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
-import { User, AlertCircle } from 'lucide-react'
+import { User, AlertCircle, FileText, Edit, List } from 'lucide-react'
 import ProfileCard from '@/components/research/ProfileCard'
 import LoadingState from '@/components/research/LoadingState'
 import { WriterProfile } from '@/lib/types'
@@ -115,9 +115,28 @@ function AnalysePageInner() {
             </div>
           </form>
           <p className="text-center text-sm text-gray-500 mt-3">
-            Analysis typically takes 15–20 seconds.
+            Analysis typically takes 15-20 seconds.
           </p>
         </div>
+
+        {/* Idle preview row */}
+        {state === 'idle' && (
+          <div className="w-full max-w-2xl mx-auto mt-4">
+            <div className="grid grid-cols-3 gap-px bg-gray-100 rounded-xl overflow-hidden">
+              {[
+                { icon: FileText, label: '7-section audit', desc: 'Niche, positioning, audience, content patterns, monetisation, and more' },
+                { icon: Edit, label: 'About page tips', desc: 'Specific suggestions to improve how you introduce your newsletter' },
+                { icon: List, label: 'Recent posts reviewed', desc: 'We fetch your last 12 posts and factor them into the analysis' },
+              ].map(({ icon: Icon, label, desc }) => (
+                <div key={label} className="bg-gray-100 py-4 px-5 flex flex-col gap-1.5">
+                  <Icon className="w-4 h-4 text-gray-400" />
+                  <p className="text-sm font-semibold text-gray-700">{label}</p>
+                  <p className="text-xs text-gray-500 leading-relaxed">{desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Loading */}
         {isLoading && <LoadingState phase="researching" writerName={searchedHandle} />}

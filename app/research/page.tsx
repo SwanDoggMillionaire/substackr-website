@@ -8,7 +8,7 @@ import LoadingState from '@/components/research/LoadingState'
 import ProfileCard from '@/components/research/ProfileCard'
 import EssayIdeas from '@/components/research/EssayIdeas'
 import { WriterProfile, EssayIdeasResult } from '@/lib/types'
-import { AlertCircle } from 'lucide-react'
+import { AlertCircle, Lightbulb, Search as SearchIcon, Sparkles } from 'lucide-react'
 
 type PageState = 'idle' | 'researching' | 'generating-ideas' | 'success' | 'error'
 
@@ -121,6 +121,25 @@ function ResearchPageInner() {
           isLoading={isLoading}
           initialNiche={initialNiche}
         />
+
+        {/* Idle preview row */}
+        {state === 'idle' && (
+          <div className="w-full max-w-2xl mx-auto mt-4">
+            <div className="grid grid-cols-3 gap-px bg-gray-100 rounded-xl overflow-hidden">
+              {[
+                { icon: Lightbulb, label: '5 essay ideas', desc: 'Inspired by how they write, shaped for your niche' },
+                { icon: SearchIcon, label: 'Writer profile', desc: 'Niche, positioning, content patterns, and the gap they\'re leaving open' },
+                { icon: Sparkles, label: 'Adapted for you', desc: 'Add your handle for ideas built around your actual posts' },
+              ].map(({ icon: Icon, label, desc }) => (
+                <div key={label} className="bg-gray-100 py-4 px-5 flex flex-col gap-1.5">
+                  <Icon className="w-4 h-4 text-gray-400" />
+                  <p className="text-sm font-semibold text-gray-700">{label}</p>
+                  <p className="text-xs text-gray-500 leading-relaxed">{desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Loading */}
         {isLoading && (
