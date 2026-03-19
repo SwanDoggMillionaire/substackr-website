@@ -47,7 +47,7 @@ export default function Navbar() {
             href="/research"
             className="text-sm font-semibold bg-brand-orange text-white px-4 py-2 rounded-full hover:bg-brand-orange-dark transition-colors"
           >
-            Get ideas
+            Try it free
           </Link>
         </nav>
       </div>

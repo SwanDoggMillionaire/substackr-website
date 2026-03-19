@@ -73,16 +73,19 @@ function AnalysePageInner() {
 
         {/* Page header */}
         <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-full px-3 py-1 mb-4">
+          <div className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-full px-3 py-1 mb-2">
             <span className="text-xs font-medium text-amber-700">Pro feature — free during beta</span>
           </div>
+          {state !== 'success' && (
+            <p className="text-xs text-gray-400 mb-4">No card required. No account needed. Just your handle.</p>
+          )}
           <h1 className="font-display font-extrabold text-4xl sm:text-5xl text-gray-900 mb-3">
-            {state === 'success' ? 'Your Substack Profile' : 'Analyse your Substack'}
+            {state === 'success' ? 'Your Substack Profile' : 'See your newsletter the way your readers do.'}
           </h1>
           <p className="text-gray-500 text-lg max-w-xl mx-auto">
             {state === 'success'
               ? "Here's how your newsletter looks from the outside."
-              : 'Enter your handle for a full strategic analysis — positioning, content patterns, About page tips, and more.'}
+              : 'We fetch your actual posts and about page — not a guess. You get a structured view of your positioning, what content lands, and where you\'re leaving readers cold.'}
           </p>
         </div>
 
@@ -112,7 +115,7 @@ function AnalysePageInner() {
             </div>
           </form>
           <p className="text-center text-sm text-gray-500 mt-3">
-            We fetch your actual posts and about page for an accurate analysis — not a guess.
+            Analysis typically takes 15–20 seconds.
           </p>
         </div>
 

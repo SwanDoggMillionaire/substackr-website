@@ -116,14 +116,14 @@ function FreeExample() {
             </div>
             <div className="absolute inset-0 flex items-center justify-center">
               <span className="text-xs font-medium text-gray-500 bg-white/90 px-3 py-1 rounded-full border border-gray-200">
-                2 more ideas — try it free
+                2 more ideas waiting — run a real search to unlock them
               </span>
             </div>
           </div>
         </div>
       </div>
       <p className="text-center text-sm text-gray-400 mt-6">
-        Run a real search to get your own 5 ideas — free, no account needed.
+        Free, no account needed. <a href="/research" className="text-brand-orange hover:text-brand-orange-dark font-medium transition-colors">Try it on a writer you know →</a>
       </p>
     </div>
   )

@@ -5,19 +5,19 @@ const features = [
     icon: Lightbulb,
     title: 'Essay ideas, not just research',
     description:
-      'After every profile, get five essay ideas inspired by that writer\'s approach — adapted to your niche. Turn research into content, every time you use the tool.',
+      'After every profile, get five essay ideas inspired by how that writer thinks — shaped around your niche, not theirs. Research that ends in a brief, not a bookmark.',
   },
   {
     icon: Search,
     title: 'Full strategic profile',
     description:
-      'Seven sections covering what matters — niche, positioning, audience, monetisation, content patterns, and a strategic summary with the gap they\'re leaving open.',
+      'Seven sections covering what matters — niche, positioning, audience, content patterns, and the gap they\'re not filling. The brief you\'d pay a researcher to write.',
   },
   {
     icon: User,
     title: 'Analyse yourself',
     description:
-      'Enter your own Substack name and get an honest, structured view of how your newsletter looks from the outside. Surface the blind spots you can\'t see from inside.',
+      'Enter your handle. Get an honest, structured view of how your newsletter looks from the outside — the blind spots you can\'t see from inside.',
   },
 ]
 
@@ -27,11 +27,11 @@ export default function Features() {
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-16">
-          <p className="section-label mb-3">What you get</p>
+          <p className="section-label mb-3">What you actually get</p>
           <h2 className="font-display font-extrabold text-4xl text-gray-900">
-            Research that becomes writing.
+            Five ideas you could write this week.
             <br />
-            <span className="text-brand-orange">Not just a report you file away.</span>
+            <span className="text-brand-orange">Based on a writer you already respect.</span>
           </h2>
         </div>
 

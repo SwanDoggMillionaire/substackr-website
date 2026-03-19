@@ -102,7 +102,7 @@ function ResearchPageInner() {
           <h1 className="font-display font-extrabold text-4xl sm:text-5xl text-gray-900 mb-3">
             {state === 'success' && profile
               ? `5 ideas inspired by ${profile.writerName}`
-              : 'Get your essay ideas'}
+              : 'Five essay ideas. Based on a writer you actually admire.'}
           </h1>
           <p className="text-gray-500 text-lg max-w-xl mx-auto">
             {state === 'success'
@@ -111,7 +111,7 @@ function ResearchPageInner() {
                 : searchedUserHandle
                   ? `Personalised for your Substack (@${searchedUserHandle})`
                   : 'Inspired by their approach — adapt for your voice.'
-              : 'Enter a writer you admire. Get five essay ideas in seconds.'}
+              : 'Enter their name. We\'ll analyse how they write — and turn it into ideas you could genuinely publish.'}
           </p>
         </div>
 

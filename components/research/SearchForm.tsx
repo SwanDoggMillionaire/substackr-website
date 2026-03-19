@@ -71,28 +71,34 @@ export default function SearchForm({ onSearch, isLoading, initialNiche = '' }: S
             />
           </div>
           {/* Niche — optional */}
-          <div className="flex items-center px-4 py-3 border-b border-gray-100">
-            <span className="text-gray-300 flex-shrink-0 mr-3 text-lg leading-none">✦</span>
-            <input
-              type="text"
-              value={niche}
-              onChange={(e) => setNiche(e.target.value)}
-              placeholder="Your newsletter niche (optional) — e.g. mindfulness for busy parents"
-              className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm py-1"
-              disabled={isLoading}
-            />
+          <div className="flex items-start px-4 py-3 border-b border-gray-100">
+            <span className="text-gray-300 flex-shrink-0 mr-3 text-lg leading-none mt-1">✦</span>
+            <div className="flex-1 min-w-0">
+              <input
+                type="text"
+                value={niche}
+                onChange={(e) => setNiche(e.target.value)}
+                placeholder="Your newsletter niche (optional) — e.g. mindfulness for busy parents"
+                className="w-full bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm py-1"
+                disabled={isLoading}
+              />
+              <p className="text-xs text-gray-400 mt-0.5">Helps us shape the ideas around your angle, not theirs</p>
+            </div>
           </div>
           {/* User handle — optional, for personalised ideas */}
-          <div className="flex items-center px-4 py-3">
-            <User className="w-4 h-4 text-gray-300 flex-shrink-0 mr-3" />
-            <input
-              type="text"
-              value={userHandle}
-              onChange={(e) => setUserHandle(e.target.value)}
-              placeholder="Your Substack handle (optional) — for personalised ideas"
-              className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm py-1"
-              disabled={isLoading}
-            />
+          <div className="flex items-start px-4 py-3">
+            <User className="w-4 h-4 text-gray-300 flex-shrink-0 mr-3 mt-1.5" />
+            <div className="flex-1 min-w-0">
+              <input
+                type="text"
+                value={userHandle}
+                onChange={(e) => setUserHandle(e.target.value)}
+                placeholder="Your Substack handle (optional) — e.g. yourname.substack.com"
+                className="w-full bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm py-1"
+                disabled={isLoading}
+              />
+              <p className="text-xs text-gray-400 mt-0.5">We&apos;ll pull in your real posts so the ideas fit your newsletter, not a stranger&apos;s</p>
+            </div>
             <button
               type="submit"
               disabled={!canSubmit || isLoading}
