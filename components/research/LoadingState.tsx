@@ -58,7 +58,7 @@ export default function LoadingState({ phase = 'researching', writerName }: Load
       </div>
 
       {isGenerating ? (
-        /* Phase 2 — idea card skeletons */
+        /* Phase 2 - idea card skeletons */
         <div className="bg-white rounded-2xl shadow-md card-orange-top overflow-hidden">
           <div className="px-8 py-5 border-b border-gray-100 flex items-center gap-3">
             <div className="skeleton w-8 h-8 rounded-lg" />
@@ -80,7 +80,7 @@ export default function LoadingState({ phase = 'researching', writerName }: Load
           </div>
         </div>
       ) : (
-        /* Phase 1 — profile card skeleton */
+        /* Phase 1 - profile card skeleton */
         <div className="bg-white rounded-2xl shadow-md card-orange-top overflow-hidden">
           <div className="px-8 py-6 border-b border-gray-100">
             <div className="skeleton h-3 w-24 mb-3" />

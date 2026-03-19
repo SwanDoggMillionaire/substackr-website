@@ -9,7 +9,6 @@ export default function Hero() {
 
   const [writer, setWriter] = useState('')
   const [niche, setNiche] = useState('')
-  const [userHandle, setUserHandle] = useState('')
   const [analyseHandle, setAnalyseHandle] = useState('')
 
   const handleIdeasSubmit = (e: React.FormEvent) => {
@@ -17,7 +16,6 @@ export default function Hero() {
     if (writer.trim().length < 2) return
     const params = new URLSearchParams({ writer: writer.trim() })
     if (niche.trim()) params.set('niche', niche.trim())
-    if (userHandle.trim()) params.set('userHandle', userHandle.trim())
     router.push(`/research?${params.toString()}`)
   }
 
@@ -37,7 +35,7 @@ export default function Hero() {
         {/* Badge */}
         <div className="inline-flex items-center gap-2 bg-brand-orange-muted border border-brand-orange/20 rounded-full px-4 py-1.5 mb-8">
           <span className="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse" />
-          <span className="text-sm font-medium text-brand-orange-dark">Free to use — no sign-up required</span>
+          <span className="text-sm font-medium text-brand-orange-dark">Free to use - no sign-up required</span>
         </div>
 
         {/* Headline */}
@@ -49,20 +47,20 @@ export default function Hero() {
 
         {/* Subheadline */}
         <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
-          Pick a writer you admire — get five ideas inspired by how they think, adapted for your newsletter.
+          Choose a writer you admire. Receive ideas inspired by how they think, adapted for your newsletter.
         </p>
 
         {/* Two product cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left items-stretch">
 
-          {/* Card 1: Essay ideas — free */}
+          {/* Card 1: Essay ideas - free */}
           <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 flex flex-col">
             <div className="flex items-center justify-between mb-1">
               <p className="text-xs font-semibold uppercase tracking-widest text-brand-orange">Get essay ideas</p>
               <span className="text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2.5 py-0.5">Free</span>
             </div>
             <p className="text-sm text-gray-500 mb-4 leading-relaxed">
-              Pick a Substack writer you admire. Get five essay ideas inspired by their approach — adapted for your newsletter, not a copy of theirs.
+              Pick a Substack writer you admire. Get five essay ideas inspired by their approach - adapted for your newsletter, not a copy of theirs.
             </p>
             <form onSubmit={handleIdeasSubmit} className="flex-1 flex flex-col">
               <div className="border border-gray-200 rounded-xl overflow-hidden mb-3">
@@ -72,28 +70,18 @@ export default function Hero() {
                     type="text"
                     value={writer}
                     onChange={(e) => setWriter(e.target.value)}
-                    placeholder="Writer you admire — e.g. lenny.substack.com"
+                    placeholder="Writer you admire - e.g. lenny.substack.com"
                     className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm"
                     autoFocus
                   />
                 </div>
-                <div className="flex items-center px-3 py-2.5 border-b border-gray-100">
+                <div className="flex items-center px-3 py-2.5">
                   <span className="text-gray-300 flex-shrink-0 mr-2.5 text-base leading-none">✦</span>
                   <input
                     type="text"
                     value={niche}
                     onChange={(e) => setNiche(e.target.value)}
-                    placeholder="Your niche (optional) — e.g. mindfulness for parents"
-                    className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm"
-                  />
-                </div>
-                <div className="flex items-center px-3 py-2.5">
-                  <User className="w-4 h-4 text-gray-300 flex-shrink-0 mr-2.5" />
-                  <input
-                    type="text"
-                    value={userHandle}
-                    onChange={(e) => setUserHandle(e.target.value)}
-                    placeholder="Your handle (optional) — for personalised ideas"
+                    placeholder="Your niche (optional) - e.g. mindfulness for parents"
                     className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm"
                   />
                 </div>
@@ -107,7 +95,7 @@ export default function Hero() {
             </form>
           </div>
 
-          {/* Card 2: Analyse your Substack — Pro */}
+          {/* Card 2: Analyse your Substack - Pro */}
           <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 flex flex-col">
             <div className="flex items-center justify-between mb-1">
               <p className="text-xs font-semibold uppercase tracking-widest text-teal-600">Analyse your Substack</p>
@@ -124,13 +112,13 @@ export default function Hero() {
                     type="text"
                     value={analyseHandle}
                     onChange={(e) => setAnalyseHandle(e.target.value)}
-                    placeholder="Your Substack handle or URL — e.g. stonedape.substack.com"
+                    placeholder="Your Substack handle or URL - e.g. stonedape.substack.com"
                     className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm"
                   />
                 </div>
               </div>
               <p className="text-xs text-gray-400 mb-3 text-center leading-relaxed">
-                We fetch your actual posts and about page — not a guess.
+                We fetch your actual posts and about page - not a guess.
               </p>
               <button
                 type="submit"

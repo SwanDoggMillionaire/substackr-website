@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Attempt live Substack data fetch — works when user provides a handle or URL
+    // Attempt live Substack data fetch - works when user provides a handle or URL
     const handle = extractHandle(writerName.trim())
     const substackResult = handle ? await fetchSubstackData(handle) : null
 
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
       substackResult?.contextString ?? undefined
     )
 
-    // Attach live posts to the profile for display (not from Claude — from Substack API directly)
+    // Attach live posts to the profile for display (not from Claude - from Substack API directly)
     if (substackResult?.posts?.length) {
       profile.recentPosts = substackResult.posts
     }

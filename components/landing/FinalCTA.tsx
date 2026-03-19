@@ -5,7 +5,7 @@ export default function FinalCTA() {
     <section className="py-24 bg-surface-dark">
       <div className="max-w-4xl mx-auto px-6 text-center">
         <p className="text-brand-orange font-semibold text-sm uppercase tracking-widest mb-4">
-          Get started — it&apos;s free
+          Get started - it&apos;s free
         </p>
         <h2 className="font-display font-extrabold text-4xl sm:text-5xl text-white mb-6 leading-tight">
           Ready to write something
@@ -13,7 +13,7 @@ export default function FinalCTA() {
           worth reading?
         </h2>
         <p className="text-gray-400 text-lg mb-10 max-w-xl mx-auto">
-          Enter a writer you admire. Tell us your niche. Get five essay ideas in under 30 seconds — free, no account needed.
+          Enter a writer you admire. Tell us your niche. Get five essay ideas in under 30 seconds - free, no account needed.
         </p>
         <Link
           href="/research"

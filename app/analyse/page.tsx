@@ -74,7 +74,7 @@ function AnalysePageInner() {
         {/* Page header */}
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-full px-3 py-1 mb-2">
-            <span className="text-xs font-medium text-amber-700">Pro feature — free during beta</span>
+            <span className="text-xs font-medium text-amber-700">Pro feature - free during beta</span>
           </div>
           {state !== 'success' && (
             <p className="text-xs text-gray-400 mb-4">No card required. No account needed. Just your handle.</p>
@@ -85,7 +85,7 @@ function AnalysePageInner() {
           <p className="text-gray-500 text-lg max-w-xl mx-auto">
             {state === 'success'
               ? "Here's how your newsletter looks from the outside."
-              : 'We fetch your actual posts and about page — not a guess. You get a structured view of your positioning, what content lands, and where you\'re leaving readers cold.'}
+              : 'We fetch your actual posts and about page - not a guess. You get a structured view of your positioning, what content lands, and where you\'re leaving readers cold.'}
           </p>
         </div>
 
@@ -100,7 +100,7 @@ function AnalysePageInner() {
                 type="text"
                 value={handle}
                 onChange={(e) => setHandle(e.target.value)}
-                placeholder="Your Substack handle or URL — e.g. stonedape or stonedape.substack.com"
+                placeholder="Your Substack handle or URL - e.g. stonedape or stonedape.substack.com"
                 className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-base py-2"
                 disabled={isLoading}
                 autoFocus={!initialHandle}

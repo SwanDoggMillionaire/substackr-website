@@ -12,7 +12,7 @@ const exampleIdeas = [
   {
     title: 'The Decision I Almost Made That Would Have Killed My Product',
     coreTension: 'The instinct to follow user requests vs. the discipline to say no to most of them.',
-    whyItWorksForThem: "Lenny's best posts create tension between conventional startup wisdom and what actually worked. He doesn't just share the right answer — he shows the moment of doubt.",
+    whyItWorksForThem: "Lenny's best posts create tension between conventional startup wisdom and what actually worked. He doesn't just share the right answer - he shows the moment of doubt.",
     howToAdaptForYou: "Document a recent decision where you nearly pivoted based on user feedback, then didn't. Walk through your exact reasoning. For solo founders, this authenticity is the product.",
   },
   {
@@ -24,7 +24,7 @@ const exampleIdeas = [
   {
     title: 'The Metrics I Track Every Week (And the One I Stopped Tracking)',
     coreTension: 'What the data says vs. what actually matters for staying motivated solo.',
-    whyItWorksForThem: "Lenny's content works because it's operationally specific — readers leave with something to implement, not just think about.",
+    whyItWorksForThem: "Lenny's content works because it's operationally specific - readers leave with something to implement, not just think about.",
     howToAdaptForYou: 'Show your actual weekly dashboard. Be honest about the vanity metric you deprioritised and why. Building in public means showing the instrument panel, not just the highlights.',
   },
 ]
@@ -38,9 +38,9 @@ const proMockRecentPosts = [
 ]
 
 const proMockAboutTips = [
-  'Your About page leads with what you cover (topics) rather than why a reader should care. Add a one-sentence hook about the transformation you offer — not just the subject matter.',
+  'Your About page leads with what you cover (topics) rather than why a reader should care. Add a one-sentence hook about the transformation you offer - not just the subject matter.',
   "Spell out who this is for. Right now a new visitor can't tell if this is for aspiring founders, developers, or curious observers. Name your reader explicitly.",
-  'Add two "Start here" links to your best posts — give new visitors an immediate sample of your writing before they decide whether to subscribe.',
+  'Add two "Start here" links to your best posts - give new visitors an immediate sample of your writing before they decide whether to subscribe.',
 ]
 
 // ─── Sub-components ─────────────────────────────────────────────────────────────
@@ -116,7 +116,7 @@ function FreeExample() {
             </div>
             <div className="absolute inset-0 flex items-center justify-center">
               <span className="text-xs font-medium text-gray-500 bg-white/90 px-3 py-1 rounded-full border border-gray-200">
-                2 more ideas waiting — run a real search to unlock them
+                2 more ideas waiting - run a real search to unlock them
               </span>
             </div>
           </div>
@@ -153,7 +153,7 @@ function ProExample() {
             </div>
           </div>
           <p className="text-gray-600 italic leading-relaxed text-sm border-l-2 border-brand-orange/40 pl-3">
-            A solo founder documenting the messy, honest reality of building an AI product in public — one mistake at a time.
+            A solo founder documenting the messy, honest reality of building an AI product in public - one mistake at a time.
           </p>
         </div>
 
@@ -161,7 +161,7 @@ function ProExample() {
         <div className="px-8 py-6 border-t border-gray-100">
           <p className="section-label mb-3">Research Profile</p>
           <p className="text-sm text-gray-700 leading-relaxed">
-            Your newsletter sits at the intersection of technical learning and raw founder honesty. You write for people who are tired of polished success stories and want to see how the sausage is actually made. The tone is self-aware, occasionally self-deprecating, and always specific — readers come for the AI angle and stay for the transparency about what&apos;s actually hard.
+            Your newsletter sits at the intersection of technical learning and raw founder honesty. You write for people who are tired of polished success stories and want to see how the sausage is actually made. The tone is self-aware, occasionally self-deprecating, and always specific - readers come for the AI angle and stay for the transparency about what&apos;s actually hard.
           </p>
         </div>
 
@@ -169,7 +169,7 @@ function ProExample() {
         <div className="px-8 py-6 border-t border-gray-100 bg-gray-50/40">
           <p className="section-label mb-3">Audience Resonance</p>
           <p className="text-sm text-gray-700 leading-relaxed">
-            Readers subscribe because they feel seen — they&apos;re also figuring things out without a team, a runway, or a clear playbook. The &quot;I don&apos;t have this figured out either&quot; framing builds unusual loyalty. What keeps people subscribed is the combination of practical AI insights with the emotional texture of going solo. You&apos;re not teaching from authority; you&apos;re learning in public, which makes the reader feel like a collaborator rather than a student.
+            Readers subscribe because they feel seen - they&apos;re also figuring things out without a team, a runway, or a clear playbook. The &quot;I don&apos;t have this figured out either&quot; framing builds unusual loyalty. What keeps people subscribed is the combination of practical AI insights with the emotional texture of going solo. You&apos;re not teaching from authority; you&apos;re learning in public, which makes the reader feel like a collaborator rather than a student.
           </p>
         </div>
 
@@ -223,7 +223,7 @@ function ProExample() {
 
       </div>
       <p className="text-center text-sm text-gray-400 mt-6">
-        Analyse your own Substack — free during beta, no account needed.
+        Analyse your own Substack - free during beta, no account needed.
       </p>
     </div>
   )
@@ -258,7 +258,7 @@ export default function ExampleOutput() {
                   : 'text-gray-500 hover:text-gray-700'
               }`}
             >
-              Free — Essay ideas
+              Free - Essay ideas
             </button>
             <button
               onClick={() => setTab('pro')}
@@ -268,7 +268,7 @@ export default function ExampleOutput() {
                   : 'text-gray-500 hover:text-gray-700'
               }`}
             >
-              Pro — Full audit
+              Pro - Full audit
             </button>
           </div>
         </div>

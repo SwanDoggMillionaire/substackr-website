@@ -5,19 +5,19 @@ const features = [
     icon: Lightbulb,
     title: 'Essay ideas, not just research',
     description:
-      'After every profile, get five essay ideas inspired by how that writer thinks — shaped around your niche, not theirs. Research that ends in a brief, not a bookmark.',
+      'After every profile, get five essay ideas inspired by how that writer thinks - shaped around your niche, not theirs. Research that ends in a brief, not a bookmark.',
   },
   {
     icon: Search,
     title: 'Full strategic profile',
     description:
-      'Seven sections covering what matters — niche, positioning, audience, content patterns, and the gap they\'re not filling. The brief you\'d pay a researcher to write.',
+      'Seven sections covering what matters - niche, positioning, audience, content patterns, and the gap they\'re not filling. The brief you\'d pay a researcher to write.',
   },
   {
     icon: User,
     title: 'Analyse yourself',
     description:
-      'Enter your handle. Get an honest, structured view of how your newsletter looks from the outside — the blind spots you can\'t see from inside.',
+      'Enter your handle. Get an honest, structured view of how your newsletter looks from the outside - the blind spots you can\'t see from inside.',
   },
 ]
 

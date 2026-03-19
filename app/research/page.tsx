@@ -110,8 +110,8 @@ function ResearchPageInner() {
                 ? `Adapted for: ${searchedNiche}`
                 : searchedUserHandle
                   ? `Personalised for your Substack (@${searchedUserHandle})`
-                  : 'Inspired by their approach — adapt for your voice.'
-              : 'Enter their name. We\'ll analyse how they write — and turn it into ideas you could genuinely publish.'}
+                  : 'Inspired by their approach - adapt for your voice.'
+              : 'Enter their name. We\'ll analyse how they write - and turn it into ideas you could genuinely publish.'}
           </p>
         </div>
 
@@ -164,7 +164,7 @@ function ResearchPageInner() {
                   <div className="w-2 h-2 rounded-full bg-amber-400 flex-shrink-0 mt-1.5" />
                   <div>
                     <p className="font-semibold text-gray-900 mb-1 text-sm">Couldn&apos;t generate essay ideas</p>
-                    <p className="text-gray-600 text-sm">The research profile loaded successfully — essay idea generation hit an error.</p>
+                    <p className="text-gray-600 text-sm">The research profile loaded successfully - essay idea generation hit an error.</p>
                     <button
                       onClick={() => handleSearch(searchedName, searchedNiche || undefined, searchedUserHandle || undefined)}
                       className="mt-2 text-sm text-brand-orange hover:text-brand-orange-dark font-medium transition-colors"
@@ -176,7 +176,7 @@ function ResearchPageInner() {
               </div>
             )}
 
-            {/* Profile card — topline only (free tier) */}
+            {/* Profile card - topline only (free tier) */}
             <ProfileCard profile={profile} toplineOnly={true} />
           </>
         )}

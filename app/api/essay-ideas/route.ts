@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Fetch the user's own Substack data if a handle was provided
-    // This is distinct from the inspiration writer's data — it describes the USER's newsletter
+    // This is distinct from the inspiration writer's data - it describes the USER's newsletter
     let userData: string | undefined
     if (userHandle && typeof userHandle === 'string') {
       const handle = extractHandle(userHandle.trim())

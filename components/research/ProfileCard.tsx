@@ -26,7 +26,7 @@ const LOCKED_SECTIONS = [
   },
   {
     title: 'Positioning',
-    teaser: 'How they frame their identity — expert vs fellow traveller, aspirational vs personal — and what makes it distinctive.',
+    teaser: 'How they frame their identity - expert vs fellow traveller, aspirational vs personal - and what makes it distinctive.',
   },
   {
     title: 'Monetisation Strategy',
@@ -86,7 +86,7 @@ export default function ProfileCard({ profile, collapsed = false, toplineOnly = 
     <div className="w-full max-w-3xl mx-auto mt-6 animate-slide-up">
       <div className="bg-white rounded-2xl shadow-md card-orange-top overflow-hidden">
 
-        {/* Header — always visible */}
+        {/* Header - always visible */}
         <div className="px-8 py-6 border-b border-gray-100">
           <div className="flex items-start justify-between gap-4 mb-3">
             <div>
@@ -117,7 +117,7 @@ export default function ProfileCard({ profile, collapsed = false, toplineOnly = 
             </p>
           )}
 
-          {/* Niche bullets — shown in header when toplineOnly (that's the free overview) */}
+          {/* Niche bullets - shown in header when toplineOnly (that's the free overview) */}
           {toplineOnly && profile.nicheAndTopicFocus?.bullets && profile.nicheAndTopicFocus.bullets.length > 0 && (
             <div className="flex flex-wrap gap-1.5 mt-3">
               {profile.nicheAndTopicFocus.bullets.map((bullet) => (
@@ -131,7 +131,7 @@ export default function ProfileCard({ profile, collapsed = false, toplineOnly = 
           {/* Low confidence warning */}
           {profile.confidenceLevel === 'LOW' && (
             <div className="mt-3 bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-700">
-              This writer has limited information in Claude&apos;s training data. The profile below is a best-effort analysis — treat it as directional, not definitive.
+              This writer has limited information in Claude&apos;s training data. The profile below is a best-effort analysis - treat it as directional, not definitive.
             </div>
           )}
         </div>
@@ -159,7 +159,7 @@ export default function ProfileCard({ profile, collapsed = false, toplineOnly = 
               </button>
             )}
 
-            {/* Full content — shown when expanded */}
+            {/* Full content - shown when expanded */}
             {!isCollapsed && (
               <>
                 <ProfileSection section={profile.researchProfile} />
@@ -212,7 +212,7 @@ export default function ProfileCard({ profile, collapsed = false, toplineOnly = 
                   </div>
                 )}
 
-                {/* About Me Tips — self-analysis only */}
+                {/* About Me Tips - self-analysis only */}
                 {profile.isAnalysingSelf && profile.aboutMeTips && profile.aboutMeTips.length > 0 && (
                   <div className="px-8 py-6 border-t border-gray-100">
                     <p className="section-label mb-3">Improve your About page</p>
@@ -227,7 +227,7 @@ export default function ProfileCard({ profile, collapsed = false, toplineOnly = 
                   </div>
                 )}
 
-                {/* Recent Posts — self-analysis only */}
+                {/* Recent Posts - self-analysis only */}
                 {profile.isAnalysingSelf && profile.recentPosts && profile.recentPosts.length > 0 && (
                   <div className="px-8 py-6 border-t border-gray-100 bg-gray-50/50">
                     <p className="section-label mb-3">Your recent posts</p>
