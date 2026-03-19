@@ -37,6 +37,4 @@ export interface EssayIdeasResult {
   ideas: EssayIdea[]  // always 5
 }
 
-export type ResearchState = 'idle' | 'loading' | 'success' | 'error'
-export type EssayIdeasState = 'idle' | 'loading' | 'success' | 'error'
 export type ResearchMode = 'writer' | 'self'

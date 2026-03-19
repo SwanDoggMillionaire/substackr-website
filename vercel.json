@@ -2,6 +2,9 @@
   "functions": {
     "app/api/research/route.ts": {
       "maxDuration": 60
+    },
+    "app/api/essay-ideas/route.ts": {
+      "maxDuration": 60
     }
   }
 }

@@ -21,6 +21,7 @@ function ResearchPageInner() {
   const [state, setState] = useState<CombinedState>('idle')
   const [profile, setProfile] = useState<WriterProfile | null>(null)
   const [ideas, setIdeas] = useState<EssayIdeasResult | null>(null)
+  const [ideasFailed, setIdeasFailed] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [searchedName, setSearchedName] = useState<string>('')
   const [searchedNiche, setSearchedNiche] = useState<string>('')
@@ -41,6 +42,7 @@ function ResearchPageInner() {
     setError(null)
     setProfile(null)
     setIdeas(null)
+    setIdeasFailed(false)
     setSearchedName(writerName)
     setSearchedNiche(niche || '')
     setSearchedMode(mode)
@@ -77,8 +79,7 @@ function ResearchPageInner() {
         const ideasData = await ideasRes.json()
 
         if (!ideasRes.ok) {
-          // Ideas failed — still show profile, just skip ideas
-          setIdeas(null)
+          setIdeasFailed(true)
         } else {
           setIdeas(ideasData)
         }
@@ -155,6 +156,25 @@ function ResearchPageInner() {
             {/* Essay ideas first (writer mode only) */}
             {!isSelf && ideas && (
               <EssayIdeas ideas={ideas} />
+            )}
+
+            {/* Ideas failed gracefully */}
+            {!isSelf && ideasFailed && (
+              <div className="w-full max-w-3xl mx-auto mt-12 animate-fade-in">
+                <div className="bg-white border border-amber-100 rounded-2xl p-6 flex gap-4">
+                  <div className="w-2 h-2 rounded-full bg-amber-400 flex-shrink-0 mt-1.5" />
+                  <div>
+                    <p className="font-semibold text-gray-900 mb-1 text-sm">Couldn&apos;t generate essay ideas</p>
+                    <p className="text-gray-600 text-sm">The research profile loaded successfully — essay idea generation hit an error. You can still read the full profile below.</p>
+                    <button
+                      onClick={() => handleSearch(searchedName, searchedMode, searchedNiche || undefined)}
+                      className="mt-2 text-sm text-brand-orange hover:text-brand-orange-dark font-medium transition-colors"
+                    >
+                      Try again →
+                    </button>
+                  </div>
+                </div>
+              </div>
             )}
 
             {/* Profile card — collapsed by default in writer mode */}
