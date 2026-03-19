@@ -108,35 +108,35 @@ export default function Hero() {
           </div>
 
           {/* Card 2: Analyse your Substack — Pro */}
-          <div className="bg-gray-900 rounded-2xl shadow-lg border border-gray-700 p-6 flex flex-col">
+          <div className="bg-teal-800 rounded-2xl shadow-lg border border-teal-700 p-6 flex flex-col">
             <div className="flex items-center justify-between mb-1">
-              <p className="text-xs font-semibold uppercase tracking-widest text-brand-orange">Analyse your Substack</p>
-              <span className="text-xs font-medium text-brand-orange border border-brand-orange/40 rounded-full px-2.5 py-0.5">Pro — free in beta</span>
+              <p className="text-xs font-semibold uppercase tracking-widest text-teal-200">Analyse your Substack</p>
+              <span className="text-xs font-medium text-teal-200 border border-teal-500/60 rounded-full px-2.5 py-0.5">Pro — free in beta</span>
             </div>
-            <p className="text-sm text-gray-400 mb-4 leading-relaxed">
+            <p className="text-sm text-teal-100/80 mb-4 leading-relaxed">
               Get a full strategic audit of your newsletter — positioning, content patterns, About page tips, and your recent posts.
             </p>
             <form onSubmit={handleAnalyseSubmit} className="flex-1 flex flex-col">
-              <div className="border border-gray-700 rounded-xl overflow-hidden mb-3">
+              <div className="border border-teal-600/60 bg-teal-900/40 rounded-xl overflow-hidden mb-3">
                 <div className="flex items-center px-3 py-2.5">
-                  <User className="w-4 h-4 text-gray-500 flex-shrink-0 mr-2.5" />
+                  <User className="w-4 h-4 text-teal-400 flex-shrink-0 mr-2.5" />
                   <input
                     type="text"
                     value={analyseHandle}
                     onChange={(e) => setAnalyseHandle(e.target.value)}
                     placeholder="Your Substack handle or URL — e.g. stonedape.substack.com"
-                    className="flex-1 bg-transparent outline-none text-white placeholder:text-gray-500 text-sm"
+                    className="flex-1 bg-transparent outline-none text-white placeholder:text-teal-400/70 text-sm"
                   />
                 </div>
               </div>
               <button
                 type="submit"
-                className="mt-auto w-full bg-brand-orange text-white font-semibold py-2.5 rounded-xl hover:bg-brand-orange-dark transition-colors text-sm"
+                className="mt-auto w-full bg-teal-500 text-white font-semibold py-2.5 rounded-xl hover:bg-teal-400 transition-colors text-sm"
               >
                 Analyse my Substack →
               </button>
             </form>
-            <p className="text-xs text-gray-500 mt-3 text-center leading-relaxed">
+            <p className="text-xs text-teal-300/60 mt-3 text-center leading-relaxed">
               We fetch your actual posts and about page — not a guess.
             </p>
           </div>
