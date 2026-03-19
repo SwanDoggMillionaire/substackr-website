@@ -88,7 +88,7 @@ function IdeaCard({ idea, index }: { idea: typeof exampleIdeas[0]; index: number
 
 function FreeExample() {
   return (
-    <div className="max-w-3xl mx-auto">
+    <div className="max-w-4xl mx-auto">
       <div className="bg-white rounded-2xl shadow-md card-orange-top overflow-hidden">
         <div className="px-8 py-5 border-b border-gray-100 flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-brand-orange-muted flex items-center justify-center flex-shrink-0">
@@ -131,7 +131,7 @@ function FreeExample() {
 
 function ProExample() {
   return (
-    <div className="max-w-3xl mx-auto">
+    <div className="max-w-4xl mx-auto">
       <div className="bg-white rounded-2xl shadow-md card-orange-top overflow-hidden">
 
         {/* Header */}
