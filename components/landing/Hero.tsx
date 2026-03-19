@@ -18,14 +18,15 @@ export default function Hero() {
 
         {/* Headline */}
         <h1 className="font-display font-extrabold text-5xl sm:text-6xl lg:text-7xl text-gray-900 leading-tight tracking-tight mb-6">
-          Know any Substack writer{' '}
-          <span className="text-brand-orange">inside out.</span>
+          Turn the writers you admire
+          <br />
+          <span className="text-brand-orange">into essay ideas.</span>
         </h1>
 
         {/* Subheadline */}
         <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
-          Substackr gives you a full strategic profile of any Substack writer in seconds.
-          Niche, audience, monetisation, content patterns — all analysed by Claude AI.
+          Research any Substack writer in seconds. Understand what makes them work.
+          Then get five essay ideas — inspired by their approach, adapted for your newsletter.
         </p>
 
         {/* CTAs */}

@@ -26,8 +26,14 @@ export async function POST(request: NextRequest) {
     }
     const message = error instanceof Error ? error.message : String(error)
     console.error('Research API error:', message)
+    const isQuotaError = message.includes('usage limits') || message.includes('quota')
     return Response.json(
-      { error: 'Something went wrong. Please try again in a moment.', code: 'API_ERROR', detail: message },
+      {
+        error: isQuotaError
+          ? 'The AI service is temporarily unavailable. Please try again shortly.'
+          : 'Something went wrong. Please try again in a moment.',
+        code: 'API_ERROR',
+      },
       { status: 500 }
     )
   }

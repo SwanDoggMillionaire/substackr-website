@@ -1,23 +1,23 @@
-import { Search, Zap, BarChart3 } from 'lucide-react'
+import { Lightbulb, Search, User } from 'lucide-react'
 
 const features = [
   {
+    icon: Lightbulb,
+    title: 'Essay ideas, not just research',
+    description:
+      'After every profile, get five essay ideas inspired by that writer\'s approach — adapted to your niche. Turn research into content, every time you use the tool.',
+  },
+  {
     icon: Search,
-    title: 'Full Strategic Profile',
+    title: 'Full strategic profile',
     description:
-      'Seven sections covering everything that matters — niche, positioning, audience, monetisation, content patterns, and a strategic summary with three actionable insights.',
+      'Seven sections covering what matters — niche, positioning, audience, monetisation, content patterns, and a strategic summary with the gap they\'re leaving open.',
   },
   {
-    icon: Zap,
-    title: 'Powered by Claude AI',
+    icon: User,
+    title: 'Analyse yourself',
     description:
-      'Not a keyword scraper. Genuine AI synthesis of publicly available information. The kind of analysis that would take you an hour — done in under 30 seconds.',
-  },
-  {
-    icon: BarChart3,
-    title: 'Learn, Not Just Read',
-    description:
-      'Each profile ends with three specific insights calibrated to help you learn from that writer. What to adopt, what gap they leave open, what makes them distinctive.',
+      'Enter your own Substack name and get an honest, structured view of how your newsletter looks from the outside. Surface the blind spots you can\'t see from inside.',
   },
 ]
 
@@ -27,11 +27,11 @@ export default function Features() {
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-16">
-          <p className="section-label mb-3">How it works</p>
+          <p className="section-label mb-3">What you get</p>
           <h2 className="font-display font-extrabold text-4xl text-gray-900">
-            Research that used to take hours.
+            Research that becomes writing.
             <br />
-            <span className="text-brand-orange">Now takes seconds.</span>
+            <span className="text-brand-orange">Not just a report you file away.</span>
           </h2>
         </div>
 
