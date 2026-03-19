@@ -37,17 +37,24 @@ export default function Hero() {
             Research a writer
             <span className="text-xl">→</span>
           </Link>
-          <a
-            href="#example"
-            className="inline-flex items-center gap-2 text-gray-600 font-medium px-6 py-4 hover:text-gray-900 transition-colors"
+          <Link
+            href="/research?mode=self"
+            className="inline-flex items-center gap-2 bg-white text-gray-800 font-semibold px-8 py-4 rounded-full text-lg border border-gray-200 hover:border-brand-orange/40 hover:text-brand-orange transition-all duration-200 hover:scale-105"
           >
-            See an example
-            <span>↓</span>
-          </a>
+            Analyse yourself
+          </Link>
         </div>
 
+        {/* Secondary link */}
+        <a
+          href="#example"
+          className="inline-flex items-center gap-1.5 text-gray-500 text-sm font-medium mt-6 hover:text-gray-700 transition-colors"
+        >
+          See an example output <span>↓</span>
+        </a>
+
         {/* Social proof */}
-        <p className="mt-12 text-sm text-gray-400">
+        <p className="mt-8 text-sm text-gray-400">
           Try searching for: Ben Thompson · Lenny Rachitsky · Anne-Laure Le Cunff
         </p>
       </div>

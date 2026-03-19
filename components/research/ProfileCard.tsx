@@ -17,17 +17,61 @@ function formatDate(isoString: string) {
   }
 }
 
+function ConfidenceBadge({ level }: { level: 'HIGH' | 'MEDIUM' | 'LOW' }) {
+  const styles = {
+    HIGH: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    MEDIUM: 'bg-amber-50 text-amber-700 border-amber-200',
+    LOW: 'bg-red-50 text-red-600 border-red-200',
+  }
+  const labels = {
+    HIGH: 'High confidence',
+    MEDIUM: 'Medium confidence',
+    LOW: 'Limited data',
+  }
+  return (
+    <span className={`inline-flex items-center gap-1.5 text-xs font-medium border rounded-full px-2.5 py-1 ${styles[level]}`}>
+      <span className={`w-1.5 h-1.5 rounded-full ${level === 'HIGH' ? 'bg-emerald-500' : level === 'MEDIUM' ? 'bg-amber-500' : 'bg-red-400'}`} />
+      {labels[level]}
+    </span>
+  )
+}
+
 export default function ProfileCard({ profile }: ProfileCardProps) {
   return (
     <div className="w-full max-w-3xl mx-auto mt-12 animate-slide-up">
       <div className="bg-white rounded-2xl shadow-md card-orange-top overflow-hidden">
+
         {/* Header */}
         <div className="px-8 py-6 border-b border-gray-100">
-          <p className="section-label mb-1">Writer Profile</p>
-          <h2 className="font-display font-extrabold text-2xl text-gray-900">
-            {profile.writerName}
-          </h2>
-          <p className="text-xs text-gray-400 mt-1">Generated {formatDate(profile.generatedAt)}</p>
+          <div className="flex items-start justify-between gap-4 mb-3">
+            <div>
+              <p className="section-label mb-1">
+                {profile.isAnalysingSelf ? 'Your Substack Profile' : 'Writer Profile'}
+              </p>
+              <h2 className="font-display font-extrabold text-2xl text-gray-900">
+                {profile.writerName}
+              </h2>
+            </div>
+            {profile.confidenceLevel && (
+              <ConfidenceBadge level={profile.confidenceLevel} />
+            )}
+          </div>
+
+          {/* One-liner */}
+          {profile.oneLiner && (
+            <p className="text-gray-600 italic leading-relaxed text-sm border-l-2 border-brand-orange/40 pl-3">
+              {profile.oneLiner}
+            </p>
+          )}
+
+          {/* Low confidence warning */}
+          {profile.confidenceLevel === 'LOW' && (
+            <div className="mt-3 bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-700">
+              This writer has limited information in Claude&apos;s training data. The profile below is a best-effort analysis — treat it as directional, not definitive.
+            </div>
+          )}
+
+          <p className="text-xs text-gray-400 mt-3">Generated {formatDate(profile.generatedAt)}</p>
         </div>
 
         {/* Sections */}
@@ -41,7 +85,7 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
         {/* Strategic Summary — special treatment */}
         <div className="px-8 py-6 bg-brand-orange-muted/40">
           <p className="section-label mb-4">{profile.strategicSummary.title}</p>
-          <div className="space-y-4">
+          <div className="space-y-4 mb-6">
             {profile.strategicSummary.insights.map((insight, i) => (
               <div key={i} className="flex gap-4">
                 <span className="font-display font-extrabold text-3xl text-brand-orange/30 leading-none mt-0.5 flex-shrink-0 w-8">
@@ -51,7 +95,36 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
               </div>
             ))}
           </div>
+
+          {/* The Gap */}
+          {profile.strategicSummary.theGap && (
+            <div className="border-t border-brand-orange/20 pt-4">
+              <p className="text-xs font-semibold uppercase tracking-widest text-brand-orange/70 mb-2">
+                The Gap
+              </p>
+              <p className="text-gray-700 leading-relaxed text-sm">
+                {profile.strategicSummary.theGap}
+              </p>
+            </div>
+          )}
         </div>
+
+        {/* Similar Writers */}
+        {profile.similarWriters && profile.similarWriters.length > 0 && (
+          <div className="px-8 py-5 border-t border-gray-100 bg-gray-50/50">
+            <p className="section-label mb-3">Also worth studying</p>
+            <div className="flex flex-wrap gap-2">
+              {profile.similarWriters.map((name) => (
+                <span
+                  key={name}
+                  className="text-sm text-gray-700 bg-white border border-gray-200 rounded-full px-3 py-1"
+                >
+                  {name}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Disclaimer */}

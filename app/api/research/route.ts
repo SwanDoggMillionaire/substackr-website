@@ -6,7 +6,7 @@ export const maxDuration = 60
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { writerName } = body
+    const { writerName, isSelf } = body
 
     if (!writerName || typeof writerName !== 'string' || writerName.trim().length < 2) {
       return Response.json(
@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const profile = await researchWriter(writerName.trim())
+    const profile = await researchWriter(writerName.trim(), isSelf === true)
     return Response.json(profile)
   } catch (error) {
     if (error instanceof SyntaxError) {
