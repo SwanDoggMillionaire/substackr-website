@@ -10,18 +10,6 @@ interface ProfileCardProps {
   collapsed?: boolean
 }
 
-function formatDate(isoString: string) {
-  try {
-    return new Date(isoString).toLocaleDateString('en-GB', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    })
-  } catch {
-    return 'Today'
-  }
-}
-
 function ConfidenceBadge({ level }: { level: 'HIGH' | 'MEDIUM' | 'LOW' }) {
   const styles = {
     HIGH: 'bg-emerald-50 text-emerald-700 border-emerald-200',
@@ -86,7 +74,6 @@ export default function ProfileCard({ profile, collapsed = false }: ProfileCardP
             </div>
           )}
 
-          <p className="text-xs text-gray-400 mt-3">Generated {formatDate(profile.generatedAt)}</p>
         </div>
 
         {/* Toggle button when collapsed */}

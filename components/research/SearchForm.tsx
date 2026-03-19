@@ -11,13 +11,30 @@ interface SearchFormProps {
   initialNiche?: string
 }
 
-const SUGGESTED = ['Lenny Rachitsky', 'Ben Thompson', 'Anne-Laure Le Cunff']
+const WRITER_POOL = [
+  'Lenny Rachitsky', 'Ben Thompson', 'Anne-Laure Le Cunff',
+  'Heather Cox Richardson', 'Gergely Orosz', 'Packy McCormick',
+  'Noah Smith', 'Byrne Hobart', 'Mario Gabriele',
+  'Kyla Scanlon', 'Ted Gioia', 'Nick Maggiulli',
+  'Freddie deBoer', 'Polina Pompliano', 'Casey Newton',
+  'Nikhil Krishnan', 'Lyn Alden', 'Molly White',
+  'Li Jin', 'Tomas Pueyo', 'Andrew Sullivan',
+  'Gary Marcus', 'Simon Owens', 'Chartr',
+  'Alex Danco', 'Trung Phan', 'Emily Oster',
+  'Matt Levine', 'Kelsey Piper', 'Ramp Capital',
+]
+
+function pickRandom<T>(arr: T[], n: number): T[] {
+  const shuffled = [...arr].sort(() => Math.random() - 0.5)
+  return shuffled.slice(0, n)
+}
 
 export default function SearchForm({ onSearch, isLoading, initialMode = 'writer', initialNiche = '' }: SearchFormProps) {
   const [value, setValue] = useState('')
   const [niche, setNiche] = useState(initialNiche)
   const [userHandle, setUserHandle] = useState('')
   const [mode, setMode] = useState<ResearchMode>(initialMode)
+  const [suggested] = useState(() => pickRandom(WRITER_POOL, 3))
 
   const isSelf = mode === 'self'
 
@@ -159,7 +176,7 @@ export default function SearchForm({ onSearch, isLoading, initialMode = 'writer'
       ) : (
         <div className="flex flex-wrap gap-2 mt-4 justify-center">
           <span className="text-sm text-gray-400">Try:</span>
-          {SUGGESTED.map((name) => (
+          {suggested.map((name) => (
             <button
               key={name}
               onClick={() => handleSuggestion(name)}
