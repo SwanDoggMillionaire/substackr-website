@@ -1,8 +1,13 @@
+'use client'
+
+import { useState } from 'react'
 import { WriterProfile } from '@/lib/types'
 import ProfileSection from './ProfileSection'
+import { ChevronDown, ChevronUp } from 'lucide-react'
 
 interface ProfileCardProps {
   profile: WriterProfile
+  collapsed?: boolean
 }
 
 function formatDate(isoString: string) {
@@ -36,17 +41,19 @@ function ConfidenceBadge({ level }: { level: 'HIGH' | 'MEDIUM' | 'LOW' }) {
   )
 }
 
-export default function ProfileCard({ profile }: ProfileCardProps) {
+export default function ProfileCard({ profile, collapsed = false }: ProfileCardProps) {
+  const [isCollapsed, setIsCollapsed] = useState(collapsed)
+
   return (
-    <div className="w-full max-w-3xl mx-auto mt-12 animate-slide-up">
+    <div className="w-full max-w-3xl mx-auto mt-6 animate-slide-up">
       <div className="bg-white rounded-2xl shadow-md card-orange-top overflow-hidden">
 
-        {/* Header */}
+        {/* Header — always visible */}
         <div className="px-8 py-6 border-b border-gray-100">
           <div className="flex items-start justify-between gap-4 mb-3">
             <div>
               <p className="section-label mb-1">
-                {profile.isAnalysingSelf ? 'Your Substack Profile' : 'Writer Profile'}
+                {profile.isAnalysingSelf ? 'Your Substack Profile' : 'Research Profile'}
               </p>
               <h2 className="font-display font-extrabold text-2xl text-gray-900">
                 {profile.writerName}
@@ -74,56 +81,81 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
           <p className="text-xs text-gray-400 mt-3">Generated {formatDate(profile.generatedAt)}</p>
         </div>
 
-        {/* Sections */}
-        <ProfileSection section={profile.researchProfile} />
-        <ProfileSection section={profile.nicheAndTopicFocus} />
-        <ProfileSection section={profile.audienceResonance} />
-        <ProfileSection section={profile.positioning} />
-        <ProfileSection section={profile.monetisationStrategy} />
-        <ProfileSection section={profile.contentPatterns} />
+        {/* Toggle button when collapsed */}
+        {isCollapsed && (
+          <button
+            onClick={() => setIsCollapsed(false)}
+            className="w-full px-8 py-4 flex items-center justify-center gap-2 text-sm text-gray-500 hover:text-brand-orange hover:bg-brand-orange-muted/20 transition-colors"
+          >
+            <span>See the full research behind these ideas</span>
+            <ChevronDown className="w-4 h-4" />
+          </button>
+        )}
 
-        {/* Strategic Summary — special treatment */}
-        <div className="px-8 py-6 bg-brand-orange-muted/40">
-          <p className="section-label mb-4">{profile.strategicSummary.title}</p>
-          <div className="space-y-4 mb-6">
-            {profile.strategicSummary.insights.map((insight, i) => (
-              <div key={i} className="flex gap-4">
-                <span className="font-display font-extrabold text-3xl text-brand-orange/30 leading-none mt-0.5 flex-shrink-0 w-8">
-                  {i + 1}
-                </span>
-                <p className="text-gray-700 leading-relaxed">{insight}</p>
+        {/* Full content — shown when expanded */}
+        {!isCollapsed && (
+          <>
+            <ProfileSection section={profile.researchProfile} />
+            <ProfileSection section={profile.nicheAndTopicFocus} />
+            <ProfileSection section={profile.audienceResonance} />
+            <ProfileSection section={profile.positioning} />
+            <ProfileSection section={profile.monetisationStrategy} />
+            <ProfileSection section={profile.contentPatterns} />
+
+            {/* Strategic Summary */}
+            <div className="px-8 py-6 bg-brand-orange-muted/40">
+              <p className="section-label mb-4">{profile.strategicSummary.title}</p>
+              <div className="space-y-4 mb-6">
+                {profile.strategicSummary.insights.map((insight, i) => (
+                  <div key={i} className="flex gap-4">
+                    <span className="font-display font-extrabold text-3xl text-brand-orange/30 leading-none mt-0.5 flex-shrink-0 w-8">
+                      {i + 1}
+                    </span>
+                    <p className="text-gray-700 leading-relaxed">{insight}</p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
 
-          {/* The Gap */}
-          {profile.strategicSummary.theGap && (
-            <div className="border-t border-brand-orange/20 pt-4">
-              <p className="text-xs font-semibold uppercase tracking-widest text-brand-orange/70 mb-2">
-                The Gap
-              </p>
-              <p className="text-gray-700 leading-relaxed text-sm">
-                {profile.strategicSummary.theGap}
-              </p>
+              {profile.strategicSummary.theGap && (
+                <div className="border-t border-brand-orange/20 pt-4">
+                  <p className="text-xs font-semibold uppercase tracking-widest text-brand-orange/70 mb-2">
+                    The Gap
+                  </p>
+                  <p className="text-gray-700 leading-relaxed text-sm">
+                    {profile.strategicSummary.theGap}
+                  </p>
+                </div>
+              )}
             </div>
-          )}
-        </div>
 
-        {/* Similar Writers */}
-        {profile.similarWriters && profile.similarWriters.length > 0 && (
-          <div className="px-8 py-5 border-t border-gray-100 bg-gray-50/50">
-            <p className="section-label mb-3">Also worth studying</p>
-            <div className="flex flex-wrap gap-2">
-              {profile.similarWriters.map((name) => (
-                <span
-                  key={name}
-                  className="text-sm text-gray-700 bg-white border border-gray-200 rounded-full px-3 py-1"
-                >
-                  {name}
-                </span>
-              ))}
-            </div>
-          </div>
+            {/* Similar Writers */}
+            {profile.similarWriters && profile.similarWriters.length > 0 && (
+              <div className="px-8 py-5 border-t border-gray-100 bg-gray-50/50">
+                <p className="section-label mb-3">Also worth studying</p>
+                <div className="flex flex-wrap gap-2">
+                  {profile.similarWriters.map((name) => (
+                    <span
+                      key={name}
+                      className="text-sm text-gray-700 bg-white border border-gray-200 rounded-full px-3 py-1"
+                    >
+                      {name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Collapse button */}
+            {collapsed && (
+              <button
+                onClick={() => setIsCollapsed(true)}
+                className="w-full px-8 py-4 flex items-center justify-center gap-2 text-sm text-gray-400 hover:text-gray-600 hover:bg-gray-50 transition-colors border-t border-gray-100"
+              >
+                <span>Collapse</span>
+                <ChevronUp className="w-4 h-4" />
+              </button>
+            )}
+          </>
         )}
       </div>
 

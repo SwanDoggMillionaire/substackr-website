@@ -5,30 +5,38 @@ import { Search, User } from 'lucide-react'
 import { ResearchMode } from '@/lib/types'
 
 interface SearchFormProps {
-  onSearch: (name: string, mode: ResearchMode) => void
+  onSearch: (name: string, mode: ResearchMode, niche?: string) => void
   isLoading: boolean
   initialMode?: ResearchMode
+  initialNiche?: string
 }
 
 const SUGGESTED = ['Lenny Rachitsky', 'Ben Thompson', 'Anne-Laure Le Cunff']
 
-export default function SearchForm({ onSearch, isLoading, initialMode = 'writer' }: SearchFormProps) {
+export default function SearchForm({ onSearch, isLoading, initialMode = 'writer', initialNiche = '' }: SearchFormProps) {
   const [value, setValue] = useState('')
+  const [niche, setNiche] = useState(initialNiche)
   const [mode, setMode] = useState<ResearchMode>(initialMode)
+
+  const isSelf = mode === 'self'
+
+  const canSubmit = isSelf
+    ? value.trim().length >= 2
+    : value.trim().length >= 2 && niche.trim().length >= 3
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (value.trim().length >= 2 && !isLoading) {
-      onSearch(value.trim(), mode)
+    if (canSubmit && !isLoading) {
+      onSearch(value.trim(), mode, isSelf ? undefined : niche.trim())
     }
   }
 
   const handleSuggestion = (name: string) => {
     setValue(name)
-    if (!isLoading) onSearch(name, mode)
+    if (!isLoading && (isSelf || niche.trim().length >= 3)) {
+      onSearch(name, mode, isSelf ? undefined : niche.trim())
+    }
   }
-
-  const isSelf = mode === 'self'
 
   return (
     <div className="w-full max-w-2xl mx-auto">
@@ -58,35 +66,68 @@ export default function SearchForm({ onSearch, isLoading, initialMode = 'writer'
         </button>
       </div>
 
-      <form onSubmit={handleSubmit} className="relative">
-        <div className="flex gap-2 p-2 bg-white rounded-2xl shadow-md border border-gray-200 focus-within:border-brand-orange/40 focus-within:shadow-lg transition-all duration-200">
-          <div className="flex items-center pl-3 text-gray-400">
-            {isSelf ? <User className="w-5 h-5" /> : <Search className="w-5 h-5" />}
+      <form onSubmit={handleSubmit}>
+        {isSelf ? (
+          /* Self mode — single field */
+          <div className="flex gap-2 p-2 bg-white rounded-2xl shadow-md border border-gray-200 focus-within:border-brand-orange/40 focus-within:shadow-lg transition-all duration-200">
+            <div className="flex items-center pl-3 text-gray-400">
+              <User className="w-5 h-5" />
+            </div>
+            <input
+              type="text"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              placeholder="Enter your Substack name or URL…"
+              className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-base py-2"
+              disabled={isLoading}
+              autoFocus
+            />
+            <button
+              type="submit"
+              disabled={value.trim().length < 2 || isLoading}
+              className="bg-brand-orange text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-brand-orange-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed text-sm whitespace-nowrap"
+            >
+              {isLoading ? 'Analysing…' : 'Analyse'}
+            </button>
           </div>
-          <input
-            type="text"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            placeholder={
-              isSelf
-                ? 'Enter your Substack name or URL…'
-                : 'Enter a Substack writer\'s name…'
-            }
-            className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-base py-2"
-            disabled={isLoading}
-            autoFocus
-          />
-          <button
-            type="submit"
-            disabled={value.trim().length < 2 || isLoading}
-            className="bg-brand-orange text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-brand-orange-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed text-sm whitespace-nowrap"
-          >
-            {isLoading ? 'Analysing…' : isSelf ? 'Analyse' : 'Research'}
-          </button>
-        </div>
+        ) : (
+          /* Writer mode — two stacked fields */
+          <div className="bg-white rounded-2xl shadow-md border border-gray-200 focus-within:border-brand-orange/40 focus-within:shadow-lg transition-all duration-200 overflow-hidden">
+            <div className="flex items-center px-4 py-3 border-b border-gray-100">
+              <Search className="w-4 h-4 text-gray-400 flex-shrink-0 mr-3" />
+              <input
+                type="text"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                placeholder="Writer you admire — e.g. Lenny Rachitsky"
+                className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm py-1"
+                disabled={isLoading}
+                autoFocus
+              />
+            </div>
+            <div className="flex items-center px-4 py-3">
+              <span className="text-gray-300 flex-shrink-0 mr-3 text-lg leading-none">✦</span>
+              <input
+                type="text"
+                value={niche}
+                onChange={(e) => setNiche(e.target.value)}
+                placeholder="Your newsletter is about… e.g. productivity for remote workers"
+                className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm py-1"
+                disabled={isLoading}
+              />
+              <button
+                type="submit"
+                disabled={!canSubmit || isLoading}
+                className="ml-3 bg-brand-orange text-white font-semibold px-5 py-2 rounded-xl hover:bg-brand-orange-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed text-sm whitespace-nowrap flex-shrink-0"
+              >
+                {isLoading ? 'Working…' : 'Get ideas →'}
+              </button>
+            </div>
+          </div>
+        )}
       </form>
 
-      {/* Context copy */}
+      {/* Context copy / suggestions */}
       {isSelf ? (
         <p className="text-center text-sm text-gray-500 mt-3">
           Get an honest, structured view of how your newsletter looks from the outside.

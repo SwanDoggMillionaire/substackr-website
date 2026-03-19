@@ -38,10 +38,16 @@ export default function Navbar() {
             How it works
           </Link>
           <Link
+            href="/research?mode=self"
+            className="text-sm text-gray-600 hover:text-gray-900 transition-colors hidden sm:block"
+          >
+            Analyse yourself
+          </Link>
+          <Link
             href="/research"
             className="text-sm font-semibold bg-brand-orange text-white px-4 py-2 rounded-full hover:bg-brand-orange-dark transition-colors"
           >
-            Research a writer
+            Get ideas
           </Link>
         </nav>
       </div>

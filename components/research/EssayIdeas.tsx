@@ -1,11 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { WriterProfile, EssayIdeasResult, EssayIdeasState } from '@/lib/types'
-import { Lightbulb, ChevronDown, ChevronUp, Loader2 } from 'lucide-react'
+import { EssayIdeasResult } from '@/lib/types'
+import { Lightbulb, ChevronDown, ChevronUp } from 'lucide-react'
 
 interface EssayIdeasProps {
-  profile: WriterProfile
+  ideas: EssayIdeasResult
 }
 
 function IdeaCard({ idea, index }: { idea: EssayIdeasResult['ideas'][0]; index: number }) {
@@ -49,45 +49,10 @@ function IdeaCard({ idea, index }: { idea: EssayIdeasResult['ideas'][0]; index: 
   )
 }
 
-export default function EssayIdeas({ profile }: EssayIdeasProps) {
-  const [state, setState] = useState<EssayIdeasState>('idle')
-  const [userNiche, setUserNiche] = useState('')
-  const [result, setResult] = useState<EssayIdeasResult | null>(null)
-  const [error, setError] = useState<string | null>(null)
-
-  const handleGenerate = async () => {
-    if (userNiche.trim().length < 3 || state === 'loading') return
-
-    setState('loading')
-    setError(null)
-
-    try {
-      const res = await fetch('/api/essay-ideas', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ profile, userNiche: userNiche.trim() }),
-      })
-
-      const data = await res.json()
-
-      if (!res.ok) {
-        setError(data.error || 'Something went wrong.')
-        setState('error')
-        return
-      }
-
-      setResult(data)
-      setState('success')
-    } catch {
-      setError('Could not connect. Please try again.')
-      setState('error')
-    }
-  }
-
+export default function EssayIdeas({ ideas }: EssayIdeasProps) {
   return (
-    <div className="w-full max-w-3xl mx-auto mt-6 animate-fade-in">
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-
+    <div className="w-full max-w-3xl mx-auto mt-12 animate-slide-up">
+      <div className="bg-white rounded-2xl shadow-md card-orange-top overflow-hidden">
         {/* Header */}
         <div className="px-8 py-5 border-b border-gray-100 flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-brand-orange-muted flex items-center justify-center flex-shrink-0">
@@ -95,66 +60,20 @@ export default function EssayIdeas({ profile }: EssayIdeasProps) {
           </div>
           <div>
             <p className="font-display font-semibold text-gray-900 text-sm">
-              Essay Ideas inspired by {profile.writerName}
+              Your 5 essay ideas
             </p>
-            <p className="text-xs text-gray-500">Adapted for your newsletter</p>
+            <p className="text-xs text-gray-500">
+              Inspired by {ideas.writerName} · Your niche: <span className="font-medium text-gray-700">{ideas.userNiche}</span>
+            </p>
           </div>
         </div>
 
-        {/* Input or results */}
-        {state === 'idle' || state === 'error' ? (
-          <div className="px-8 py-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              What is your Substack newsletter about?
-            </label>
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={userNiche}
-                onChange={(e) => setUserNiche(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleGenerate()}
-                placeholder="e.g. AI tools for solo founders, personal finance for millennials"
-                className="flex-1 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-none focus:border-brand-orange/40 focus:ring-2 focus:ring-brand-orange/10"
-              />
-              <button
-                onClick={handleGenerate}
-                disabled={userNiche.trim().length < 3}
-                className="bg-brand-orange text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-brand-orange-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed text-sm whitespace-nowrap"
-              >
-                Generate
-              </button>
-            </div>
-            {state === 'error' && error && (
-              <p className="text-sm text-red-500 mt-2">{error}</p>
-            )}
-            <p className="text-xs text-gray-400 mt-2">
-              Claude will generate 5 essay ideas inspired by {profile.writerName}&apos;s approach, adapted to your niche.
-            </p>
-          </div>
-        ) : state === 'loading' ? (
-          <div className="px-8 py-10 flex flex-col items-center gap-3 text-center">
-            <Loader2 className="w-6 h-6 text-brand-orange animate-spin" />
-            <p className="text-sm text-gray-600 font-medium">Generating essay ideas…</p>
-            <p className="text-xs text-gray-400">Analysing {profile.writerName}&apos;s approach and adapting it for your newsletter</p>
-          </div>
-        ) : (
-          <div className="px-8 py-6">
-            <p className="text-xs text-gray-500 mb-4">
-              Based on {profile.writerName}&apos;s approach · Your niche: <span className="font-medium text-gray-700">{result?.userNiche}</span>
-            </p>
-            <div className="space-y-2">
-              {result?.ideas.map((idea, i) => (
-                <IdeaCard key={i} idea={idea} index={i} />
-              ))}
-            </div>
-            <button
-              onClick={() => setState('idle')}
-              className="mt-4 text-sm text-brand-orange hover:text-brand-orange-dark font-medium transition-colors"
-            >
-              ← Regenerate with different niche
-            </button>
-          </div>
-        )}
+        {/* Ideas */}
+        <div className="px-8 py-6 space-y-2">
+          {ideas.ideas.map((idea, i) => (
+            <IdeaCard key={i} idea={idea} index={i} />
+          ))}
+        </div>
       </div>
     </div>
   )

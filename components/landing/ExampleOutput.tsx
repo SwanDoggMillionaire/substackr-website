@@ -1,29 +1,71 @@
-// Static example profile — shows the product before someone uses it
-const exampleProfile = {
-  writerName: 'Lenny Rachitsky',
-  researchProfile: {
-    title: 'Research Profile',
-    content:
-      'Lenny Rachitsky is one of the most prominent product and growth writers on Substack, best known for Lenny\'s Newsletter — a deep-dive resource for product managers, founders, and growth practitioners. A former Airbnb product lead, Lenny writes from genuine practitioner experience, covering frameworks, interviews with top operators, and candid takes on product strategy. He has built one of the largest paid newsletters on Substack.',
+'use client'
+
+import { useState } from 'react'
+import { ChevronDown, ChevronUp, Lightbulb } from 'lucide-react'
+
+const exampleNiche = 'building in public as a solo founder'
+const exampleWriter = 'Lenny Rachitsky'
+
+const exampleIdeas = [
+  {
+    title: 'The Decision I Almost Made That Would Have Killed My Product',
+    coreTension: 'The instinct to follow user requests vs. the discipline to say no to most of them.',
+    whyItWorksForThem: "Lenny's best posts create tension between conventional startup wisdom and what actually worked. He doesn't just share the right answer — he shows the moment of doubt.",
+    howToAdaptForYou: 'Document a recent decision where you nearly pivoted based on user feedback, then didn\'t. Walk through your exact reasoning. For solo founders, this authenticity is the product.',
   },
-  nicheAndTopicFocus: {
-    title: 'Niche & Topic Focus',
-    content: 'Tightly owned product and growth space — very little dilution into adjacent territory.',
-    bullets: ['Product strategy & roadmapping', 'Growth loops and retention', 'Interviews with PMs and founders', 'Career advice for product people'],
+  {
+    title: 'I Interviewed 10 Solo Founders Who Hit €10K MRR. Here\'s What They All Had in Common.',
+    coreTension: 'Individual success stories vs. the repeatable patterns underneath them.',
+    whyItWorksForThem: 'Lenny built his audience by turning one-off interviews into systematic insight. The format signals authority: "I did the research so you don\'t have to."',
+    howToAdaptForYou: 'Interview 5–10 founders in your audience. Keep the questions identical. Publish the patterns. This one piece of content builds credibility and your email list simultaneously.',
   },
-  positioning: {
-    title: 'Positioning',
-    content:
-      'Peer-to-peer expert. Lenny positions himself as a former practitioner who is still in the trenches through his interviews and community — not an academic or consultant. His framing is: "I\'ve done this, here\'s what I learned, here\'s what the best people I know think."',
+  {
+    title: 'The Metrics I Track Every Week (And the One I Stopped Tracking)',
+    coreTension: 'What the data says vs. what actually matters for staying motivated solo.',
+    whyItWorksForThem: "Lenny's content works because it's operationally specific — readers leave with something to implement, not just think about.",
+    howToAdaptForYou: 'Show your actual weekly dashboard. Be honest about the vanity metric you deprioritised and why. Building in public means showing the instrument panel, not just the highlights.',
   },
-  strategicSummary: {
-    title: 'Strategic Summary',
-    insights: [
-      'Adopt his interview format: deep, structured conversations with real practitioners outperform opinion essays for trust-building. The guest\'s credibility compounds your own.',
-      'His weakness is specificity to tech/Silicon Valley — a writer serving a different industry vertical (e.g. e-commerce, media) could own the same format in a less crowded space.',
-      'His paid tier converts because the content is directly useful for career advancement — not just interesting. When evaluating your own premium offer, ask whether it helps subscribers do something, not just know something.',
-    ],
-  },
+]
+
+function IdeaCard({ idea, index }: { idea: typeof exampleIdeas[0]; index: number }) {
+  const [expanded, setExpanded] = useState(index === 0)
+
+  return (
+    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-brand-orange/30 transition-colors">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="w-full text-left px-5 py-4 flex items-start gap-3"
+      >
+        <span className="font-display font-bold text-lg text-brand-orange/40 flex-shrink-0 leading-tight mt-0.5">
+          {index + 1}
+        </span>
+        <div className="flex-1 min-w-0">
+          <p className="font-display font-semibold text-gray-900 leading-snug">{idea.title}</p>
+          <p className="text-sm text-gray-500 mt-1 line-clamp-2">{idea.coreTension}</p>
+        </div>
+        <span className="flex-shrink-0 text-gray-400 mt-1">
+          {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+        </span>
+      </button>
+
+      {expanded && (
+        <div className="px-5 pb-5 border-t border-gray-100 space-y-3">
+          <div className="pt-3">
+            <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-1">Core tension</p>
+            <p className="text-sm text-gray-700 leading-relaxed">{idea.coreTension}</p>
+          </div>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-1">Why it works for them</p>
+            <p className="text-sm text-gray-700 leading-relaxed">{idea.whyItWorksForThem}</p>
+          </div>
+          <div className="bg-brand-orange-muted/50 rounded-lg p-3">
+            <p className="text-xs font-semibold uppercase tracking-widest text-brand-orange mb-1">How to adapt for you</p>
+            <p className="text-sm text-gray-700 leading-relaxed">{idea.howToAdaptForYou}</p>
+          </div>
+        </div>
+      )}
+    </div>
+  )
 }
 
 export default function ExampleOutput() {
@@ -34,71 +76,54 @@ export default function ExampleOutput() {
         <div className="text-center mb-12">
           <p className="section-label mb-3">Example output</p>
           <h2 className="font-display font-extrabold text-4xl text-gray-900 mb-4">
-            This is what you get.
+            This is what you walk away with.
           </h2>
           <p className="text-gray-600 max-w-xl mx-auto">
-            A structured profile that gives you strategic intelligence, not just a description.
+            Writer: <span className="font-medium text-gray-900">{exampleWriter}</span> · Niche: <span className="font-medium text-gray-900">{exampleNiche}</span>
           </p>
         </div>
 
-        {/* Profile card preview */}
+        {/* Essay ideas */}
         <div className="max-w-3xl mx-auto">
           <div className="bg-white rounded-2xl shadow-md card-orange-top overflow-hidden">
             {/* Card header */}
-            <div className="px-8 py-6 border-b border-gray-100">
-              <p className="section-label mb-1">Writer Profile</p>
-              <h3 className="font-display font-extrabold text-2xl text-gray-900">
-                {exampleProfile.writerName}
-              </h3>
+            <div className="px-8 py-5 border-b border-gray-100 flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-brand-orange-muted flex items-center justify-center flex-shrink-0">
+                <Lightbulb className="w-4 h-4 text-brand-orange" />
+              </div>
+              <div>
+                <p className="font-display font-semibold text-gray-900 text-sm">
+                  5 essay ideas inspired by {exampleWriter}
+                </p>
+                <p className="text-xs text-gray-500">Adapted for: {exampleNiche}</p>
+              </div>
             </div>
 
-            {/* Sections */}
-            <div className="divide-y divide-gray-100">
-              {/* Research Profile */}
-              <div className="px-8 py-6">
-                <p className="section-label mb-2">{exampleProfile.researchProfile.title}</p>
-                <p className="text-gray-700 leading-relaxed">{exampleProfile.researchProfile.content}</p>
-              </div>
-
-              {/* Niche */}
-              <div className="px-8 py-6">
-                <p className="section-label mb-2">{exampleProfile.nicheAndTopicFocus.title}</p>
-                <p className="text-gray-700 leading-relaxed mb-3">{exampleProfile.nicheAndTopicFocus.content}</p>
-                <ul className="space-y-1">
-                  {exampleProfile.nicheAndTopicFocus.bullets.map((bullet, i) => (
-                    <li key={i} className="flex items-start gap-2 text-gray-600 text-sm">
-                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-brand-orange flex-shrink-0" />
-                      {bullet}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Positioning */}
-              <div className="px-8 py-6">
-                <p className="section-label mb-2">{exampleProfile.positioning.title}</p>
-                <p className="text-gray-700 leading-relaxed">{exampleProfile.positioning.content}</p>
-              </div>
-
-              {/* Strategic Summary — highlighted */}
-              <div className="px-8 py-6 bg-brand-orange-muted/40">
-                <p className="section-label mb-4">{exampleProfile.strategicSummary.title}</p>
-                <div className="space-y-3">
-                  {exampleProfile.strategicSummary.insights.map((insight, i) => (
-                    <div key={i} className="flex gap-4">
-                      <span className="font-display font-bold text-2xl text-brand-orange/40 leading-none mt-0.5 flex-shrink-0">
-                        {i + 1}
-                      </span>
-                      <p className="text-gray-700 leading-relaxed text-sm">{insight}</p>
-                    </div>
-                  ))}
+            {/* Idea cards */}
+            <div className="px-8 py-6 space-y-2">
+              {exampleIdeas.map((idea, i) => (
+                <IdeaCard key={i} idea={idea} index={i} />
+              ))}
+              {/* Blurred hint at more */}
+              <div className="relative">
+                <div className="bg-white border border-gray-200 rounded-xl px-5 py-4 flex items-start gap-3 opacity-40 blur-sm select-none pointer-events-none">
+                  <span className="font-display font-bold text-lg text-brand-orange/40 flex-shrink-0">4</span>
+                  <div>
+                    <p className="font-display font-semibold text-gray-900 text-sm">Two more ideas waiting…</p>
+                    <p className="text-sm text-gray-500 mt-1">Run a real search to unlock all five.</p>
+                  </div>
+                </div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-xs font-medium text-gray-500 bg-white/90 px-3 py-1 rounded-full border border-gray-200">
+                    2 more ideas — try it free
+                  </span>
                 </div>
               </div>
             </div>
           </div>
 
           <p className="text-center text-sm text-gray-400 mt-6">
-            This is a sample profile. Run a real search to get the full 7-section analysis.
+            Run a real search to get your own 5 ideas — free, no account needed.
           </p>
         </div>
       </div>
