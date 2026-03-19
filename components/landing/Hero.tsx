@@ -7,20 +7,14 @@ import { Search, User } from 'lucide-react'
 export default function Hero() {
   const router = useRouter()
 
-  // Essay ideas form state
   const [writer, setWriter] = useState('')
   const [niche, setNiche] = useState('')
   const [userHandle, setUserHandle] = useState('')
-
-  // Analyse form state
   const [analyseHandle, setAnalyseHandle] = useState('')
-
-  const canSubmitIdeas = writer.trim().length >= 2
-  const canSubmitAnalyse = analyseHandle.trim().length >= 2
 
   const handleIdeasSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!canSubmitIdeas) return
+    if (writer.trim().length < 2) return
     const params = new URLSearchParams({ writer: writer.trim() })
     if (niche.trim()) params.set('niche', niche.trim())
     if (userHandle.trim()) params.set('userHandle', userHandle.trim())
@@ -29,13 +23,12 @@ export default function Hero() {
 
   const handleAnalyseSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!canSubmitAnalyse) return
+    if (analyseHandle.trim().length < 2) return
     router.push(`/analyse?handle=${encodeURIComponent(analyseHandle.trim())}`)
   }
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      {/* Subtle background */}
       <div className="absolute inset-0 bg-gradient-to-b from-white via-surface to-brand-orange-muted/30 pointer-events-none" />
       <div className="absolute top-1/4 -right-24 w-96 h-96 rounded-full bg-brand-orange/5 blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 -left-24 w-80 h-80 rounded-full bg-brand-orange/4 blur-3xl pointer-events-none" />
@@ -60,7 +53,7 @@ export default function Hero() {
         </p>
 
         {/* Two product cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left items-stretch">
 
           {/* Card 1: Essay ideas — free */}
           <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 flex flex-col">
@@ -68,7 +61,7 @@ export default function Hero() {
               <p className="text-xs font-semibold uppercase tracking-widest text-brand-orange">Get essay ideas</p>
               <span className="text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2.5 py-0.5">Free</span>
             </div>
-            <p className="text-sm text-gray-500 mb-5 leading-relaxed">
+            <p className="text-sm text-gray-500 mb-4 leading-relaxed">
               Pick a writer you admire. Get 5 essay ideas inspired by their approach, adapted for your newsletter.
             </p>
             <form onSubmit={handleIdeasSubmit} className="flex-1 flex flex-col">
@@ -107,8 +100,7 @@ export default function Hero() {
               </div>
               <button
                 type="submit"
-                disabled={!canSubmitIdeas}
-                className="w-full bg-brand-orange text-white font-semibold py-2.5 rounded-xl hover:bg-brand-orange-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed text-sm"
+                className="mt-auto w-full bg-brand-orange text-white font-semibold py-2.5 rounded-xl hover:bg-brand-orange-dark transition-colors text-sm"
               >
                 Get ideas →
               </button>
@@ -116,36 +108,35 @@ export default function Hero() {
           </div>
 
           {/* Card 2: Analyse your Substack — Pro */}
-          <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 flex flex-col">
+          <div className="bg-gray-900 rounded-2xl shadow-lg border border-gray-700 p-6 flex flex-col">
             <div className="flex items-center justify-between mb-1">
               <p className="text-xs font-semibold uppercase tracking-widest text-brand-orange">Analyse your Substack</p>
-              <span className="text-xs font-medium text-amber-700 bg-amber-50 border border-amber-200 rounded-full px-2.5 py-0.5">Pro — free in beta</span>
+              <span className="text-xs font-medium text-brand-orange border border-brand-orange/40 rounded-full px-2.5 py-0.5">Pro — free in beta</span>
             </div>
-            <p className="text-sm text-gray-500 mb-5 leading-relaxed">
+            <p className="text-sm text-gray-400 mb-4 leading-relaxed">
               Get a full strategic audit of your newsletter — positioning, content patterns, About page tips, and your recent posts.
             </p>
             <form onSubmit={handleAnalyseSubmit} className="flex-1 flex flex-col">
-              <div className="border border-gray-200 rounded-xl overflow-hidden mb-3">
+              <div className="border border-gray-700 rounded-xl overflow-hidden mb-3">
                 <div className="flex items-center px-3 py-2.5">
-                  <User className="w-4 h-4 text-gray-400 flex-shrink-0 mr-2.5" />
+                  <User className="w-4 h-4 text-gray-500 flex-shrink-0 mr-2.5" />
                   <input
                     type="text"
                     value={analyseHandle}
                     onChange={(e) => setAnalyseHandle(e.target.value)}
                     placeholder="Your Substack handle or URL — e.g. stonedape.substack.com"
-                    className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm"
+                    className="flex-1 bg-transparent outline-none text-white placeholder:text-gray-500 text-sm"
                   />
                 </div>
               </div>
               <button
                 type="submit"
-                disabled={!canSubmitAnalyse}
-                className="w-full bg-brand-orange text-white font-semibold py-2.5 rounded-xl hover:bg-brand-orange-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed text-sm"
+                className="mt-auto w-full bg-brand-orange text-white font-semibold py-2.5 rounded-xl hover:bg-brand-orange-dark transition-colors text-sm"
               >
                 Analyse my Substack →
               </button>
             </form>
-            <p className="text-xs text-gray-400 mt-3 text-center leading-relaxed">
+            <p className="text-xs text-gray-500 mt-3 text-center leading-relaxed">
               We fetch your actual posts and about page — not a guess.
             </p>
           </div>
