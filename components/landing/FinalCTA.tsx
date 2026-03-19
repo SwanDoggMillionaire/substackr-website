@@ -13,7 +13,7 @@ export default function FinalCTA() {
           worth reading?
         </h2>
         <p className="text-gray-400 text-lg mb-10 max-w-xl mx-auto">
-          Enter a writer you admire. Tell us your niche. Get five essay ideas in under 30 seconds - free, no account needed.
+          Free. No account needed. Results in under 30 seconds.
         </p>
         <Link
           href="/research"
