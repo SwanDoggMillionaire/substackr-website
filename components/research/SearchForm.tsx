@@ -53,17 +53,20 @@ export default function SearchForm({ onSearch, isLoading, initialNiche = '' }: S
       <form onSubmit={handleSubmit}>
         <div className="bg-white rounded-2xl shadow-md border border-gray-200 focus-within:border-brand-orange/40 focus-within:shadow-lg transition-all duration-200 overflow-hidden">
           {/* Writer field - required */}
-          <div className="flex items-center px-4 py-3 border-b border-gray-100">
-            <Search className="w-4 h-4 text-gray-400 flex-shrink-0 mr-3" />
-            <input
-              type="text"
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-              placeholder="Writer's name or handle - e.g. Lenny Rachitsky or lenny.substack.com"
-              className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm py-1"
-              disabled={isLoading}
-              autoFocus
-            />
+          <div className="flex items-start px-4 py-3 border-b border-gray-100">
+            <Search className="w-4 h-4 text-gray-400 flex-shrink-0 mr-3 mt-1.5" />
+            <div className="flex-1 min-w-0">
+              <input
+                type="text"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                placeholder="Writer's name or handle - e.g. Lenny Rachitsky or lenny.substack.com"
+                className="w-full bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm py-1"
+                disabled={isLoading}
+                autoFocus
+              />
+              <p className="text-xs text-gray-400 mt-0.5">For best results, add their Substack handle - e.g. lenny.substack.com</p>
+            </div>
           </div>
           {/* Niche - optional */}
           <div className="flex items-start px-4 py-3">
