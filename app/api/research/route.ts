@@ -24,9 +24,10 @@ export async function POST(request: NextRequest) {
         { status: 500 }
       )
     }
-    console.error('Research API error:', error)
+    const message = error instanceof Error ? error.message : String(error)
+    console.error('Research API error:', message)
     return Response.json(
-      { error: 'Something went wrong. Please try again in a moment.', code: 'API_ERROR' },
+      { error: 'Something went wrong. Please try again in a moment.', code: 'API_ERROR', detail: message },
       { status: 500 }
     )
   }
