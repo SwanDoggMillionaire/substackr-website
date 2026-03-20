@@ -84,96 +84,101 @@ function AnalysePageInner() {
       </div>
 
       <div className="pt-10 max-w-6xl mx-auto px-6">
+        <div className="lg:flex lg:gap-10 lg:items-start">
 
-        {/* Input form */}
-        <div className="w-full max-w-2xl mx-auto mb-10">
-          <form onSubmit={handleSubmit}>
-            <div className="flex gap-2 p-2 bg-white rounded-2xl shadow-md border border-gray-200 focus-within:border-brand-orange/40 focus-within:shadow-lg transition-all duration-200">
-              <div className="flex items-center pl-3 text-gray-400">
-                <User className="w-5 h-5" />
-              </div>
-              <input
-                type="text"
-                value={handle}
-                onChange={(e) => setHandle(e.target.value)}
-                placeholder="Your Substack handle or URL - e.g. stonedape or stonedape.substack.com"
-                className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-base py-2"
-                disabled={isLoading}
-                autoFocus={!initialHandle}
-              />
-              <button
-                type="submit"
-                disabled={!canSubmit || isLoading}
-                className="bg-brand-orange text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-brand-orange-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed text-sm whitespace-nowrap"
-              >
-                {isLoading ? 'Analysing…' : 'Analyse'}
-              </button>
-            </div>
-          </form>
-          <p className="text-center text-sm text-gray-500 mt-3">
-            Analysis typically takes 30-60 seconds.
-          </p>
-        </div>
-
-        {/* Idle preview row */}
-        {state === 'idle' && (
-          <div className="w-full max-w-2xl mx-auto mt-4">
-            <div className="grid grid-cols-3 gap-px bg-gray-100 rounded-xl overflow-hidden">
-              {[
-                { icon: FileText, label: '7-section audit', desc: 'Niche, positioning, audience, content patterns, monetisation, and more' },
-                { icon: Edit, label: 'About page tips', desc: 'Specific suggestions to improve how you introduce your newsletter' },
-                { icon: List, label: 'Recent posts reviewed', desc: 'We fetch your last 12 posts and factor them into the analysis' },
-              ].map(({ icon: Icon, label, desc }) => (
-                <div key={label} className="bg-gray-100 py-4 px-5 flex flex-col gap-1.5">
-                  <Icon className="w-4 h-4 text-gray-400" />
-                  <p className="text-sm font-semibold text-gray-700">{label}</p>
-                  <p className="text-xs text-gray-500 leading-relaxed">{desc}</p>
+          {/* Left column — sticky input form */}
+          <div className="lg:w-80 lg:shrink-0 lg:sticky lg:top-24">
+            <form onSubmit={handleSubmit}>
+              <div className="flex gap-2 p-2 bg-white rounded-2xl shadow-md border border-gray-200 focus-within:border-brand-orange/40 focus-within:shadow-lg transition-all duration-200">
+                <div className="flex items-center pl-3 text-gray-400">
+                  <User className="w-5 h-5" />
                 </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Loading */}
-        {isLoading && <LoadingState phase="researching" writerName={searchedHandle} />}
-
-        {/* Error */}
-        {state === 'error' && error && (
-          <div className="max-w-3xl mx-auto mt-12 animate-fade-in">
-            <div className="bg-white border border-red-100 rounded-2xl p-8 flex gap-4">
-              <AlertCircle className="w-6 h-6 text-red-400 flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="font-semibold text-gray-900 mb-1">
-                  Couldn&apos;t analyse &quot;{searchedHandle}&quot;
-                </p>
-                <p className="text-gray-600 text-sm">{error}</p>
+                <input
+                  type="text"
+                  value={handle}
+                  onChange={(e) => setHandle(e.target.value)}
+                  placeholder="Your handle or URL"
+                  className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-base py-2 min-w-0"
+                  disabled={isLoading}
+                  autoFocus={!initialHandle}
+                />
                 <button
-                  onClick={() => analyse(searchedHandle)}
-                  className="mt-3 text-sm text-brand-orange hover:text-brand-orange-dark font-medium transition-colors"
+                  type="submit"
+                  disabled={!canSubmit || isLoading}
+                  className="bg-brand-orange text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-brand-orange-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed text-sm whitespace-nowrap"
                 >
-                  Try again →
+                  {isLoading ? 'Analysing…' : 'Analyse'}
                 </button>
               </div>
-            </div>
+            </form>
+            <p className="text-center text-sm text-gray-500 mt-3">
+              Analysis typically takes 30-60 seconds.
+            </p>
           </div>
-        )}
 
-        {/* Success */}
-        {state === 'success' && profile && (
-          <>
-            <ProfileCard profile={profile} collapsed={false} />
-            <div className="text-center mt-12 mb-4">
-              <a
-                href="https://tally.so/r/D4eEg5"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                How was this? 30-second feedback →
-              </a>
-            </div>
-          </>
-        )}
+          {/* Right column — results area */}
+          <div className="flex-1 min-w-0 mt-6 lg:mt-0">
+
+            {/* Idle preview */}
+            {state === 'idle' && (
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-gray-100 rounded-xl overflow-hidden">
+                {[
+                  { icon: FileText, label: '7-section audit', desc: 'Niche, positioning, audience, content patterns, monetisation, and more' },
+                  { icon: Edit, label: 'About page tips', desc: 'Specific suggestions to improve how you introduce your newsletter' },
+                  { icon: List, label: 'Recent posts reviewed', desc: 'We fetch your last 12 posts and factor them into the analysis' },
+                ].map(({ icon: Icon, label, desc }) => (
+                  <div key={label} className="bg-gray-100 py-4 px-5 flex flex-col gap-1.5">
+                    <Icon className="w-4 h-4 text-gray-400" />
+                    <p className="text-sm font-semibold text-gray-700">{label}</p>
+                    <p className="text-xs text-gray-500 leading-relaxed">{desc}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Loading */}
+            {isLoading && <LoadingState phase="researching" writerName={searchedHandle} />}
+
+            {/* Error */}
+            {state === 'error' && error && (
+              <div className="animate-fade-in">
+                <div className="bg-white border border-red-100 rounded-2xl p-8 flex gap-4">
+                  <AlertCircle className="w-6 h-6 text-red-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-semibold text-gray-900 mb-1">
+                      Couldn&apos;t analyse &quot;{searchedHandle}&quot;
+                    </p>
+                    <p className="text-gray-600 text-sm">{error}</p>
+                    <button
+                      onClick={() => analyse(searchedHandle)}
+                      className="mt-3 text-sm text-brand-orange hover:text-brand-orange-dark font-medium transition-colors"
+                    >
+                      Try again →
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Success */}
+            {state === 'success' && profile && (
+              <>
+                <ProfileCard profile={profile} collapsed={false} />
+                <div className="text-center mt-12 mb-4">
+                  <a
+                    href="https://tally.so/r/D4eEg5"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    How was this? 30-second feedback →
+                  </a>
+                </div>
+              </>
+            )}
+
+          </div>
+        </div>
       </div>
     </div>
   )
