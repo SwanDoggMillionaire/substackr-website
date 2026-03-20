@@ -38,8 +38,8 @@ export default function Navbar() {
             How it works
           </Link>
           <Link
-            href="/analyse"
-            className="text-sm text-gray-600 hover:text-gray-900 transition-colors hidden sm:block"
+            href="/audit"
+            className="text-sm font-semibold bg-white border border-gray-300 text-gray-800 px-4 py-2 rounded-full hover:border-gray-400 transition-colors hidden sm:flex items-center"
           >
             Analyse your Substack
           </Link>
@@ -47,7 +47,7 @@ export default function Navbar() {
             href="/essay-ideas"
             className="text-sm font-semibold bg-brand-orange text-white px-4 py-2 rounded-full hover:bg-brand-orange-dark transition-colors"
           >
-            Try it free
+            Get essay ideas free
           </Link>
         </nav>
       </div>

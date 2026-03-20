@@ -22,7 +22,7 @@ export default function Hero() {
   const handleAnalyseSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (analyseHandle.trim().length < 2) return
-    router.push(`/analyse?handle=${encodeURIComponent(analyseHandle.trim())}`)
+    router.push(`/audit?handle=${encodeURIComponent(analyseHandle.trim())}`)
   }
 
   return (

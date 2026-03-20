@@ -13,7 +13,7 @@ export default function Footer() {
           <Link href="/essay-ideas" className="text-sm text-gray-500 hover:text-brand-orange transition-colors">
             Get Essay Ideas
           </Link>
-          <Link href="/analyse" className="text-sm text-gray-500 hover:text-brand-orange transition-colors">
+          <Link href="/audit" className="text-sm text-gray-500 hover:text-brand-orange transition-colors">
             Analyse Your Substack
           </Link>
         </nav>

@@ -281,7 +281,7 @@ function ProExample() {
 
       </div>
       <p className="text-center text-sm text-gray-400 mt-6">
-        Analyse your own Substack — free during beta, no account needed. <a href="/analyse" className="text-brand-orange hover:text-brand-orange-dark font-medium transition-colors">Try it now →</a>
+        Analyse your own Substack — free during beta, no account needed. <a href="/audit" className="text-brand-orange hover:text-brand-orange-dark font-medium transition-colors">Try it now →</a>
       </p>
     </div>
   )

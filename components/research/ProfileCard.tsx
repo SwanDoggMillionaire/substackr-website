@@ -51,7 +51,7 @@ function LockedSection({ title, teaser }: { title: string; teaser: string }) {
         <div>
           <p className="text-xs font-semibold text-gray-700 mb-1">Substackr Pro</p>
           <p className="text-sm text-gray-500 leading-relaxed mb-3">{teaser}</p>
-          <a href="/analyse" className="text-xs font-semibold text-brand-orange hover:text-brand-orange-dark transition-colors">
+          <a href="/audit" className="text-xs font-semibold text-brand-orange hover:text-brand-orange-dark transition-colors">
             See full analysis →
           </a>
         </div>
