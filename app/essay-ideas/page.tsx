@@ -95,25 +95,22 @@ function ResearchPageInner() {
   const isLoading = state === 'researching' || state === 'generating-ideas'
 
   return (
-    <div className="min-h-screen pt-28 pb-24">
-      <div className="max-w-6xl mx-auto px-6">
-        {/* Page header */}
-        <div className="text-center mb-10">
+    <div className="min-h-screen pb-24">
+
+      {/* Full-width page header */}
+      <div className="w-full bg-orange-50 border-b border-orange-100 pt-24 pb-10 px-6">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="text-xs font-semibold uppercase tracking-widest text-brand-orange mb-2">Free Tool</p>
           <h1 className="font-display font-extrabold text-4xl sm:text-5xl text-gray-900 mb-3">
-            {state === 'success' && profile
-              ? `5 ideas inspired by ${profile.writerName}`
-              : 'Five essay ideas. Based on a writer you actually admire.'}
+            Get Essay Ideas
           </h1>
-          <p className="text-gray-500 text-lg max-w-xl mx-auto">
-            {state === 'success'
-              ? searchedNiche
-                ? `Adapted for: ${searchedNiche}`
-                : searchedUserHandle
-                  ? `Personalised for your Substack (@${searchedUserHandle})`
-                  : 'Inspired by their approach - adapt for your voice.'
-              : 'Enter their name. We\'ll analyse how they write - and turn it into ideas you could genuinely publish.'}
+          <p className="text-gray-600 text-lg leading-relaxed">
+            Pick a writer you admire. Walk away with 5 ideas shaped around your niche.
           </p>
         </div>
+      </div>
+
+      <div className="pt-10 max-w-6xl mx-auto px-6">
 
         {/* Search form */}
         <SearchForm

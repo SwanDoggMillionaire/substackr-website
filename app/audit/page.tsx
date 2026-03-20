@@ -68,26 +68,22 @@ function AnalysePageInner() {
   const isLoading = state === 'loading'
 
   return (
-    <div className="min-h-screen pt-28 pb-24">
-      <div className="max-w-6xl mx-auto px-6">
+    <div className="min-h-screen pb-24">
 
-        {/* Page header */}
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-full px-3 py-1 mb-2">
-            <span className="text-xs font-medium text-amber-700">Pro feature - free during beta</span>
-          </div>
-          {state !== 'success' && (
-            <p className="text-xs text-gray-400 mb-4">No card required. No account needed. Just your handle.</p>
-          )}
-          <h1 className="font-display font-extrabold text-4xl sm:text-5xl text-gray-900 mb-3">
-            {state === 'success' ? 'Your Substack Profile' : 'See your newsletter the way your readers do.'}
+      {/* Full-width page header */}
+      <div className="w-full bg-gray-900 border-b border-gray-800 pt-24 pb-10 px-6">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="text-xs font-semibold uppercase tracking-widest text-brand-orange mb-2">Pro — Free in Beta</p>
+          <h1 className="font-display font-extrabold text-4xl sm:text-5xl text-white mb-3">
+            Audit Your Substack
           </h1>
-          <p className="text-gray-500 text-lg max-w-xl mx-auto">
-            {state === 'success'
-              ? "Here's how your newsletter looks from the outside."
-              : 'We fetch your actual posts and about page - not a guess. You get a structured view of your positioning, what content lands, and where you\'re leaving readers cold.'}
+          <p className="text-gray-400 text-lg leading-relaxed">
+            Enter your handle. See your newsletter the way your readers do.
           </p>
         </div>
+      </div>
+
+      <div className="pt-10 max-w-6xl mx-auto px-6">
 
         {/* Input form */}
         <div className="w-full max-w-2xl mx-auto mb-10">
