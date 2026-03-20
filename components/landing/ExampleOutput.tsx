@@ -31,16 +31,49 @@ const exampleIdeas = [
 
 // ─── Pro tab data ──────────────────────────────────────────────────────────────
 
+const proMockNewsletter = {
+  name: 'The Curious Creator',
+  handle: 'curiouscreator.substack.com',
+  oneLiner: 'An essay newsletter for people who think carefully, create seriously, and still have more questions than answers.',
+}
+
+const proMockResearchProfile = `The Curious Creator is built around a central conviction: the most interesting creative work happens in the gap between what you know and what you're still figuring out. The writing is essay-driven and intellectually honest — each post traces a real thought process rather than delivering a pre-packaged conclusion. The newsletter occupies the space between personal development and creative practice, but it sidesteps the generic productivity framing that saturates that category. What distinguishes it is the willingness to sit with open questions and bring the reader along for the thinking, not just the answer.`
+
+const proMockNicheBullets = [
+  'The psychology of creative curiosity — why some people keep asking questions and others stop',
+  'Creative identity and the tension between producing work and developing as a thinker',
+  'Learning in public: the case for documenting your process before you have the answers',
+  'The intersection of craft, attention, and original thought in a distracted world',
+]
+
+const proMockAudienceResonance = `Your likely reader is someone who has a professional identity but suspects there is a more interesting version of themselves underneath it. They read widely, think carefully, and feel a vague guilt that they have not yet turned that into something. They are not beginners looking for permission — they are people looking for a framework that matches how they actually think. The "curious" framing resonates because it describes how they see themselves, not just what they are interested in. Your tone — unhurried, precise, genuinely exploratory — is the product, not merely the delivery mechanism.`
+
+const proMockStrategicSummary = [
+  {
+    number: 1,
+    insight: 'Your strongest single asset is the quality of your questions. Most newsletters give readers answers; you give them better questions to carry around. This is a distinctive editorial position that few writers claim explicitly — naming it directly in your About page and post headers would make the value proposition immediately legible to first-time visitors.',
+  },
+  {
+    number: 2,
+    insight: 'The biggest growth lever right now is a consistent publishing cadence, not more polish. Readers of exploratory newsletters forgive imperfect essays; they do not forgive inconsistency, because it breaks the habit loop that makes a newsletter feel essential. Even a fortnightly cadence published like clockwork will compound faster than brilliant but sporadic posts.',
+  },
+  {
+    number: 3,
+    insight: 'You have the ingredients for a signature series but have not assembled them yet. Several posts circle the same territory — the relationship between curiosity and creative output — but they live as standalone pieces. Tying them into a named series would give new subscribers a reason to go deep into your archive immediately, rather than reading the latest issue and moving on.',
+  },
+]
+
 const proMockRecentPosts = [
-  { title: 'I shipped my first AI feature using only prompts. Here\'s what broke.', audience: 'free', wordcount: 1240 },
-  { title: 'The moment I stopped pretending I had a plan', audience: 'paid', wordcount: 890 },
-  { title: 'What 6 months of building in public actually taught me', audience: 'free', wordcount: 1580 },
+  { title: 'What curiosity actually feels like (vs. what we say it feels like)', audience: 'free', views: 4150 },
+  { title: 'Why most creative advice makes you worse, not better', audience: 'free', views: 3240 },
+  { title: 'The question I keep asking that I still cannot answer', audience: 'free', views: 2810 },
+  { title: 'On finishing things you no longer believe in', audience: 'paid', views: 1920 },
 ]
 
 const proMockAboutTips = [
-  'Your About page leads with what you cover (topics) rather than why a reader should care. Add a one-sentence hook about the transformation you offer - not just the subject matter.',
-  "Spell out who this is for. Right now a new visitor can't tell if this is for aspiring founders, developers, or curious observers. Name your reader explicitly.",
-  'Add two "Start here" links to your best posts - give new visitors an immediate sample of your writing before they decide whether to subscribe.',
+  'Your About page describes what you write about but not what changes for the reader. Add one sentence that completes: "Read this if you want to…" — it forces you to name the transformation, not just the topic.',
+  'The newsletter name is strong but the tagline underneath it is not doing work. "Exploring ideas at the edge of creativity and learning" describes half the newsletters on Substack. Replace it with something only you could say — something that names your specific angle.',
+  'Pin your two best posts at the top of the About page. New subscribers decide in under 60 seconds — surface your strongest work immediately rather than making them scroll a chronological archive.',
 ]
 
 // ─── Sub-components ─────────────────────────────────────────────────────────────
@@ -139,7 +172,8 @@ function ProExample() {
           <div className="flex items-start justify-between gap-4 mb-3">
             <div>
               <p className="section-label mb-1">Your Substack Profile</p>
-              <h3 className="font-display font-extrabold text-2xl text-gray-900">Your Newsletter</h3>
+              <h3 className="font-display font-extrabold text-2xl text-gray-900">{proMockNewsletter.name}</h3>
+              <p className="text-xs text-gray-400 mt-0.5">{proMockNewsletter.handle}</p>
             </div>
             <div className="flex flex-col items-end gap-1.5">
               <span className="inline-flex items-center gap-1.5 text-xs font-medium border rounded-full px-2.5 py-1 bg-emerald-50 text-emerald-700 border-emerald-200">
@@ -153,24 +187,48 @@ function ProExample() {
             </div>
           </div>
           <p className="text-gray-600 italic leading-relaxed text-sm border-l-2 border-brand-orange/40 pl-3">
-            A solo founder documenting the messy, honest reality of building an AI product in public - one mistake at a time.
+            {proMockNewsletter.oneLiner}
           </p>
         </div>
 
-        {/* Research Profile section */}
+        {/* Research Profile */}
         <div className="px-8 py-6 border-t border-gray-100">
           <p className="section-label mb-3">Research Profile</p>
-          <p className="text-sm text-gray-700 leading-relaxed">
-            Your newsletter sits at the intersection of technical learning and raw founder honesty. You write for people who are tired of polished success stories and want to see how the sausage is actually made. The tone is self-aware, occasionally self-deprecating, and always specific - readers come for the AI angle and stay for the transparency about what&apos;s actually hard.
-          </p>
+          <p className="text-sm text-gray-700 leading-relaxed">{proMockResearchProfile}</p>
         </div>
 
-        {/* Audience Resonance section */}
+        {/* Niche & Topic Focus */}
         <div className="px-8 py-6 border-t border-gray-100 bg-gray-50/40">
+          <p className="section-label mb-3">Niche &amp; Topic Focus</p>
+          <ul className="space-y-2.5">
+            {proMockNicheBullets.map((bullet, i) => (
+              <li key={i} className="flex gap-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-brand-orange flex-shrink-0 mt-1.5" />
+                <p className="text-sm text-gray-700 leading-relaxed">{bullet}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Audience Resonance */}
+        <div className="px-8 py-6 border-t border-gray-100">
           <p className="section-label mb-3">Audience Resonance</p>
-          <p className="text-sm text-gray-700 leading-relaxed">
-            Readers subscribe because they feel seen - they&apos;re also figuring things out without a team, a runway, or a clear playbook. The &quot;I don&apos;t have this figured out either&quot; framing builds unusual loyalty. What keeps people subscribed is the combination of practical AI insights with the emotional texture of going solo. You&apos;re not teaching from authority; you&apos;re learning in public, which makes the reader feel like a collaborator rather than a student.
-          </p>
+          <p className="text-sm text-gray-700 leading-relaxed">{proMockAudienceResonance}</p>
+        </div>
+
+        {/* Strategic Summary */}
+        <div className="px-8 py-6 border-t border-gray-100 bg-gray-50/40">
+          <p className="section-label mb-4">Strategic Summary</p>
+          <ol className="space-y-5">
+            {proMockStrategicSummary.map((item) => (
+              <li key={item.number} className="flex gap-4">
+                <span className="font-display font-extrabold text-xl text-brand-orange/30 flex-shrink-0 leading-tight w-5">
+                  {item.number}
+                </span>
+                <p className="text-sm text-gray-700 leading-relaxed">{item.insight}</p>
+              </li>
+            ))}
+          </ol>
         </div>
 
         {/* About Me Tips */}
@@ -206,7 +264,7 @@ function ProExample() {
                     }`}>
                       {post.audience === 'paid' ? 'Paid' : 'Free'}
                     </span>
-                    <span className="text-xs text-gray-400 flex-shrink-0">{post.wordcount.toLocaleString()} words</span>
+                    <span className="text-xs text-gray-400 flex-shrink-0">{post.views.toLocaleString()} views</span>
                   </div>
                 </div>
               </li>
@@ -214,16 +272,16 @@ function ProExample() {
           </ol>
         </div>
 
-        {/* Footer: more sections teaser */}
+        {/* Footer: remaining sections teaser */}
         <div className="px-8 py-4 border-t border-gray-100 bg-brand-orange-muted/20">
           <p className="text-xs text-gray-500 text-center">
-            Plus: Niche & Topic Focus · Positioning · Monetisation Strategy · Content Patterns · Strategic Summary
+            Plus: Positioning · Monetisation Strategy · Content Patterns · Similar Writers
           </p>
         </div>
 
       </div>
       <p className="text-center text-sm text-gray-400 mt-6">
-        Analyse your own Substack - free during beta, no account needed.
+        Analyse your own Substack — free during beta, no account needed. <a href="/analyse" className="text-brand-orange hover:text-brand-orange-dark font-medium transition-colors">Try it now →</a>
       </p>
     </div>
   )

@@ -13,7 +13,7 @@ export default function FinalCTA() {
           worth reading?
         </h2>
         <p className="text-gray-400 text-lg mb-10 max-w-xl mx-auto">
-          Free. No account needed. Results in under 30 seconds.
+          Free. No account needed. Results in under 60 seconds.
         </p>
         <Link
           href="/research"

@@ -47,7 +47,7 @@ export default function Hero() {
 
         {/* Subheadline */}
         <p className="text-lg text-gray-600 mx-auto mb-6 leading-relaxed">
-          Choose a writer you admire. Receive ideas inspired by how they think, adapted for your newsletter.
+          Research writers you admire. Audit your own newsletter. Free - no sign-up required.
         </p>
 
         {/* Stacked product cards */}

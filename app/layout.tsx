@@ -19,13 +19,13 @@ const jakarta = Plus_Jakarta_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'Substackr - Turn the writers you admire into essay ideas',
+  title: 'Substackr - Essay Ideas & Newsletter Audit for Substack Writers',
   description:
-    'Enter a writer you admire and your newsletter niche. Get 5 essay ideas - inspired by their approach, adapted for your voice. Free, no sign-up required.',
+    'Research any Substack writer in seconds. Audit your own newsletter with live data. Free, no sign-up required.',
   openGraph: {
-    title: 'Substackr - Turn the writers you admire into essay ideas',
+    title: 'Substackr - Essay Ideas & Newsletter Audit for Substack Writers',
     description:
-      'Enter a writer you admire and your newsletter niche. Get 5 essay ideas - inspired by their approach, adapted for your voice. Free, no sign-up required.',
+      'Research any Substack writer in seconds. Audit your own newsletter with live data. Free, no sign-up required.',
     type: 'website',
   },
 }

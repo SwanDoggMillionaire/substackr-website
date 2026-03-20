@@ -1,6 +1,7 @@
 import Hero from '@/components/landing/Hero'
 import Features from '@/components/landing/Features'
 import ExampleOutput from '@/components/landing/ExampleOutput'
+import FAQ from '@/components/landing/FAQ'
 import FinalCTA from '@/components/landing/FinalCTA'
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
       <Hero />
       <Features />
       <ExampleOutput />
+      <FAQ />
       <FinalCTA />
     </>
   )

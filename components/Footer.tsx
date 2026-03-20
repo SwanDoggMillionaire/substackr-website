@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export default function Footer() {
   return (
     <footer className="border-t border-gray-100 bg-white">
@@ -7,6 +9,14 @@ export default function Footer() {
           <span className="w-1 h-1 rounded-full bg-brand-orange" />
           <span className="text-sm text-gray-500">AI-powered writer research</span>
         </div>
+        <nav className="flex items-center gap-5">
+          <Link href="/research" className="text-sm text-gray-500 hover:text-brand-orange transition-colors">
+            Get Essay Ideas
+          </Link>
+          <Link href="/analyse" className="text-sm text-gray-500 hover:text-brand-orange transition-colors">
+            Analyse Your Substack
+          </Link>
+        </nav>
         <p className="text-sm text-gray-400">
           Built by{' '}
           <a
