@@ -16,7 +16,7 @@ export default function Hero() {
     if (writer.trim().length < 2) return
     const params = new URLSearchParams({ writer: writer.trim() })
     if (niche.trim()) params.set('niche', niche.trim())
-    router.push(`/research?${params.toString()}`)
+    router.push(`/essay-ideas?${params.toString()}`)
   }
 
   const handleAnalyseSubmit = (e: React.FormEvent) => {

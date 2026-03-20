@@ -10,7 +10,7 @@ export default function Footer() {
           <span className="text-sm text-gray-500">AI-powered writer research</span>
         </div>
         <nav className="flex items-center gap-5">
-          <Link href="/research" className="text-sm text-gray-500 hover:text-brand-orange transition-colors">
+          <Link href="/essay-ideas" className="text-sm text-gray-500 hover:text-brand-orange transition-colors">
             Get Essay Ideas
           </Link>
           <Link href="/analyse" className="text-sm text-gray-500 hover:text-brand-orange transition-colors">

@@ -44,7 +44,7 @@ export default function Navbar() {
             Analyse your Substack
           </Link>
           <Link
-            href="/research"
+            href="/essay-ideas"
             className="text-sm font-semibold bg-brand-orange text-white px-4 py-2 rounded-full hover:bg-brand-orange-dark transition-colors"
           >
             Try it free

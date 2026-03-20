@@ -16,7 +16,7 @@ export default function FinalCTA() {
           Free. No account needed. Results in under 60 seconds.
         </p>
         <Link
-          href="/research"
+          href="/essay-ideas"
           className="inline-flex items-center gap-2 bg-brand-orange text-white font-semibold px-8 py-4 rounded-full text-lg hover:bg-brand-orange-dark transition-all duration-200 hover:scale-105 shadow-lg shadow-brand-orange/30"
         >
           Get my first ideas →

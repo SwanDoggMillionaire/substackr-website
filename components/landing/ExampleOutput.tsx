@@ -156,7 +156,7 @@ function FreeExample() {
         </div>
       </div>
       <p className="text-center text-sm text-gray-400 mt-6">
-        Free, no account needed. <a href="/research" className="text-brand-orange hover:text-brand-orange-dark font-medium transition-colors">Try it on a writer you know →</a>
+        Free, no account needed. <a href="/essay-ideas" className="text-brand-orange hover:text-brand-orange-dark font-medium transition-colors">Try it on a writer you know →</a>
       </p>
     </div>
   )
