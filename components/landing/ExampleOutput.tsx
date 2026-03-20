@@ -140,16 +140,10 @@ function FreeExample() {
           ))}
           {/* Blurred hint */}
           <div className="relative">
-            <div className="bg-white border border-gray-200 rounded-xl px-5 py-4 flex items-start gap-3 opacity-40 blur-sm select-none pointer-events-none">
-              <span className="font-display font-bold text-lg text-brand-orange/40 flex-shrink-0">4</span>
-              <div>
-                <p className="font-display font-semibold text-gray-900 text-sm">Two more ideas waiting…</p>
-                <p className="text-sm text-gray-500 mt-1">Run a real search to unlock all five.</p>
-              </div>
-            </div>
+            <div className="bg-white border border-gray-200 rounded-xl px-5 py-8 opacity-20 blur-sm select-none pointer-events-none" />
             <div className="absolute inset-0 flex items-center justify-center">
               <span className="text-xs font-medium text-gray-500 bg-white/90 px-3 py-1 rounded-full border border-gray-200">
-                2 more ideas waiting - run a real search to unlock them
+                2 more ideas in a real search.
               </span>
             </div>
           </div>

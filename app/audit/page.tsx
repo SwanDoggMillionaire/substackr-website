@@ -132,7 +132,7 @@ function AnalysePageInner() {
                   type="text"
                   value={handle}
                   onChange={(e) => setHandle(e.target.value)}
-                  placeholder="Your handle or URL"
+                  placeholder="e.g. stonedape.substack.com"
                   className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-base py-2 min-w-0"
                   disabled={isLoading}
                   autoFocus={!initialHandle}
