@@ -24,7 +24,7 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/">
-          <Image src="/logo.png" alt="Substackr" width={140} height={32} />
+          <Image src="/logo.png" alt="Substackr" width={180} height={40} />
         </Link>
 
         {/* Nav links */}
