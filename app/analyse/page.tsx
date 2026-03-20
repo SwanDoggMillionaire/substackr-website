@@ -115,7 +115,7 @@ function AnalysePageInner() {
             </div>
           </form>
           <p className="text-center text-sm text-gray-500 mt-3">
-            Analysis typically takes 15-20 seconds.
+            Analysis typically takes 30-60 seconds.
           </p>
         </div>
 
