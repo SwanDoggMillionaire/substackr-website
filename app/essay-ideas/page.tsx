@@ -282,6 +282,19 @@ function ResearchPageInner() {
 
                 <ProfileCard profile={profile} toplineOnly={true} />
 
+                {/* Cross-sell to audit */}
+                <div className="mt-8 bg-orange-50 border border-orange-100 rounded-xl p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    Want to see how your own newsletter stacks up? Run a free audit — no sign-up needed.
+                  </p>
+                  <a
+                    href="/audit"
+                    className="flex-shrink-0 text-sm font-semibold text-brand-orange border border-brand-orange rounded-lg px-4 py-2 hover:bg-brand-orange hover:text-white transition-colors"
+                  >
+                    Audit my newsletter →
+                  </a>
+                </div>
+
                 <div className="text-center mt-12 mb-4">
                   <a
                     href="https://tally.so/r/D4eEg5"

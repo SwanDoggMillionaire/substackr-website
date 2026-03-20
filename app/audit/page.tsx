@@ -200,6 +200,20 @@ function AnalysePageInner() {
             {state === 'success' && profile && (
               <>
                 <ProfileCard profile={profile} collapsed={false} />
+
+                {/* Cross-sell to essay ideas */}
+                <div className="mt-8 bg-gray-50 border border-gray-200 rounded-xl p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    Inspired by another writer? Get 5 essay ideas tailored to your niche.
+                  </p>
+                  <a
+                    href="/essay-ideas"
+                    className="flex-shrink-0 text-sm font-semibold text-gray-700 border border-gray-300 rounded-lg px-4 py-2 hover:border-gray-400 hover:bg-gray-100 transition-colors"
+                  >
+                    Get essay ideas →
+                  </a>
+                </div>
+
                 <div className="text-center mt-12 mb-4">
                   <a
                     href="https://tally.so/r/D4eEg5"
