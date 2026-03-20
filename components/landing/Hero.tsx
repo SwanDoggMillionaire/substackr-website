@@ -98,7 +98,7 @@ export default function Hero() {
           {/* Card 2: Analyse your Substack - Pro */}
           <div className="bg-gray-900 rounded-2xl shadow-lg border border-gray-800 p-8 flex flex-col">
             <div className="flex items-center justify-between mb-1">
-              <p className="text-xs font-semibold uppercase tracking-widest text-white">Analyse your Substack</p>
+              <p className="text-xs font-semibold uppercase tracking-widest text-white">Audit your Substack</p>
               <span className="text-xs font-medium text-white bg-white/10 rounded-full px-3 py-1">Free during beta</span>
             </div>
             <p className="text-sm text-gray-400 mb-4 leading-relaxed">
@@ -124,7 +124,7 @@ export default function Hero() {
                 type="submit"
                 className="w-full bg-white text-gray-900 font-semibold py-2.5 rounded-xl hover:bg-gray-100 transition-colors text-sm"
               >
-                Analyse my Substack →
+                Audit my Substack →
               </button>
             </form>
           </div>

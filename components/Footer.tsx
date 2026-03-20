@@ -14,7 +14,7 @@ export default function Footer() {
             Get Essay Ideas
           </Link>
           <Link href="/audit" className="text-sm text-gray-500 hover:text-brand-orange transition-colors">
-            Analyse Your Substack
+            Audit Your Substack
           </Link>
         </nav>
         <p className="text-sm text-gray-400">

@@ -142,7 +142,7 @@ function AnalysePageInner() {
                   disabled={!canSubmit || isLoading}
                   className="bg-brand-orange text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-brand-orange-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed text-sm whitespace-nowrap"
                 >
-                  {isLoading ? 'Analysing…' : 'Analyse'}
+                  {isLoading ? 'Auditing…' : 'Audit'}
                 </button>
               </div>
             </form>
@@ -182,7 +182,7 @@ function AnalysePageInner() {
                   <AlertCircle className="w-6 h-6 text-red-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-semibold text-gray-900 mb-1">
-                      Couldn&apos;t analyse &quot;{searchedHandle}&quot;
+                      Couldn&apos;t audit &quot;{searchedHandle}&quot;
                     </p>
                     <p className="text-gray-600 text-sm">{error}</p>
                     <button

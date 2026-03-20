@@ -15,7 +15,7 @@ const features = [
   },
   {
     icon: User,
-    title: 'Analyse yourself',
+    title: 'Audit yourself',
     description:
       'See your newsletter the way your readers do. The blind spots you can\'t see from inside - laid out clearly.',
   },

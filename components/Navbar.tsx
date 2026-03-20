@@ -41,7 +41,7 @@ export default function Navbar() {
             href="/audit"
             className="text-sm font-semibold bg-white border border-gray-300 text-gray-800 px-4 py-2 rounded-full hover:border-gray-400 transition-colors hidden sm:flex items-center"
           >
-            Analyse your Substack
+            Audit your Substack
           </Link>
           <Link
             href="/essay-ideas"
