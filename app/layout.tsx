@@ -27,6 +27,11 @@ export const metadata: Metadata = {
     description:
       'Research any Substack writer in seconds. Audit your own newsletter with live data. Free, no sign-up required.',
     type: 'website',
+    images: [{ url: '/og.png', width: 1200, height: 630, alt: 'Substackr' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/og.png'],
   },
 }
 

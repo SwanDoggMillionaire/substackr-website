@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState, useEffect } from 'react'
 
 export default function Navbar() {
@@ -22,11 +23,8 @@ export default function Navbar() {
     >
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <span className="font-display font-bold text-xl text-gray-900 group-hover:text-brand-orange transition-colors">
-            Substackr
-          </span>
-          <span className="w-1.5 h-1.5 rounded-full bg-brand-orange" />
+        <Link href="/">
+          <Image src="/logo.png" alt="Substackr" width={140} height={32} />
         </Link>
 
         {/* Nav links */}
