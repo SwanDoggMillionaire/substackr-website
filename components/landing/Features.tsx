@@ -29,9 +29,9 @@ export default function Features() {
         <div className="text-center mb-16">
           <p className="section-label mb-3">What you actually get</p>
           <h2 className="font-display font-extrabold text-4xl text-gray-900">
-            Five ideas you could write this week.
+            Research writers you admire. Understand your own newsletter.
             <br />
-            <span className="text-brand-orange">Based on a writer you already respect.</span>
+            <span className="text-brand-orange">Both free, both useful this week.</span>
           </h2>
         </div>
 
