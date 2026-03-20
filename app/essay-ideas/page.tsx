@@ -9,6 +9,7 @@ import ProfileCard from '@/components/research/ProfileCard'
 import EssayIdeas from '@/components/research/EssayIdeas'
 import { WriterProfile, EssayIdeasResult } from '@/lib/types'
 import { AlertCircle, Lightbulb, Search as SearchIcon, Sparkles, ChevronDown, ChevronUp } from 'lucide-react'
+import PageTabSwitcher from '@/components/PageTabSwitcher'
 
 // ─── Static example data (idle state preview) ────────────────────────────────
 
@@ -188,6 +189,9 @@ function ResearchPageInner() {
           <p className="text-gray-600 text-lg leading-relaxed">
             Pick a writer you admire. Walk away with 5 ideas shaped around your niche.
           </p>
+        </div>
+        <div className="mt-6">
+          <PageTabSwitcher active="essay-ideas" />
         </div>
       </div>
 

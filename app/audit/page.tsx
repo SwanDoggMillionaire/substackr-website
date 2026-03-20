@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
 import { User, AlertCircle, FileText, Edit, List, ChevronDown, ChevronUp } from 'lucide-react'
+import PageTabSwitcher from '@/components/PageTabSwitcher'
 import ProfileCard from '@/components/research/ProfileCard'
 import LoadingState from '@/components/research/LoadingState'
 import { WriterProfile } from '@/lib/types'
@@ -111,6 +112,9 @@ function AnalysePageInner() {
           <p className="text-gray-400 text-lg leading-relaxed">
             Enter your handle. See your newsletter the way your readers do.
           </p>
+        </div>
+        <div className="mt-6">
+          <PageTabSwitcher active="audit" />
         </div>
       </div>
 
