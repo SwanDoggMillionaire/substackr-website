@@ -13,6 +13,10 @@ import { WriterProfile } from '@/lib/types'
 
 const EXAMPLE_RESEARCH_PROFILE = `Lenny's Newsletter is one of the most operationally specific publications in the product and growth space. Lenny Rachitsky draws on years of experience at Airbnb to analyse how successful consumer and B2B companies actually grow — not in theory, but in practice, with real numbers and named tactics. The newsletter sits at the intersection of product management and growth strategy, and it has built an unusually loyal paid readership by consistently trading in information that practitioners can act on the same day they read it. What distinguishes it from adjacent publications is the combination of primary research (Lenny conducts original surveys and interviews) with Lenny's own hard-won operational experience, which gives even well-known topics a layer of credibility that is difficult to replicate.`
 
+const EXAMPLE_STRATEGIC_INSIGHT = `Your subscribers are not beginners looking for permission — they are practitioners who already have opinions. The most effective thing you can do is write in a way that makes them feel understood rather than taught. This means leading with the problem or tension before you offer the framework, and naming the specific situation your reader is probably in right now rather than the abstract category they belong to.`
+
+const EXAMPLE_ABOUT_TIP = `Your About page opens with what you write about rather than why a reader should care. Flip the order: start with a single sentence that describes the specific situation your ideal reader is in right now, then explain what you offer them. Readers scan About pages in seconds — the first sentence either earns their attention or loses it.`
+
 function AuditIdleExamplePreview() {
   const [open, setOpen] = useState(false)
   return (
@@ -27,13 +31,34 @@ function AuditIdleExamplePreview() {
         </span>
       </button>
       {open && (
-        <div className="px-4 pb-4 pt-3 bg-white">
-          <p className="text-xs text-gray-400 mb-3">Example only — your real results will be based on your actual posts and about page.</p>
-          <div className="bg-white border border-gray-100 rounded-xl p-4">
+        <div className="px-4 pb-4 pt-3 bg-white space-y-3">
+          <p className="text-xs text-gray-400">Example only — your real results will be based on your actual posts and about page.</p>
+
+          {/* Research Profile */}
+          <div className="border border-gray-100 rounded-xl p-4">
             <p className="text-xs font-semibold uppercase tracking-widest text-brand-orange mb-2">Research Profile</p>
             <p className="text-sm text-gray-700 leading-relaxed">{EXAMPLE_RESEARCH_PROFILE}</p>
-            <p className="text-xs text-gray-400 mt-3 italic">Plus 6 more sections in your full audit…</p>
           </div>
+
+          {/* Strategic Summary - one insight */}
+          <div className="border border-gray-100 rounded-xl p-4 bg-brand-orange-muted/30">
+            <p className="text-xs font-semibold uppercase tracking-widest text-brand-orange mb-3">Strategic Summary</p>
+            <div className="flex gap-3">
+              <span className="font-display font-extrabold text-2xl text-brand-orange/30 leading-none flex-shrink-0 w-6">1</span>
+              <p className="text-sm text-gray-700 leading-relaxed">{EXAMPLE_STRATEGIC_INSIGHT}</p>
+            </div>
+          </div>
+
+          {/* About page tip */}
+          <div className="border border-gray-100 rounded-xl p-4">
+            <p className="text-xs font-semibold uppercase tracking-widest text-brand-orange mb-2">Improve your About page</p>
+            <div className="flex gap-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-orange flex-shrink-0 mt-1.5" />
+              <p className="text-sm text-gray-700 leading-relaxed">{EXAMPLE_ABOUT_TIP}</p>
+            </div>
+          </div>
+
+          <p className="text-xs text-gray-400 italic">Plus 5 more sections in your full audit…</p>
         </div>
       )}
     </div>
