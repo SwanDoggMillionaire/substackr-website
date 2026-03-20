@@ -3,10 +3,41 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
-import { User, AlertCircle, FileText, Edit, List } from 'lucide-react'
+import { User, AlertCircle, FileText, Edit, List, ChevronDown, ChevronUp } from 'lucide-react'
 import ProfileCard from '@/components/research/ProfileCard'
 import LoadingState from '@/components/research/LoadingState'
 import { WriterProfile } from '@/lib/types'
+
+// ─── Static example (idle state preview) ─────────────────────────────────────
+
+const EXAMPLE_RESEARCH_PROFILE = `Lenny's Newsletter is one of the most operationally specific publications in the product and growth space. Lenny Rachitsky draws on years of experience at Airbnb to analyse how successful consumer and B2B companies actually grow — not in theory, but in practice, with real numbers and named tactics. The newsletter sits at the intersection of product management and growth strategy, and it has built an unusually loyal paid readership by consistently trading in information that practitioners can act on the same day they read it. What distinguishes it from adjacent publications is the combination of primary research (Lenny conducts original surveys and interviews) with Lenny's own hard-won operational experience, which gives even well-known topics a layer of credibility that is difficult to replicate.`
+
+function AuditIdleExamplePreview() {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className="mt-5 border border-gray-200 rounded-xl overflow-hidden">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 hover:bg-gray-100 transition-colors text-left"
+      >
+        <span className="text-sm font-medium text-gray-600">See an example result</span>
+        <span className="text-gray-400 flex-shrink-0">
+          {open ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+        </span>
+      </button>
+      {open && (
+        <div className="px-4 pb-4 pt-3 bg-white">
+          <p className="text-xs text-gray-400 mb-3">Example only — your real results will be based on your actual posts and about page.</p>
+          <div className="bg-white border border-gray-100 rounded-xl p-4">
+            <p className="text-xs font-semibold uppercase tracking-widest text-brand-orange mb-2">Research Profile</p>
+            <p className="text-sm text-gray-700 leading-relaxed">{EXAMPLE_RESEARCH_PROFILE}</p>
+            <p className="text-xs text-gray-400 mt-3 italic">Plus 6 more sections in your full audit…</p>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
 
 type AnalyseState = 'idle' | 'loading' | 'success' | 'error'
 
@@ -114,6 +145,7 @@ function AnalysePageInner() {
             <p className="text-center text-sm text-gray-500 mt-3">
               Analysis typically takes 30-60 seconds.
             </p>
+            {state === 'idle' && <AuditIdleExamplePreview />}
           </div>
 
           {/* Right column — results area */}

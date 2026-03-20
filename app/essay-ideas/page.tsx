@@ -8,7 +8,88 @@ import LoadingState from '@/components/research/LoadingState'
 import ProfileCard from '@/components/research/ProfileCard'
 import EssayIdeas from '@/components/research/EssayIdeas'
 import { WriterProfile, EssayIdeasResult } from '@/lib/types'
-import { AlertCircle, Lightbulb, Search as SearchIcon, Sparkles } from 'lucide-react'
+import { AlertCircle, Lightbulb, Search as SearchIcon, Sparkles, ChevronDown, ChevronUp } from 'lucide-react'
+
+// ─── Static example data (idle state preview) ────────────────────────────────
+
+const EXAMPLE_IDEAS = [
+  {
+    title: 'The Metric I Stopped Tracking (And What I Watch Instead)',
+    coreTension: 'Vanity metrics feel good but often obscure what is actually driving growth.',
+    whyItWorksForThem: "Lenny's best posts name a common practice and then quietly dismantle it. He doesn't lecture — he shows his own dashboard and explains the switch. Readers trust the specificity.",
+    howToAdaptForYou: 'Pick one metric you have quietly deprioritised and explain the reasoning. For a solo newsletter, this kind of operational honesty is rare and immediately useful to other writers at the same stage.',
+  },
+  {
+    title: 'What I Got Wrong About My Audience in Year One',
+    coreTension: 'The readers you imagine writing for and the readers who actually subscribe are often different people.',
+    whyItWorksForThem: "Lenny regularly revisits early assumptions with new evidence. The format — 'I thought X, it turned out Y' — is easy to read and hard to disagree with because it's grounded in real experience rather than advice.",
+    howToAdaptForYou: "Look at your last 20 subscribers and describe who actually showed up versus who you assumed would. Name the gap. This is the kind of writing that makes readers feel like you understand their situation, not just your own.",
+  },
+]
+
+function ExampleIdeaCard({ idea, index, defaultOpen }: { idea: typeof EXAMPLE_IDEAS[0]; index: number; defaultOpen?: boolean }) {
+  const [expanded, setExpanded] = useState(defaultOpen ?? false)
+  return (
+    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-brand-orange/30 transition-colors">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="w-full text-left px-5 py-4 flex items-start gap-3"
+      >
+        <span className="font-display font-bold text-lg text-brand-orange/40 flex-shrink-0 leading-tight mt-0.5">
+          {index + 1}
+        </span>
+        <div className="flex-1 min-w-0">
+          <p className="font-display font-semibold text-gray-900 leading-snug">{idea.title}</p>
+          <p className="text-sm text-gray-500 mt-1 line-clamp-2">{idea.coreTension}</p>
+        </div>
+        <span className="flex-shrink-0 text-gray-400 mt-1">
+          {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+        </span>
+      </button>
+      {expanded && (
+        <div className="px-5 pb-5 border-t border-gray-100 space-y-3">
+          <div className="pt-3">
+            <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-1">Core tension</p>
+            <p className="text-sm text-gray-700 leading-relaxed">{idea.coreTension}</p>
+          </div>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-1">Why it works for them</p>
+            <p className="text-sm text-gray-700 leading-relaxed">{idea.whyItWorksForThem}</p>
+          </div>
+          <div className="bg-brand-orange-muted/50 rounded-lg p-3">
+            <p className="text-xs font-semibold uppercase tracking-widest text-brand-orange mb-1">How to adapt for you</p>
+            <p className="text-sm text-gray-700 leading-relaxed">{idea.howToAdaptForYou}</p>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function IdleExamplePreview() {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className="mt-5 border border-gray-200 rounded-xl overflow-hidden">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 hover:bg-gray-100 transition-colors text-left"
+      >
+        <span className="text-sm font-medium text-gray-600">See an example result</span>
+        <span className="text-gray-400 flex-shrink-0">
+          {open ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+        </span>
+      </button>
+      {open && (
+        <div className="px-4 pb-4 pt-3 bg-white space-y-2">
+          <p className="text-xs text-gray-400 mb-3">Example only — your real results will be tailored to your niche.</p>
+          {EXAMPLE_IDEAS.map((idea, i) => (
+            <ExampleIdeaCard key={i} idea={idea} index={i} defaultOpen={i === 0} />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
 type PageState = 'idle' | 'researching' | 'generating-ideas' | 'success' | 'error'
 
@@ -120,6 +201,7 @@ function ResearchPageInner() {
               isLoading={isLoading}
               initialNiche={initialNiche}
             />
+            {state === 'idle' && <IdleExamplePreview />}
           </div>
 
           {/* Right column — results area */}
