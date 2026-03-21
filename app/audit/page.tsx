@@ -95,7 +95,11 @@ function AnalysePageInner() {
       const data = await res.json()
 
       if (!res.ok) {
-        setError(data.error || 'Something went wrong. Please try again.')
+        if (res.status === 429) {
+          setError('You\'ve made too many requests in the past hour (limit: 10). Please try again later.')
+        } else {
+          setError(data.error || 'Something went wrong. Please try again.')
+        }
         setState('error')
         return
       }

@@ -138,7 +138,11 @@ function ResearchPageInner() {
       const resData = await resRes.json()
 
       if (!resRes.ok) {
-        setError(resData.error || 'Something went wrong. Please try again.')
+        if (resRes.status === 429) {
+          setError('You\'ve made too many requests in the past hour (limit: 10). Please try again later.')
+        } else {
+          setError(resData.error || 'Something went wrong. Please try again.')
+        }
         setState('error')
         return
       }
