@@ -9,6 +9,7 @@ import ProfileCard from '@/components/research/ProfileCard'
 import EssayIdeas from '@/components/research/EssayIdeas'
 import { WriterProfile, EssayIdeasResult } from '@/lib/types'
 import { AlertCircle, Lightbulb, Search as SearchIcon, Sparkles, ChevronDown, ChevronUp } from 'lucide-react'
+import { track } from '@vercel/analytics'
 import PageTabSwitcher from '@/components/PageTabSwitcher'
 
 // ─── Static example data (idle state preview) ────────────────────────────────
@@ -170,6 +171,13 @@ function ResearchPageInner() {
       } else {
         setIdeas(ideasData)
       }
+
+      track('essay_ideas_generated', {
+        writer_name: writerName,
+        has_niche: Boolean(niche?.trim()),
+        has_user_handle: Boolean(userHandle?.trim()),
+        ideas_succeeded: ideasRes.ok,
+      })
 
       setState('success')
     } catch {

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
 import { User, AlertCircle, FileText, Edit, List, ChevronDown, ChevronUp } from 'lucide-react'
+import { track } from '@vercel/analytics'
 import PageTabSwitcher from '@/components/PageTabSwitcher'
 import ProfileCard from '@/components/research/ProfileCard'
 import LoadingState from '@/components/research/LoadingState'
@@ -103,6 +104,11 @@ function AnalysePageInner() {
         setState('error')
         return
       }
+
+      track('audit_completed', {
+        confidence_level: data.confidenceLevel ?? 'UNKNOWN',
+        data_source: data.dataSource ?? 'unknown',
+      })
 
       setProfile(data)
       setState('success')
