@@ -61,6 +61,7 @@
 - Custom domain: substackr.com live, www.substackr.com redirects there
 - Tally.so feedback form linked from both result pages
 - Per-page SEO metadata (layout.tsx files in each route folder)
+- Vercel Analytics custom events: `essay_ideas_generated` (writer_name, has_niche, has_user_handle, ideas_succeeded) and `audit_completed` (confidence_level, data_source)
 
 **What is not live:**
 - Authentication or user accounts
@@ -195,9 +196,9 @@
 | `layout.tsx` | Root layout — fonts, metadata, Navbar + Footer wrapper |
 | `globals.css` | Tailwind v3 directives, CSS variables, `.skeleton`, `.section-label`, `.card-orange-top` |
 | `page.tsx` | Landing page — server component, assembles 5 landing sections (Hero, Features, ExampleOutput, FAQ, FinalCTA) |
-| `essay-ideas/page.tsx` | Essay ideas — state machine, URL param parsing, auto-chains both API calls, toplineOnly ProfileCard |
+| `essay-ideas/page.tsx` | Essay ideas — state machine, URL param parsing, auto-chains both API calls, toplineOnly ProfileCard. Fires `essay_ideas_generated` analytics event on success. |
 | `essay-ideas/layout.tsx` | Page-level SEO metadata for `/essay-ideas` |
-| `audit/page.tsx` | Self-analysis — single handle input, POST /api/research with isSelf: true, full ProfileCard |
+| `audit/page.tsx` | Self-analysis — single handle input, POST /api/research with isSelf: true, full ProfileCard. Fires `audit_completed` analytics event on success. |
 | `audit/layout.tsx` | Page-level SEO metadata for `/audit` |
 | `api/research/route.ts` | POST — `{writerName, isSelf}` → calls `fetchSubstackData()` + `researchWriter()`, attaches `recentPosts` to profile |
 | `api/essay-ideas/route.ts` | POST — `{profile, userNiche?, userHandle?}` → fetches user's live Substack data if handle provided, calls `generateEssayIdeas()` |
@@ -376,4 +377,4 @@ npm run dev
     └── Stoned-Ape-analysis.md  ← example self-analysis output (reference)
 ```
 
-*Last updated: 20 March 2026*
+*Last updated: 21 March 2026*
