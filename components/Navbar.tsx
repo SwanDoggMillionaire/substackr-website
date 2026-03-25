@@ -44,14 +44,13 @@ export default function Navbar() {
             href="/audit"
             className="text-xs sm:text-sm font-semibold bg-white border border-gray-300 text-gray-800 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full hover:border-gray-400 transition-colors flex items-center"
           >
-            <span className="sm:hidden">Audit →</span>
-            <span className="hidden sm:inline">Audit your Substack</span>
+            Get audit
           </Link>
           <Link
             href="/essay-ideas"
             className="text-xs sm:text-sm font-semibold bg-brand-orange text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full hover:bg-brand-orange-dark transition-colors"
           >
-            Generate ideas →
+            Get ideas
           </Link>
         </nav>
       </div>
