@@ -11,7 +11,7 @@
 
 **Two products for Substack writers:**
 
-1. **Essay Idea Engine (Free)** — Enter a writer you admire + optional niche/handle. Get 5 essay ideas inspired by their approach, adapted for your newsletter. A topline writer overview is shown; the full 7-section research profile is locked behind Pro.
+1. **Essay Idea Engine (Free)** — Enter your niche/topic (required) + optionally a writer you admire + your own handle. Get 5 essay ideas. If a writer is provided, ideas are inspired by their approach; if no writer, ideas are generated from niche alone. A topline writer overview is shown when a writer was researched; the full 7-section profile is locked behind Pro.
 
 2. **Substack Audit (Pro)** — Enter your own Substack handle. Get a full strategic analysis: all 7 profile sections, About page improvement tips, and a clickable list of your recent posts. Free during beta. Auth-gated in v2.
 
@@ -49,12 +49,12 @@
 | GitHub account | SwanDoggMillionaire |
 
 **What is live:**
-- Homepage with two product cards (white=Free, dark=Pro), side by side
+- Homepage with two product cards (white=Free, dark=Pro), stacked on mobile
 - ExampleOutput section with Free/Pro tab switcher
-- `/essay-ideas` — essay ideas only (no mode toggle), writer name required, niche + handle optional, toplineOnly ProfileCard with locked sections
+- `/essay-ideas` — niche required, writer optional, handle optional. Skips research phase if no writer. toplineOnly ProfileCard only shown when writer was researched.
 - `/audit` — self-analysis only, full ProfileCard (all 7 sections + about me tips + recent posts)
 - Live Substack data fetching via public API endpoints (about page + 12 recent posts)
-- Two-phase loading state per page
+- Two-phase loading state per page. On mobile: form hidden while loading so loading state is immediately visible above fold.
 - Both API routes with 60s timeout (`vercel.json`)
 - Randomised suggested writers on `/essay-ideas` from a pool of 30 popular Substack names
 - IP-based rate limiting via Upstash Redis middleware (10 requests/hour per IP, fail-open)
@@ -62,6 +62,7 @@
 - Tally.so feedback form linked from both result pages
 - Per-page SEO metadata (layout.tsx files in each route folder)
 - Vercel Analytics custom events: `essay_ideas_generated` (writer_name, has_niche, has_user_handle, ideas_succeeded) and `audit_completed` (confidence_level, data_source)
+- Mobile-optimised: compact navbar, scroll-to-top on search, no autoFocus, `overflow-x: hidden` on body
 
 **What is not live:**
 - Authentication or user accounts
@@ -119,7 +120,7 @@
 - **CTAs:** `bg-brand-orange text-white font-semibold rounded-xl hover:bg-brand-orange-dark`
 - **Skeleton loading:** `.skeleton` class — shimmer animation using gradient background-position trick
 - **Animations:** `animate-fade-in` and `animate-slide-up`
-- **Navbar:** Fixed, transparent at top → `bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100` after 20px scroll
+- **Navbar:** Fixed. On homepage: transparent → `bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100` after 20px scroll. On all other pages: always white (uses `usePathname` to detect non-home routes). Mobile: logo shrinks to 120px, pills use `text-xs` + compact padding. "Audit →" on mobile, "Audit your Substack" on desktop.
 - **Freemium locked sections:** `bg-gray-50 border border-gray-200 rounded-xl` with `Lock` icon from lucide-react
 
 ---
@@ -130,13 +131,12 @@
 `app/page.tsx` (server component). Four sections:
 
 1. **Hero** (`components/landing/Hero.tsx`) — `'use client'`
-   - Headline: "Stop staring at a blank page."
-   - Sub-headline: "Two tools for Substack writers…"
-   - **Two product cards** side by side (stacked on mobile):
-     - Left card (white, "Free" emerald badge): 3-field form — writer required, niche + handle optional. Navigates to `/research?writer=X&niche=Y&userHandle=Z`
-     - Right card (dark gray, "Pro — free in beta" orange badge): 1-field form — handle. Navigates to `/analyse?handle=X`
-   - Both CTAs always orange (no disabled state on landing page)
-   - Buttons pushed to bottom of each card with `mt-auto` (horizontally aligned)
+   - Headline: "Your next essay is / already out there." Mobile font: `text-[2.1rem]`, desktop: `text-5xl`/`text-6xl`
+   - Sub-headline: "Ideas from writers you admire. Your newsletter, analysed." (`text-sm` mobile, `text-lg` desktop)
+   - **Two product cards** stacked vertically (no side-by-side on any breakpoint since session 6 redesign):
+     - Top card (white, "Free" badge): 2-field form — niche (required, first), writer (optional, second). No descriptive copy inside card. Navigates to `/essay-ideas?niche=X&writer=Y`
+     - Bottom card (dark gray, "Free during beta" badge): 1-field form — handle. Navigates to `/audit?handle=X`
+   - No `autoFocus` on any field (prevents mobile keyboard opening on page load)
    - "See an example output ↓" anchor link
 
 2. **Features** (`components/landing/Features.tsx`) — server component
@@ -156,21 +156,27 @@
 **Writer mode only** — no tab toggle, no self-analysis here.
 
 **URL parameters:**
-- `?writer=X` — auto-starts search
-- `?writer=X&niche=Y&userHandle=Z` — auto-starts with all fields
+- `?niche=X` — auto-starts with niche only (no writer research phase)
+- `?niche=X&writer=Y` — auto-starts with both
+- `?niche=X&writer=Y&userHandle=Z` — auto-starts with all fields
+- Auto-start triggers on `initialNiche || initialWriter` (either is sufficient)
 
 **State machine:** `'idle' | 'researching' | 'generating-ideas' | 'success' | 'error'`
 
 **Auto-chaining flow:**
-1. `setState('researching')` → POST `/api/research` with `isSelf: false`
-2. On success: `setState('generating-ideas')` → POST `/api/essay-ideas`
-3. On both complete: `setState('success')` — shows essay ideas first, then topline ProfileCard
+1. `window.scrollTo({ top: 0 })` immediately on search start
+2. If writer provided: `setState('researching')` → POST `/api/research` with `isSelf: false`
+   If no writer: skip research, build minimal `WriterProfile` client-side from niche, go straight to step 3
+3. `setState('generating-ideas')` → POST `/api/essay-ideas`
+4. `setState('success')` — shows essay ideas, then ProfileCard only if `profile.writerName` is set
+
+**Mobile layout while loading:** form column hidden (`hidden lg:block`), loading state fills full width above fold.
 
 **Results layout:**
 - `EssayIdeas` component (ideas first)
-- `ProfileCard` with `toplineOnly={true}` — shows header + niche bullets + 7 locked sections with padlock + teaser
+- `ProfileCard` with `toplineOnly={true}` — only rendered when a real writer was researched
 
-**SearchForm:** Writer name required (min 2 chars). Niche + handle optional. Suggested writers randomised from pool of 30 on each render.
+**SearchForm:** Niche required (min 2 chars). Writer + handle optional. Suggested writers randomised from pool of 30 on each render — clicking a suggestion auto-submits with the writer name (bypasses niche requirement).
 
 ### `/audit` — Substack Audit (Pro tier, free in beta)
 `app/audit/page.tsx` — `'use client'`, wrapped in `<Suspense>`.
@@ -214,7 +220,7 @@
 ### `components/research/`
 | File | Role |
 |------|------|
-| `SearchForm.tsx` | Writer mode only (no tab toggle). Props: `onSearch(name, niche?, userHandle?)`, `isLoading`, `initialNiche`. Randomised suggested writers from WRITER_POOL (30 names). |
+| `SearchForm.tsx` | Writer mode only (no tab toggle). Props: `onSearch(name, niche?, userHandle?)`, `isLoading`, `initialNiche`. Niche is now the primary required field (first position). Writer is optional (second position). Randomised suggested writers from WRITER_POOL (30 names). |
 | `LoadingState.tsx` | Two-phase skeleton. `phase`: `'researching'` or `'generating-ideas'`. |
 | `EssayIdeas.tsx` | Receives `EssayIdeasResult` as prop. 5 `IdeaCard` components with expand/collapse. Shows green "Personalised using your real Substack content" badge when `userDataSource === 'live'`. |
 | `ProfileCard.tsx` | Renders `WriterProfile`. Props: `collapsed` (default false), `toplineOnly` (default false). When `toplineOnly=true`: shows header + niche bullets + 7 locked sections (LOCKED_SECTIONS array with teaser copy). When false: full 7 sections + aboutMeTips + recentPosts. |
@@ -223,7 +229,7 @@
 ### `components/`
 | File | Role |
 |------|------|
-| `Navbar.tsx` | Fixed header. Links: "How it works" → `/#how-it-works`, "Audit your Substack" → `/audit`, "Get ideas" CTA → `/essay-ideas` |
+| `Navbar.tsx` | Fixed header. Uses `usePathname` — always white on inner pages, transparent-then-white on homepage. Mobile: logo 120px, pills `text-xs` compact. "Audit →" (mobile) / "Audit your Substack" (desktop). "Get ideas →" always. |
 | `Footer.tsx` | Logo, tagline, Substack link, "Not affiliated with Substack Inc." |
 | `PageTabSwitcher.tsx` | Tab toggle shown in page headers — switches between `/essay-ideas` and `/audit`. Props: `active: 'essay-ideas' \| 'audit'` |
 
@@ -314,9 +320,9 @@ recentPosts?: RecentPost[] — only when live data fetched
 | Freemium gate is client-side only | Medium | Full WriterProfile JSON is returned to the browser — locked sections are presentational. Fine for beta; v2 gate is route-level (Clerk on `/audit`) |
 | Full profile sent client→server for essay ideas | Low | Client POSTs the full WriterProfile to `/api/essay-ideas`. Fine for now; in v2 store in Vercel KV by session |
 | Small-writer profile quality | Low | Claude has limited training data on smaller writers. Live fetch helps significantly when handle is provided |
+| Niche-only idea quality | Low | When no writer is provided, research phase is skipped and a minimal profile is built client-side. Claude has less to work with — ideas are based solely on niche string. Acceptable for v1. |
 | Anthropic quota shared with OpenClaw | Medium | Monthly spend cap hit once in March 2026. Monitor at console.anthropic.com |
 | Analytics metadata thin | Low | Events fire but no latency tracking or error-type classification. Sufficient for early beta; extend before v2 |
-| Placeholder text inconsistency | Low | Writer input placeholder copy varies across Hero, SearchForm, and Audit form — minor UX friction |
 | LoadingState message replacement fragile | Low | Uses `.replace('the writer', writerName)` — breaks silently if a message is edited without the literal phrase. Low risk until message pool expands |
 | Substack API partial failures silent | Low | If about fetch succeeds but posts fail, Claude gets partial data still marked as VERIFIED. No user-facing indication |
 
@@ -381,4 +387,4 @@ npm run dev
     └── Stoned-Ape-analysis.md  ← example self-analysis output (reference)
 ```
 
-*Last updated: 21 March 2026 (session 5 — pre-launch bug fixes, known issues documented)*
+*Last updated: 25 March 2026 (session 6 — mobile UX overhaul from beta testing)*
