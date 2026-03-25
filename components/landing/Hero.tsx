@@ -39,14 +39,14 @@ export default function Hero() {
         </div>
 
         {/* Headline */}
-        <h1 className="font-display font-extrabold text-5xl sm:text-6xl text-gray-900 leading-tight tracking-tight mb-4">
+        <h1 className="font-display font-extrabold text-[2.1rem] sm:text-5xl lg:text-6xl text-gray-900 leading-tight tracking-tight mb-4">
           Your next essay is
           <br />
           <span className="text-brand-orange">already out there.</span>
         </h1>
 
         {/* Subheadline */}
-        <p className="text-lg text-gray-600 mx-auto mb-6 leading-relaxed">
+        <p className="text-base sm:text-lg text-gray-600 mx-auto mb-6 leading-relaxed">
           Research writers you admire. Audit your own newsletter.
         </p>
 
