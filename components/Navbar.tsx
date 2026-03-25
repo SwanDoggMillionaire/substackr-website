@@ -51,7 +51,7 @@ export default function Navbar() {
             href="/essay-ideas"
             className="text-xs sm:text-sm font-semibold bg-brand-orange text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full hover:bg-brand-orange-dark transition-colors"
           >
-            Get ideas →
+            Generate ideas →
           </Link>
         </nav>
       </div>

@@ -85,7 +85,7 @@ export default function SearchForm({ onSearch, isLoading, initialNiche = '' }: S
               disabled={!canSubmit || isLoading}
               className="ml-3 bg-brand-orange text-white font-semibold px-5 py-2 rounded-xl hover:bg-brand-orange-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed text-sm whitespace-nowrap flex-shrink-0 self-start mt-0.5"
             >
-              {isLoading ? 'Working…' : 'Get ideas →'}
+              {isLoading ? 'Working…' : 'Generate ideas →'}
             </button>
           </div>
         </div>

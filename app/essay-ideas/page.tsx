@@ -220,7 +220,7 @@ function ResearchPageInner() {
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-xs font-semibold uppercase tracking-widest text-brand-orange mb-2">Free Tool</p>
           <h1 className="font-display font-extrabold text-4xl sm:text-5xl text-gray-900 mb-3">
-            Get Essay Ideas
+            Generate<br />essay ideas.
           </h1>
           <p className="text-gray-600 text-lg leading-relaxed">
             Enter your niche or topic. Add a writer you admire for extra inspiration.

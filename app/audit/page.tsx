@@ -143,7 +143,7 @@ function AnalysePageInner() {
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-xs font-semibold uppercase tracking-widest text-brand-orange mb-2">Pro — Free in Beta</p>
           <h1 className="font-display font-extrabold text-4xl sm:text-5xl text-white mb-3">
-            Audit Your Substack
+            Audit your<br />Substack.
           </h1>
           <p className="text-gray-400 text-lg leading-relaxed">
             Enter your Substack handle. Get a full strategic breakdown in 30–60 seconds.
