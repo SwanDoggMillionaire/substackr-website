@@ -41,6 +41,12 @@ export default function Navbar() {
             How it works
           </Link>
           <Link
+            href="/blog"
+            className="text-sm text-gray-600 hover:text-gray-900 transition-colors hidden sm:block"
+          >
+            Blog
+          </Link>
+          <Link
             href="/audit"
             className="text-xs sm:text-sm font-semibold bg-white border border-gray-300 text-gray-800 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full hover:border-gray-400 transition-colors flex items-center"
           >
