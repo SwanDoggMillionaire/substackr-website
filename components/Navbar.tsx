@@ -26,14 +26,14 @@ export default function Navbar() {
           : 'bg-transparent'
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/">
-          <Image src="/logo.png" alt="Substackr" width={180} height={40} />
+          <Image src="/logo.png" alt="Substackr" width={180} height={40} className="w-[120px] sm:w-[180px] h-auto" />
         </Link>
 
         {/* Nav links */}
-        <nav className="flex items-center gap-3 sm:gap-6">
+        <nav className="flex items-center gap-2 sm:gap-6">
           <Link
             href="/#how-it-works"
             className="text-sm text-gray-600 hover:text-gray-900 transition-colors hidden sm:block"
@@ -42,14 +42,14 @@ export default function Navbar() {
           </Link>
           <Link
             href="/audit"
-            className="text-sm font-semibold bg-white border border-gray-300 text-gray-800 px-3 sm:px-4 py-2 rounded-full hover:border-gray-400 transition-colors flex items-center"
+            className="text-xs sm:text-sm font-semibold bg-white border border-gray-300 text-gray-800 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full hover:border-gray-400 transition-colors flex items-center"
           >
             <span className="sm:hidden">Audit →</span>
             <span className="hidden sm:inline">Audit your Substack</span>
           </Link>
           <Link
             href="/essay-ideas"
-            className="text-sm font-semibold bg-brand-orange text-white px-3 sm:px-4 py-2 rounded-full hover:bg-brand-orange-dark transition-colors"
+            className="text-xs sm:text-sm font-semibold bg-brand-orange text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full hover:bg-brand-orange-dark transition-colors"
           >
             Get ideas →
           </Link>

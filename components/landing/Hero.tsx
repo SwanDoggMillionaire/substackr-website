@@ -46,8 +46,8 @@ export default function Hero() {
         </h1>
 
         {/* Subheadline */}
-        <p className="text-base sm:text-lg text-gray-600 mx-auto mb-6 leading-relaxed">
-          Research writers you admire. Audit your own newsletter.
+        <p className="text-sm sm:text-lg text-gray-600 mx-auto mb-6 leading-relaxed">
+          Ideas from writers you admire. Your newsletter, analysed.
         </p>
 
         {/* Stacked product cards */}
