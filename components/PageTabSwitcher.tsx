@@ -8,26 +8,26 @@ export default function PageTabSwitcher({ active }: { active: ActivePage }) {
       <div className="bg-gray-100 rounded-full p-1 inline-flex">
         {active === 'essay-ideas' ? (
           <span className="bg-brand-orange text-white text-sm font-semibold px-5 py-2 rounded-full">
-            Essay Ideas — Free
+            Essay Ideas
           </span>
         ) : (
           <Link
             href="/essay-ideas"
             className="text-gray-500 hover:text-gray-700 text-sm font-medium px-5 py-2 rounded-full transition-colors"
           >
-            Essay Ideas — Free
+            Essay Ideas
           </Link>
         )}
         {active === 'audit' ? (
           <span className="bg-brand-orange text-white text-sm font-semibold px-5 py-2 rounded-full">
-            Newsletter Audit — Free in beta
+            Substack Audit
           </span>
         ) : (
           <Link
             href="/audit"
             className="text-gray-500 hover:text-gray-700 text-sm font-medium px-5 py-2 rounded-full transition-colors"
           >
-            Newsletter Audit — Free in beta
+            Substack Audit
           </Link>
         )}
       </div>

@@ -75,7 +75,7 @@ export default function SearchForm({ onSearch, isLoading, initialNiche = '' }: S
                 type="text"
                 value={writerName}
                 onChange={(e) => setWriterName(e.target.value)}
-                placeholder="Writer you admire (optional)"
+                placeholder="A writer you admire (optional)"
                 className="w-full bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm py-1"
                 disabled={isLoading}
               />

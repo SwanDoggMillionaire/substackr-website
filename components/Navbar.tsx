@@ -16,20 +16,20 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const showWhiteBg = !isHome || scrolled
+  const navBgClass = !isHome
+    ? 'bg-white shadow-sm border-b border-gray-100'
+    : scrolled
+      ? 'bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100'
+      : 'bg-transparent'
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        showWhiteBg
-          ? 'bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100'
-          : 'bg-transparent'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navBgClass}`}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/">
-          <Image src="/logo.png" alt="Substackr" width={180} height={40} className="w-[120px] sm:w-[180px] h-auto" />
+          <Image src="/logo.png" alt="Substackr" width={180} height={40} className="w-[160px] sm:w-[180px] h-auto" />
         </Link>
 
         {/* Nav links */}

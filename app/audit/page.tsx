@@ -146,7 +146,7 @@ function AnalysePageInner() {
             Audit Your Substack
           </h1>
           <p className="text-gray-400 text-lg leading-relaxed">
-            Enter your handle. Get a strategic breakdown of what&apos;s working, what isn&apos;t, and where you&apos;re leaving readers behind.
+            Enter your Substack handle. Get a full strategic breakdown in 30–60 seconds.
           </p>
         </div>
         <div className="mt-6">

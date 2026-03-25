@@ -223,7 +223,7 @@ function ResearchPageInner() {
             Get Essay Ideas
           </h1>
           <p className="text-gray-600 text-lg leading-relaxed">
-            Pick a writer you admire. Walk away with 5 ideas shaped around your niche.
+            Enter your niche or topic. Add a writer you admire for extra inspiration.
           </p>
         </div>
         <div className="mt-6">
