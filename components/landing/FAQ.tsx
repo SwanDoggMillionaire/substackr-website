@@ -41,9 +41,26 @@ function FAQItem({ faq, defaultOpen }: { faq: typeof faqs[0]; defaultOpen?: bool
   )
 }
 
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer,
+    },
+  })),
+}
+
 export default function FAQ() {
   return (
     <section className="py-24 bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <div className="max-w-3xl mx-auto px-6">
         <div className="text-center mb-10">
           <p className="section-label mb-3">FAQ</p>
