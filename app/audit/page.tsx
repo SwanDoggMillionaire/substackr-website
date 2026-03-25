@@ -173,14 +173,14 @@ function AnalysePageInner() {
                   disabled={isLoading}
                   autoFocus={!initialHandle}
                 />
-                <button
-                  type="submit"
-                  disabled={!canSubmit || isLoading}
-                  className="bg-brand-orange text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-brand-orange-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed text-sm whitespace-nowrap"
-                >
-                  {isLoading ? 'Auditing…' : 'Audit'}
-                </button>
               </div>
+              <button
+                type="submit"
+                disabled={!canSubmit || isLoading}
+                className="w-full mt-3 bg-brand-orange text-white font-semibold px-5 py-3 rounded-xl hover:bg-brand-orange-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed text-sm"
+              >
+                {isLoading ? 'Auditing…' : 'Audit your Substack →'}
+              </button>
             </form>
             <p className="text-center text-sm text-gray-500 mt-3">
               Analysis typically takes 30-60 seconds.
