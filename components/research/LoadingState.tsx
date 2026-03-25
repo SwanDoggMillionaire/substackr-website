@@ -39,7 +39,7 @@ export default function LoadingState({ phase = 'researching', writerName }: Load
   const isGenerating = phase === 'generating-ideas'
 
   return (
-    <div className="w-full max-w-3xl mx-auto mt-12 animate-fade-in">
+    <div className="w-full max-w-3xl mx-auto mt-4 animate-fade-in">
       {/* Status message */}
       <div className="text-center mb-8">
         <div className="inline-flex items-center gap-2 text-brand-orange font-medium">

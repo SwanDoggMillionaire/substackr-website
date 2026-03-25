@@ -267,7 +267,7 @@ export default function ProfileCard({ profile, collapsed = false, toplineOnly = 
                 )}
 
                 {/* Collapse button */}
-                {collapsed && (
+                {!isCollapsed && (
                   <button
                     onClick={() => setIsCollapsed(true)}
                     className="w-full px-8 py-4 flex items-center justify-center gap-2 text-sm text-gray-400 hover:text-gray-600 hover:bg-gray-50 transition-colors border-t border-gray-100"

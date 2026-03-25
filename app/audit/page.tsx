@@ -81,6 +81,7 @@ function AnalysePageInner() {
   const canSubmit = handle.trim().length >= 2
 
   const analyse = async (writerName: string) => {
+    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior })
     setState('loading')
     setError(null)
     setProfile(null)
@@ -145,7 +146,7 @@ function AnalysePageInner() {
             Audit Your Substack
           </h1>
           <p className="text-gray-400 text-lg leading-relaxed">
-            Enter your handle. See your newsletter the way your readers do.
+            Enter your handle. Get a strategic breakdown of what&apos;s working, what isn&apos;t, and where you&apos;re leaving readers behind.
           </p>
         </div>
         <div className="mt-6">
@@ -156,8 +157,8 @@ function AnalysePageInner() {
       <div className="pt-10 max-w-6xl mx-auto px-6">
         <div className="lg:flex lg:gap-10 lg:items-start">
 
-          {/* Left column — sticky input form */}
-          <div className="lg:w-80 lg:shrink-0 lg:sticky lg:top-24">
+          {/* Left column — sticky input form (hidden on mobile while loading) */}
+          <div className={`lg:w-80 lg:shrink-0 lg:sticky lg:top-24 ${isLoading ? 'hidden lg:block' : ''}`}>
             <form onSubmit={handleSubmit}>
               <div className="flex gap-2 p-2 bg-white rounded-2xl shadow-md border border-gray-200 focus-within:border-brand-orange/40 focus-within:shadow-lg transition-all duration-200">
                 <div className="flex items-center pl-3 text-gray-400">
@@ -222,7 +223,8 @@ function AnalysePageInner() {
                     <p className="text-gray-600 text-sm">{error}</p>
                     <button
                       onClick={() => analyse(searchedHandle)}
-                      className="mt-3 text-sm text-brand-orange hover:text-brand-orange-dark font-medium transition-colors"
+                      disabled={isLoading}
+                      className="mt-3 text-sm text-brand-orange hover:text-brand-orange-dark font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                       Try again →
                     </button>

@@ -7,7 +7,7 @@ import SearchForm from '@/components/research/SearchForm'
 import LoadingState from '@/components/research/LoadingState'
 import ProfileCard from '@/components/research/ProfileCard'
 import EssayIdeas from '@/components/research/EssayIdeas'
-import { WriterProfile, EssayIdeasResult } from '@/lib/types'
+import { WriterProfile, EssayIdeasResult, ProfileSection } from '@/lib/types'
 import { AlertCircle, Lightbulb, Search as SearchIcon, Sparkles, ChevronDown, ChevronUp } from 'lucide-react'
 import { track } from '@vercel/analytics'
 import PageTabSwitcher from '@/components/PageTabSwitcher'
@@ -112,13 +112,14 @@ function ResearchPageInner() {
 
   // Auto-start if URL params provided (from homepage form)
   useEffect(() => {
-    if (initialWriter) {
+    if (initialWriter || initialNiche) {
       handleSearch(initialWriter, initialNiche || undefined, initialUserHandle || undefined)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleSearch = async (writerName: string, niche?: string, userHandle?: string) => {
+    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior })
     setState('researching')
     setError(null)
     setProfile(null)
@@ -129,26 +130,49 @@ function ResearchPageInner() {
     setSearchedUserHandle(userHandle || '')
 
     try {
-      // Phase 1: Research the writer
-      const resRes = await fetch('/api/research', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ writerName, isSelf: false }),
-      })
+      let fetchedProfile: WriterProfile
 
-      const resData = await resRes.json()
+      if (writerName.trim()) {
+        // Phase 1: Research the writer
+        const resRes = await fetch('/api/research', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ writerName, isSelf: false }),
+        })
 
-      if (!resRes.ok) {
-        if (resRes.status === 429) {
-          setError('You\'ve made too many requests in the past hour (limit: 10). Please try again later.')
-        } else {
-          setError(resData.error || 'Something went wrong. Please try again.')
+        const resData = await resRes.json()
+
+        if (!resRes.ok) {
+          if (resRes.status === 429) {
+            setError('You\'ve made too many requests in the past hour (limit: 10). Please try again later.')
+          } else {
+            setError(resData.error || 'Something went wrong. Please try again.')
+          }
+          setState('error')
+          return
         }
-        setState('error')
-        return
+
+        fetchedProfile = resData
+      } else {
+        // No writer provided — skip research, build a minimal profile from niche
+        const emptySection = (title: string): ProfileSection => ({ title, content: '' })
+        fetchedProfile = {
+          writerName: '',
+          confidenceLevel: 'LOW',
+          dataSource: 'training',
+          oneLiner: '',
+          researchProfile: emptySection('Research Profile'),
+          nicheAndTopicFocus: { title: 'Niche & Topic Focus', content: niche || '', bullets: [] },
+          audienceResonance: emptySection('Audience Resonance'),
+          positioning: emptySection('Positioning'),
+          monetisationStrategy: emptySection('Monetisation Strategy'),
+          contentPatterns: emptySection('Content Patterns'),
+          strategicSummary: { title: '', insights: [], theGap: '' },
+          similarWriters: [],
+          generatedAt: new Date().toISOString(),
+        }
       }
 
-      const fetchedProfile: WriterProfile = resData
       setProfile(fetchedProfile)
 
       // Phase 2: Generate essay ideas
@@ -210,8 +234,8 @@ function ResearchPageInner() {
       <div className="pt-10 max-w-6xl mx-auto px-6">
         <div className="lg:flex lg:gap-10 lg:items-start">
 
-          {/* Left column — sticky search form */}
-          <div className="lg:w-80 lg:shrink-0 lg:sticky lg:top-24">
+          {/* Left column — sticky search form (hidden on mobile while loading) */}
+          <div className={`lg:w-80 lg:shrink-0 lg:sticky lg:top-24 ${isLoading ? 'hidden lg:block' : ''}`}>
             <SearchForm
               onSearch={handleSearch}
               isLoading={isLoading}
@@ -260,7 +284,8 @@ function ResearchPageInner() {
                     <p className="text-gray-600 text-sm">{error}</p>
                     <button
                       onClick={() => handleSearch(searchedName, searchedNiche || undefined, searchedUserHandle || undefined)}
-                      className="mt-3 text-sm text-brand-orange hover:text-brand-orange-dark font-medium transition-colors"
+                      disabled={isLoading}
+                      className="mt-3 text-sm text-brand-orange hover:text-brand-orange-dark font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                       Try again →
                     </button>
@@ -283,7 +308,8 @@ function ResearchPageInner() {
                         <p className="text-gray-600 text-sm">The research profile loaded successfully - essay idea generation hit an error.</p>
                         <button
                           onClick={() => handleSearch(searchedName, searchedNiche || undefined, searchedUserHandle || undefined)}
-                          className="mt-2 text-sm text-brand-orange hover:text-brand-orange-dark font-medium transition-colors"
+                          disabled={isLoading}
+                          className="mt-2 text-sm text-brand-orange hover:text-brand-orange-dark font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                         >
                           Try again →
                         </button>
@@ -292,7 +318,7 @@ function ResearchPageInner() {
                   </div>
                 )}
 
-                <ProfileCard profile={profile} toplineOnly={true} />
+                {profile.writerName && <ProfileCard profile={profile} toplineOnly={true} />}
 
                 {/* Cross-sell to audit */}
                 <div className="mt-8 bg-orange-50 border border-orange-100 rounded-xl p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">

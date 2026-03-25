@@ -28,21 +28,22 @@ function pickRandom<T>(arr: T[], n: number): T[] {
 }
 
 export default function SearchForm({ onSearch, isLoading, initialNiche = '' }: SearchFormProps) {
-  const [value, setValue] = useState('')
+  const [writerName, setWriterName] = useState('')
   const [niche, setNiche] = useState(initialNiche)
   const [suggested] = useState(() => pickRandom(WRITER_POOL, 3))
 
-  const canSubmit = value.trim().length >= 2
+  // Niche is now the primary required field; writer is optional
+  const canSubmit = niche.trim().length >= 2
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (canSubmit && !isLoading) {
-      onSearch(value.trim(), niche.trim() || undefined)
+      onSearch(writerName.trim(), niche.trim() || undefined)
     }
   }
 
   const handleSuggestion = (name: string) => {
-    setValue(name)
+    setWriterName(name)
     if (!isLoading) {
       onSearch(name, niche.trim() || undefined)
     }
@@ -52,35 +53,32 @@ export default function SearchForm({ onSearch, isLoading, initialNiche = '' }: S
     <div className="w-full max-w-2xl mx-auto">
       <form onSubmit={handleSubmit}>
         <div className="bg-white rounded-2xl shadow-md border border-gray-200 focus-within:border-brand-orange/40 focus-within:shadow-lg transition-all duration-200 overflow-hidden">
-          {/* Writer field - required */}
+          {/* Niche field - primary, required */}
           <div className="flex items-start px-4 py-3 border-b border-gray-100">
-            <Search className="w-4 h-4 text-gray-400 flex-shrink-0 mr-3 mt-1.5" />
-            <div className="flex-1 min-w-0">
-              <input
-                type="text"
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-                placeholder="Writer's name or handle - e.g. Lenny Rachitsky or lenny.substack.com"
-                className="w-full bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm py-1"
-                disabled={isLoading}
-                autoFocus
-              />
-              <p className="text-xs text-gray-400 mt-0.5">For best results, add their Substack handle - e.g. lenny.substack.com</p>
-            </div>
-          </div>
-          {/* Niche - optional */}
-          <div className="flex items-start px-4 py-3">
             <span className="text-gray-300 flex-shrink-0 mr-3 text-lg leading-none mt-1">✦</span>
             <div className="flex-1 min-w-0">
               <input
                 type="text"
                 value={niche}
                 onChange={(e) => setNiche(e.target.value)}
-                placeholder="Your newsletter niche (optional) - e.g. mindfulness for busy parents"
+                placeholder="Your niche or topic"
                 className="w-full bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm py-1"
                 disabled={isLoading}
               />
-              <p className="text-xs text-gray-400 mt-0.5">Helps us shape the ideas around your angle, not theirs</p>
+            </div>
+          </div>
+          {/* Writer field - optional */}
+          <div className="flex items-start px-4 py-3">
+            <Search className="w-4 h-4 text-gray-400 flex-shrink-0 mr-3 mt-1.5" />
+            <div className="flex-1 min-w-0">
+              <input
+                type="text"
+                value={writerName}
+                onChange={(e) => setWriterName(e.target.value)}
+                placeholder="Writer you admire (optional)"
+                className="w-full bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm py-1"
+                disabled={isLoading}
+              />
             </div>
             <button
               type="submit"

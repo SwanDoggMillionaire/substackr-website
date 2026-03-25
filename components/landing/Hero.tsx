@@ -13,9 +13,9 @@ export default function Hero() {
 
   const handleIdeasSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (writer.trim().length < 2) return
-    const params = new URLSearchParams({ writer: writer.trim() })
-    if (niche.trim()) params.set('niche', niche.trim())
+    if (niche.trim().length < 2) return
+    const params = new URLSearchParams({ niche: niche.trim() })
+    if (writer.trim()) params.set('writer', writer.trim())
     router.push(`/essay-ideas?${params.toString()}`)
   }
 
@@ -55,33 +55,29 @@ export default function Hero() {
 
           {/* Card 1: Essay ideas - free */}
           <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 flex flex-col">
-            <div className="flex items-center justify-between mb-1">
+            <div className="flex items-center justify-between mb-4">
               <p className="text-xs font-semibold uppercase tracking-widest text-brand-orange">Get essay ideas</p>
               <span className="text-xs font-medium text-gray-600 bg-gray-100 rounded-full px-3 py-1">Free</span>
             </div>
-            <p className="text-sm text-gray-500 mb-4 leading-relaxed">
-              Pick a Substack writer you admire. Get five essay ideas inspired by their approach - adapted for your newsletter, not a copy of theirs.
-            </p>
             <form onSubmit={handleIdeasSubmit} className="flex flex-col">
               <div className="border border-gray-200 rounded-xl overflow-hidden mb-3">
                 <div className="flex items-center px-3 py-2.5 border-b border-gray-100">
-                  <Search className="w-4 h-4 text-gray-400 flex-shrink-0 mr-2.5" />
-                  <input
-                    type="text"
-                    value={writer}
-                    onChange={(e) => setWriter(e.target.value)}
-                    placeholder="Writer you admire - e.g. lenny.substack.com"
-                    className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm"
-                    autoFocus
-                  />
-                </div>
-                <div className="flex items-center px-3 py-2.5">
                   <span className="text-gray-300 flex-shrink-0 mr-2.5 text-base leading-none">✦</span>
                   <input
                     type="text"
                     value={niche}
                     onChange={(e) => setNiche(e.target.value)}
-                    placeholder="Your niche (optional) - e.g. mindfulness for parents"
+                    placeholder="Your niche or topic"
+                    className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm"
+                  />
+                </div>
+                <div className="flex items-center px-3 py-2.5">
+                  <Search className="w-4 h-4 text-gray-400 flex-shrink-0 mr-2.5" />
+                  <input
+                    type="text"
+                    value={writer}
+                    onChange={(e) => setWriter(e.target.value)}
+                    placeholder="Writer you admire (optional)"
                     className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm"
                   />
                 </div>
@@ -97,29 +93,23 @@ export default function Hero() {
 
           {/* Card 2: Analyse your Substack - Pro */}
           <div className="bg-gray-900 rounded-2xl shadow-lg border border-gray-800 p-8 flex flex-col">
-            <div className="flex items-center justify-between mb-1">
+            <div className="flex items-center justify-between mb-4">
               <p className="text-xs font-semibold uppercase tracking-widest text-white">Audit your Substack</p>
               <span className="text-xs font-medium text-white bg-white/10 rounded-full px-3 py-1">Free during beta</span>
             </div>
-            <p className="text-sm text-gray-400 mb-4 leading-relaxed">
-              Enter your handle. We&apos;ll fetch your actual posts and about page, then give you a structured view of what&apos;s working, what isn&apos;t, and where you&apos;re leaving readers behind.
-            </p>
             <form onSubmit={handleAnalyseSubmit} className="flex flex-col">
-              <div className="border border-gray-700 bg-gray-800/50 rounded-xl overflow-hidden mb-2">
+              <div className="border border-gray-200 bg-white rounded-xl overflow-hidden mb-3">
                 <div className="flex items-center px-3 py-2.5">
-                  <User className="w-4 h-4 text-gray-500 flex-shrink-0 mr-2.5" />
+                  <User className="w-4 h-4 text-gray-400 flex-shrink-0 mr-2.5" />
                   <input
                     type="text"
                     value={analyseHandle}
                     onChange={(e) => setAnalyseHandle(e.target.value)}
-                    placeholder="Your Substack handle or URL - e.g. stonedape.substack.com"
-                    className="flex-1 bg-transparent outline-none text-white placeholder:text-gray-500 text-sm"
+                    placeholder="Your Substack handle or URL"
+                    className="flex-1 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 text-sm"
                   />
                 </div>
               </div>
-              <p className="text-xs text-gray-500 mb-3 text-center leading-relaxed">
-                We fetch your actual posts and about page - not a guess.
-              </p>
               <button
                 type="submit"
                 className="w-full bg-white text-gray-900 font-semibold py-2.5 rounded-xl hover:bg-gray-100 transition-colors text-sm"

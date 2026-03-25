@@ -315,6 +315,10 @@ recentPosts?: RecentPost[] — only when live data fetched
 | Full profile sent client→server for essay ideas | Low | Client POSTs the full WriterProfile to `/api/essay-ideas`. Fine for now; in v2 store in Vercel KV by session |
 | Small-writer profile quality | Low | Claude has limited training data on smaller writers. Live fetch helps significantly when handle is provided |
 | Anthropic quota shared with OpenClaw | Medium | Monthly spend cap hit once in March 2026. Monitor at console.anthropic.com |
+| Analytics metadata thin | Low | Events fire but no latency tracking or error-type classification. Sufficient for early beta; extend before v2 |
+| Placeholder text inconsistency | Low | Writer input placeholder copy varies across Hero, SearchForm, and Audit form — minor UX friction |
+| LoadingState message replacement fragile | Low | Uses `.replace('the writer', writerName)` — breaks silently if a message is edited without the literal phrase. Low risk until message pool expands |
+| Substack API partial failures silent | Low | If about fetch succeeds but posts fail, Claude gets partial data still marked as VERIFIED. No user-facing indication |
 
 ---
 
@@ -377,4 +381,4 @@ npm run dev
     └── Stoned-Ape-analysis.md  ← example self-analysis output (reference)
 ```
 
-*Last updated: 21 March 2026*
+*Last updated: 21 March 2026 (session 5 — pre-launch bug fixes, known issues documented)*
