@@ -351,6 +351,8 @@ npm run dev
 
 **To deploy:** `git push origin main` — Vercel auto-deploys within ~60 seconds.
 
+**Commit and deploy automatically:** After completing any code changes in a session, always commit and push to `main` without waiting to be asked. Stage the changed files, write a concise commit message summarising what changed and why, then push. This is intentional — `main` is the live test environment via Vercel, and the workflow is: change → commit → push → verify on substackr.com. If a change is exploratory or risky, flag it before pushing and confirm with Swanny first.
+
 **Key files to read before changing anything:**
 1. `lib/types.ts` — data contract everything depends on
 2. `lib/claude.ts` — both system prompts, model settings, JSON schema
