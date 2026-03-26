@@ -33,7 +33,7 @@
 
 ## Current Status (March 2026)
 
-**Live — two-product architecture deployed.**
+**Live — two-product architecture + blog + SEO infrastructure deployed.**
 
 | Property | Detail |
 |----------|--------|
@@ -63,10 +63,16 @@
 - Per-page SEO metadata (layout.tsx files in each route folder)
 - Vercel Analytics custom events: `essay_ideas_generated` (writer_name, has_niche, has_user_handle, ideas_succeeded) and `audit_completed` (confidence_level, data_source)
 - Mobile-optimised: compact navbar, scroll-to-top on search, no autoFocus, `overflow-x: hidden` on body
+- SEO infrastructure: `sitemap.ts`, `robots.ts`, `metadataBase`, canonical URLs, JSON-LD schemas (Organization, WebApplication, FAQPage per page)
+- Google Search Console verified, sitemap submitted
+- `/blog` — MDX blog with per-post SEO (Article JSON-LD, canonical, OG). Content in `content/blog/*.mdx`.
+- Two founding blog articles live: "How to audit your Substack newsletter" and "What to write on Substack: 50 essay ideas"
 
 **What is not live:**
 - Authentication or user accounts
 - Premium features or payments (Pro tier is free during beta)
+- Scribe agent (automated blog pipeline — planned next session)
+- Reddit Ads SEA campaign (€20 test budget — copy ready, not yet executed)
 
 ---
 
@@ -80,8 +86,12 @@
 | Animation | Framer Motion (installed), CSS keyframes (used for skeleton shimmer, fade-in, slide-up) |
 | AI | `@anthropic-ai/sdk` — `claude-sonnet-4-6` |
 | Fonts | Plus Jakarta Sans (display/headings) + Inter (body) via `next/font/google` |
+| Blog | `next-mdx-remote` + `gray-matter` — MDX files in `content/blog/` |
+| Blog styling | `@tailwindcss/typography` (dev) — `prose` class on post body |
 | Deployment | Vercel — auto-deploys from `main` branch on GitHub |
 | API timeout | 60 seconds — set via `export const maxDuration = 60` in each route file AND in `vercel.json` |
+
+**Blog voice:** The Substackr blog has its own editorial voice — separate from Swanny's personal Substack voice. Register: knowledgeable practitioner writing for peers (beehiiv blog / SparkLoop style). Voice guide: `~/Claude/substackr-app/build/prompts/substackr-blog-voice.md`. Anti-AI rules (including the em dash rule): `~/Claude/substackr-app/build/prompts/scribe-voice-rules.md`. **Never use Swanny's personal confessional voice for blog content.**
 
 **Important:** shadcn/ui was installed but only `cn()` utility is used. Do not add shadcn components — Tailwind classes are used directly everywhere. The shadcn globals.css pattern was removed because it is incompatible with Tailwind v3.
 
@@ -199,13 +209,18 @@
 ### `app/`
 | File | Role |
 |------|------|
-| `layout.tsx` | Root layout — fonts, metadata, Navbar + Footer wrapper |
+| `layout.tsx` | Root layout — fonts, metadata (with `metadataBase`), Navbar + Footer wrapper, Organization + WebApplication JSON-LD |
 | `globals.css` | Tailwind v3 directives, CSS variables, `.skeleton`, `.section-label`, `.card-orange-top` |
 | `page.tsx` | Landing page — server component, assembles 5 landing sections (Hero, Features, ExampleOutput, FAQ, FinalCTA) |
+| `sitemap.ts` | Dynamic sitemap — crawls `content/blog/` for post slugs, includes all routes |
+| `robots.ts` | robots.txt — disallows `/api/`, allows all user-facing pages, points to sitemap |
 | `essay-ideas/page.tsx` | Essay ideas — state machine, URL param parsing, auto-chains both API calls, toplineOnly ProfileCard. Fires `essay_ideas_generated` analytics event on success. |
-| `essay-ideas/layout.tsx` | Page-level SEO metadata for `/essay-ideas` |
+| `essay-ideas/layout.tsx` | Page-level SEO metadata + FAQPage JSON-LD for `/essay-ideas` |
 | `audit/page.tsx` | Self-analysis — single handle input, POST /api/research with isSelf: true, full ProfileCard. Fires `audit_completed` analytics event on success. |
-| `audit/layout.tsx` | Page-level SEO metadata for `/audit` |
+| `audit/layout.tsx` | Page-level SEO metadata + FAQPage JSON-LD for `/audit` |
+| `blog/page.tsx` | Blog index — reads all MDX frontmatter from `content/blog/`, renders post cards sorted by date |
+| `blog/layout.tsx` | Blog section SEO metadata |
+| `blog/[slug]/page.tsx` | Individual blog post — reads MDX file, renders with `next-mdx-remote`, Article JSON-LD, canonical URL |
 | `api/research/route.ts` | POST — `{writerName, isSelf}` → calls `fetchSubstackData()` + `researchWriter()`, attaches `recentPosts` to profile |
 | `api/essay-ideas/route.ts` | POST — `{profile, userNiche?, userHandle?}` → fetches user's live Substack data if handle provided, calls `generateEssayIdeas()` |
 
@@ -232,6 +247,25 @@
 | `Navbar.tsx` | Fixed header. Uses `usePathname` — always white on inner pages, transparent-then-white on homepage. Mobile: logo 120px, pills `text-xs` compact. "Audit →" (mobile) / "Audit your Substack" (desktop). "Get ideas →" always. |
 | `Footer.tsx` | Logo, tagline, Substack link, "Not affiliated with Substack Inc." |
 | `PageTabSwitcher.tsx` | Tab toggle shown in page headers — switches between `/essay-ideas` and `/audit`. Props: `active: 'essay-ideas' \| 'audit'` |
+
+### `content/blog/`
+| File | Role |
+|------|------|
+| `how-to-audit-your-substack-newsletter.mdx` | Founding article — targets "substack audit", "newsletter audit tool" |
+| `what-to-write-on-substack-50-essay-ideas.mdx` | Founding article — targets "what to write on substack", "substack essay ideas" |
+
+**Adding new blog posts:** Create a `.mdx` file in `content/blog/` with this frontmatter:
+```yaml
+---
+title: "..."
+description: "..."
+excerpt: "..."
+publishedAt: "YYYY-MM-DD"
+keywords: [list]
+readingTime: "X min read"
+---
+```
+The sitemap auto-updates. No other config needed. Slug is derived from filename.
 
 ### `lib/`
 | File | Role |
@@ -333,9 +367,27 @@ recentPosts?: RecentPost[] — only when live data fetched
 | Version | Status | Goal |
 |---------|--------|------|
 | v1 | Live | Two products (free + Pro beta), live Substack data, freemium gate, rate limiting, custom domain |
-| v2 | Next | Clerk auth, gate `/audit` behind Stripe paywall (~$10/month) |
+| v1.5 | In progress | SEO content flywheel: blog infrastructure live, Scribe agent planned, Reddit Ads planned |
+| v2 | Next | Clerk auth, gate `/audit` behind Stripe paywall (~$50 one-time) |
 | v2 stretch | Planned | Vercel KV for session data |
 | v3 | Future | Saved library, writer comparison, gap analysis map |
+
+## SEO Strategy (session 7)
+
+**Target keyword clusters (priority order):**
+1. Self-audit — "substack audit", "newsletter audit tool" — low competition, we own this, direct product intent
+2. Content ideas — "what to write on substack", "substack essay ideas" — medium competition, article live
+3. Newsletter quality — "how to write a better newsletter", "newsletter writing tips" — medium
+4. Audience growth — "how to grow substack subscribers", "grow newsletter audience" — high competition, build toward
+5. Starting out — "how to start a substack", "substack for beginners" — high volume, high competition, long-term
+
+**Content pipeline:**
+- Scribe agent (not yet built) — research → write → commit → push every 3 days via OpenClaw cron
+- Uses `BRAVE_SEARCH_API_KEY` (in `.env.local`) for keyword research phase
+- Voice guide for Scribe: `~/Claude/substackr-app/build/prompts/substackr-blog-voice.md`
+- Anti-AI rules: `~/Claude/substackr-app/build/prompts/scribe-voice-rules.md`
+
+**GSC:** substackr.com verified. Sitemap submitted. Check Coverage and Performance weekly.
 
 ---
 
@@ -360,6 +412,7 @@ npm run dev
 4. `app/essay-ideas/page.tsx` — state machine and auto-chaining logic
 5. `app/globals.css` — skeleton, custom utilities, CSS variables
 6. `middleware.ts` — IP rate limiting (Upstash Redis, 10/hour, fail-open)
+7. `~/Claude/substackr-app/build/prompts/substackr-blog-voice.md` — before writing or generating any blog content
 
 **Environment variables:**
 - `ANTHROPIC_API_KEY` — set in Vercel dashboard (project settings → environment variables)
@@ -389,4 +442,4 @@ npm run dev
     └── Stoned-Ape-analysis.md  ← example self-analysis output (reference)
 ```
 
-*Last updated: 25 March 2026 (session 6 — mobile UX overhaul from beta testing)*
+*Last updated: 26 March 2026 (session 7 — SEO infrastructure, blog, voice guide)*
