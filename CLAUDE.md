@@ -66,12 +66,12 @@
 - SEO infrastructure: `sitemap.ts`, `robots.ts`, `metadataBase`, canonical URLs, JSON-LD schemas (Organization, WebApplication, FAQPage per page)
 - Google Search Console verified, sitemap submitted
 - `/blog` — MDX blog with per-post SEO (Article JSON-LD, canonical, OG). Content in `content/blog/*.mdx`.
-- Two founding blog articles live: "How to audit your Substack newsletter" and "What to write on Substack: 50 essay ideas"
+- Three blog articles live: "How to audit your Substack newsletter", "What to write on Substack: 50 essay ideas", "How to Write a Better Newsletter: Three Levers That Actually Matter"
+- **Scribe agent** — cloud-scheduled automated blog publisher. Runs 9am Tue + Fri. Researches, writes, and pushes a new article to `content/blog/` twice weekly via GitHub Contents API. See full details in the Scribe Agent section below.
 
 **What is not live:**
 - Authentication or user accounts
 - Premium features or payments (Pro tier is free during beta)
-- Scribe agent (automated blog pipeline — planned next session)
 - Reddit Ads SEA campaign (€20 test budget — copy ready, not yet executed)
 
 ---
@@ -367,7 +367,7 @@ recentPosts?: RecentPost[] — only when live data fetched
 | Version | Status | Goal |
 |---------|--------|------|
 | v1 | Live | Two products (free + Pro beta), live Substack data, freemium gate, rate limiting, custom domain |
-| v1.5 | In progress | SEO content flywheel: blog infrastructure live, Scribe agent planned, Reddit Ads planned |
+| v1.5 | In progress | SEO content flywheel: blog infrastructure live, Scribe agent LIVE (Tue+Fri), Reddit Ads planned |
 | v2 | Next | Clerk auth, gate `/audit` behind Stripe paywall (~$50 one-time) |
 | v2 stretch | Planned | Vercel KV for session data |
 | v3 | Future | Saved library, writer comparison, gap analysis map |
@@ -377,17 +377,54 @@ recentPosts?: RecentPost[] — only when live data fetched
 **Target keyword clusters (priority order):**
 1. Self-audit — "substack audit", "newsletter audit tool" — low competition, we own this, direct product intent
 2. Content ideas — "what to write on substack", "substack essay ideas" — medium competition, article live
-3. Newsletter quality — "how to write a better newsletter", "newsletter writing tips" — medium
+3. Newsletter quality — "how to write a better newsletter", "newsletter writing tips" — medium, article live
 4. Audience growth — "how to grow substack subscribers", "grow newsletter audience" — high competition, build toward
 5. Starting out — "how to start a substack", "substack for beginners" — high volume, high competition, long-term
 
 **Content pipeline:**
-- Scribe agent (not yet built) — research → write → commit → push every 3 days via OpenClaw cron
-- Uses `BRAVE_SEARCH_API_KEY` (in `.env.local`) for keyword research phase
-- Voice guide for Scribe: `~/Claude/substackr-app/build/prompts/substackr-blog-voice.md`
+- Scribe agent LIVE — runs 9am Tue + Fri via Claude Code cloud scheduling. See Scribe Agent section below.
+- Voice guide: `~/Claude/substackr-app/build/prompts/substackr-blog-voice.md`
 - Anti-AI rules: `~/Claude/substackr-app/build/prompts/scribe-voice-rules.md`
 
 **GSC:** substackr.com verified. Sitemap submitted. Check Coverage and Performance weekly.
+
+---
+
+## Scribe Agent (session 8)
+
+Automated twice-weekly blog publisher. Fully operational as of 26 March 2026.
+
+**Trigger ID:** `trig_01QzPfR9m3zz3xKtPMY2Er4j`
+**Monitor:** https://claude.ai/code/scheduled/trig_01QzPfR9m3zz3xKtPMY2Er4j
+**Schedule:** 9am Amsterdam every Tuesday and Friday (cron: `0 7 * * 2,5` UTC)
+**Infrastructure:** Claude Code `/schedule` cloud-hosted trigger (NOT OpenClaw)
+
+**Why cloud scheduling, not OpenClaw:**
+OpenClaw agents were timing out (Atlas at 90s, Minerva at 180s) and require the local machine to be on. Claude Code's `/schedule` runs on Anthropic's infrastructure — no machine dependency, monitored at claude.ai/code/scheduled.
+
+**Six-phase workflow per run:**
+1. Read `content/blog/scribe-queue.md` → pick first PENDING topic
+2. WebSearch (2-3 searches): competitor gap analysis + named writer examples
+3. Write article — length dictated by competition, not a fixed target; every sentence earns its place
+4. Generate frontmatter (slug, description, keywords, readingTime)
+5. Publish via GitHub Contents API (curl with GITHUB_TOKEN) → triggers Vercel auto-deploy
+6. Append to `content/blog/scribe-log.md`
+
+**Key files (in repo):**
+- `content/blog/scribe-queue.md` — topic queue. Edit to steer topics. PENDING/DONE/SKIP statuses.
+- `content/blog/scribe-log.md` — run log, one line per execution (created by agent on first run)
+
+**GitHub auth:** Fine-grained PAT stored in the trigger prompt. Token has Contents read/write on `substackr-website` only. Token is private to the trigger config at claude.ai/code/scheduled.
+
+**Critical lessons from build (do not repeat these mistakes):**
+1. **CCR cannot git push.** Claude Code Remote environments clone repos but have no push credentials. The git proxy returns 403 on all write operations. Fix: use the GitHub Contents API via curl with a PAT token. Do NOT attempt `git push origin main` or MCP GitHub write tools from a cloud trigger — both will 403.
+2. **MCP GitHub tools also 403.** The agent tried `push_files` and `create_or_update_file` MCP tools before falling back to curl. The prompt now explicitly blocks this with: "Do NOT use MCP GitHub tools or git push — they will return 403. Only curl works."
+3. **Em dash self-check must be a Bash grep.** The agent miscounted em dashes on the first run (said 0, was actually 1). Now uses: `grep -o ' — ' /tmp/article.mdx | wc -l`. Machine count, not eyeball.
+4. **BRAVE_SEARCH_API_KEY is unavailable in cloud triggers.** Cloud agents cannot access local env vars. Replaced with the native WebSearch tool — same capability, no API key needed.
+5. **Desktop app does not show cloud triggers.** Cloud-scheduled triggers only appear at claude.ai/code/scheduled in the browser. The Claude desktop app scheduled view shows local tasks only.
+
+**Article length guidance:**
+Write the length the topic requires to rank, informed by competitor research. Not a fixed target. If top-ranking articles are shallow 800-word pieces, a thorough 1400-word article wins. If they are all 2000-word guides, match that depth. No padding. Every sentence earns its place.
 
 ---
 
@@ -442,4 +479,4 @@ npm run dev
     └── Stoned-Ape-analysis.md  ← example self-analysis output (reference)
 ```
 
-*Last updated: 26 March 2026 (session 7 — SEO infrastructure, blog, voice guide)*
+*Last updated: 26 March 2026 (session 8 — Scribe agent live, 3rd blog article published)*
