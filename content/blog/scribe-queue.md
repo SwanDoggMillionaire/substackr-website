@@ -11,7 +11,7 @@ Edit freely — add new topics at the bottom or reorder to prioritise.
 
 | Status | Keyword target | Suggested angle |
 |--------|---------------|-----------------|
-| PENDING | how to write a better newsletter | Structure, voice, and the About page — the three levers |
+| DONE | how to write a better newsletter | Structure, voice, and the About page — the three levers |
 | PENDING | how to grow substack subscribers | What actually moves the number vs what feels like it should |
 | PENDING | how to write a substack about page | The most visited, least maintained page |
 | PENDING | substack vs beehiiv | Not a features comparison — a positioning question |
@@ -27,3 +27,4 @@ Edit freely — add new topics at the bottom or reorder to prioritise.
 |------|------|-----------------|
 | 2026-03-25 | how-to-audit-your-substack-newsletter | substack audit |
 | 2026-03-25 | what-to-write-on-substack-50-essay-ideas | what to write on substack |
+| 2026-03-26 | how-to-write-a-better-newsletter | how to write a better newsletter |
