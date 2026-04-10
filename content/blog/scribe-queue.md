@@ -15,7 +15,7 @@ Edit freely — add new topics at the bottom or reorder to prioritise.
 | DONE | how to grow substack subscribers | What actually moves the number vs what feels like it should |
 | DONE | how to write a substack about page | The most visited, least maintained page |
 | DONE | substack vs beehiiv | Not a features comparison — a positioning question |
-| PENDING | newsletter niche ideas | The specificity problem and how to solve it |
+| DONE | newsletter niche ideas | The specificity problem and how to solve it |
 | PENDING | substack newsletter examples | Real writers, what they do differently |
 | PENDING | how to start a substack | The one decision that determines everything else |
 
@@ -31,3 +31,5 @@ Edit freely — add new topics at the bottom or reorder to prioritise.
 | 2026-03-27 | how-to-grow-substack-subscribers | how to grow substack subscribers |
 | 2026-03-31 | how-to-write-a-substack-about-page | how to write a substack about page |
 | 2026-04-03 | substack-vs-beehiiv | substack vs beehiiv |
+| 2026-04-10 | newsletter-niche-ideas | newsletter niche ideas |
+
