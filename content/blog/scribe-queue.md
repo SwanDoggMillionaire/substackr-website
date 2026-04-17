@@ -16,7 +16,7 @@ Edit freely — add new topics at the bottom or reorder to prioritise.
 | DONE | how to write a substack about page | The most visited, least maintained page |
 | DONE | substack vs beehiiv | Not a features comparison — a positioning question |
 | DONE | newsletter niche ideas | The specificity problem and how to solve it |
-| PENDING | substack newsletter examples | Real writers, what they do differently |
+| DONE | substack newsletter examples | Real writers, what they do differently |
 | PENDING | how to start a substack | The one decision that determines everything else |
 
 ---
@@ -33,3 +33,4 @@ Edit freely — add new topics at the bottom or reorder to prioritise.
 | 2026-04-03 | substack-vs-beehiiv | substack vs beehiiv |
 | 2026-04-10 | newsletter-niche-ideas | newsletter niche ideas |
 
+| 2026-04-17 | substack-newsletter-examples | substack newsletter examples |
