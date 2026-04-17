@@ -9,3 +9,4 @@
 | 2026-04-10 | newsletter-niche-ideas | 1420w | newsletter niche ideas | success |
 | 2026-04-14 | newsletter-niche-ideas | 1191w | newsletter niche ideas | success |
 
+| 2026-04-17 | substack-newsletter-examples | 915w | substack newsletter examples | success |
