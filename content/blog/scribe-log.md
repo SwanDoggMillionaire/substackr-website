@@ -8,5 +8,6 @@
 | 2026-04-03 | substack-vs-beehiiv | 1195w | substack vs beehiiv | success |
 | 2026-04-10 | newsletter-niche-ideas | 1420w | newsletter niche ideas | success |
 | 2026-04-14 | newsletter-niche-ideas | 1191w | newsletter niche ideas | success |
-
 | 2026-04-17 | substack-newsletter-examples | 915w | substack newsletter examples | success |
+| 2026-04-21 | how-to-start-a-substack | 1329w | how to start a substack | success |
+
